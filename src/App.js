@@ -15,7 +15,7 @@ const App = (prors) => {
         <MainMenuContainer />
         <HeaderContainer />
         <MainContent>
-          {/* <Route path='/' render={() => <GameRPS stateRPS={prors.state.rps}dispatch={prors.dispatch}/>} /> */}
+          <Route path='/' render={() => <GameRPS/>} />
         </MainContent>
       </>
   );

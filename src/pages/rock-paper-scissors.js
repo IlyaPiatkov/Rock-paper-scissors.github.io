@@ -1,70 +1,60 @@
 import React from 'react';
 import { choiceElement } from '../redux/reduser/rps-reduser';
+import { connect } from 'react-redux';
 // import styled from 'styled-components'
 
 
 const GameRPS = (props) => {
+  console.log(props);
+  
 
   let clickHandler = (event) => {
     const name = generatorNames()
+    const resultGameSend = resultGame(event.target.id, name)
 
-    props.dispatch(choiceElement(
+    props.createDispatch(
       event.target.id,
-      resultGame(event.target.id, name),
+      resultGameSend,
       name
-    ))
+    )
   }
 
   let resultGame = (id, name) => {
     switch(`${id}-${name}`){
       case 'Rock-Scissors':
         return {
-          winner: 'user',
+          win: true,
           textWins: 'You winner',
-          userCount: ++props.stateRPS.userCount,
-          compCount: props.stateRPS.compCount,
         }
       case 'Rock-Paper':
         return {
-          winner: 'user',
+          win: false,
           textWins: 'You lose',
-          userCount: props.stateRPS.userCount,
-          compCount: ++props.stateRPS.compCount,
         }
       case 'Paper-Rock':
         return {
-          winner: 'user',
+          win: true,
           textWins: 'You winner',
-          userCount: ++props.stateRPS.userCount,
-          compCount: props.stateRPS.compCount,
         }
       case 'Paper-Scissors':
         return {
-          winner: 'user',
+          win: false,
           textWins: 'You lose',
-          userCount: props.stateRPS.userCount,
-          compCount: ++props.stateRPS.compCount,
         }
       case 'Scissors-Paper':
         return {
-          winner: 'user',
+          win: true,
           textWins: 'You winner',
-          userCount: ++props.stateRPS.userCount,
-          compCount: props.stateRPS.compCount,
         }
       case 'Scissors-Rock':
         return {
-          winner: 'user',
+          win: false,
           textWins: 'You lose',
-          userCount: props.stateRPS.userCount,
-          compCount: ++props.stateRPS.compCount,
         }
       default:
         return {
-          winner: 'user',
+          win: false,
           textWins: 'no winner',
-          userCount: props.stateRPS.userCount,
-          compCount: props.stateRPS.compCount,
         }
     }
   }
@@ -88,11 +78,11 @@ const GameRPS = (props) => {
 
   return (
     <div>
-      <p>user-choise: {props.stateRPS.userChoise}</p>
-      <p>com-choise: {props.stateRPS.randomChoise}</p>
-      <p>winner: {props.stateRPS.winner}</p>
-      <p>user-Count: {props.stateRPS.userCount}</p>
-      <p>comp-Count: {props.stateRPS.compCount}</p>
+      <p>user-choise: {props.userChoise}</p>
+      <p>com-choise: {props.randomChoise}</p>
+      <p>winner: {props.winner}</p>
+      <p>user-Count: {props.userCount}</p>
+      <p>comp-Count: {props.compCount}</p>
       <button
         id='Rock'
         type='button'
@@ -118,4 +108,22 @@ const GameRPS = (props) => {
   )
 }
 
-export default GameRPS
+let mapStateToProps = (state) => {
+  console.log(state);
+  
+  return {
+    compCount: state.rps.compCount,
+    randomChoise: state.rps.randomChoise,
+    userChoise: state.rps.userChoise,
+    userCount: state.rps.userCount,
+    winner: state.rps.winner,
+  }
+}
+
+let mapDispatchTooProps = (dispatch) => ({
+  createDispatch: (id, resultGameSend, name) => {dispatch(choiceElement(id, resultGameSend, name))}
+})
+
+const GameRPSContainer = connect(mapStateToProps, mapDispatchTooProps)(GameRPS)
+
+export default GameRPSContainer

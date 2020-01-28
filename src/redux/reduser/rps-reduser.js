@@ -11,14 +11,23 @@ let initialState = {
 const rpsReduser = (state = initialState, action) => {
 
   switch(action.type) {
-    case CHOICE_ELEMENT:
-      console.log(action.winner);
-      state.userChoise = action.idButton
-      state.winner = action.winner.textWins
-      state.userCount = action.winner.userCount
-      state.compCount = action.winner.compCount
-      state.randomChoise = action.randomChoise
-      return state
+    case CHOICE_ELEMENT: {
+      console.log(action.winner.win);
+      
+      let stateCopy = { 
+        ...state,
+        userChoise: action.idButton,
+        winner: action.winner.textWins,
+        userCount: action.winner.win 
+          ? ++action.winner.userCount 
+          : action.winner.userCount,
+        compCount: action.winner.win 
+        ? action.winner.compCount 
+        : ++action.winner.compCount,
+        randomChoise: action.randomChoise
+      }
+      return stateCopy
+    }
 
     default:
       return state
