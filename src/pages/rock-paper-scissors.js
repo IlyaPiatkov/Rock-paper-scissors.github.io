@@ -1,6 +1,7 @@
 import React from 'react';
 import { choiceElement } from '../redux/reduser/rps-reduser';
 import { connect } from 'react-redux';
+import { Scissors, Paper, Rock } from '../ui';
 // import styled from 'styled-components'
 
 
@@ -79,6 +80,7 @@ const GameRPS = (props) => {
         type='button'
         onClick={clickHandler}
       >
+        <Rock />
         rock
       </button>
       <button
@@ -86,6 +88,7 @@ const GameRPS = (props) => {
         type='button'
         onClick={clickHandler}
       >
+        <Paper />
         paper
       </button>
       <button
@@ -93,6 +96,7 @@ const GameRPS = (props) => {
         type='button'
         onClick={clickHandler}
         >
+          <Scissors />
           scissors
         </button>
     </div>
