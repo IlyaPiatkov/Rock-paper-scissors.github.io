@@ -1,8 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { openMenu } from '../../redux/reduser/main-menu-reduser'
-
 const Container = styled.button`
   position: absolute;
   right: 0;

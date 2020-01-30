@@ -58,8 +58,6 @@ const Link = styled(NavLink)`
 `
 
 const MainMenu = (props) => {
-  console.log(props.isOpenMenu);
-
   return (
     props.isOpenMenu
     ? <NavBar isOpenMenu={props.isOpenMenu}>

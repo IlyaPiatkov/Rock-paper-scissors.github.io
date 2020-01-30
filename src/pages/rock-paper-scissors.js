@@ -5,16 +5,13 @@ import { connect } from 'react-redux';
 
 
 const GameRPS = (props) => {
-  console.log(props);
-  
-
   let clickHandler = (event) => {
     const name = generatorNames()
     const resultGameSend = resultGame(event.target.id, name)
 
     props.createDispatch(
       event.target.id,
-      resultGameSend,
+      getWinner(resultGameSend),
       name
     )
   }
@@ -22,40 +19,19 @@ const GameRPS = (props) => {
   let resultGame = (id, name) => {
     switch(`${id}-${name}`){
       case 'Rock-Scissors':
-        return {
-          win: true,
-          textWins: 'You winner',
-        }
+        return 'user'
       case 'Rock-Paper':
-        return {
-          win: false,
-          textWins: 'You lose',
-        }
+        return 'comp'
       case 'Paper-Rock':
-        return {
-          win: true,
-          textWins: 'You winner',
-        }
+        return 'user'
       case 'Paper-Scissors':
-        return {
-          win: false,
-          textWins: 'You lose',
-        }
+        return 'comp'
       case 'Scissors-Paper':
-        return {
-          win: true,
-          textWins: 'You winner',
-        }
+        return 'user'
       case 'Scissors-Rock':
-        return {
-          win: false,
-          textWins: 'You lose',
-        }
+        return 'comp'
       default:
-        return {
-          win: false,
-          textWins: 'no winner',
-        }
+        return
     }
   }
 
@@ -64,15 +40,30 @@ const GameRPS = (props) => {
   }
 
   let generatorNames = () => {
-    let namber = getRandomInt(3)
+    let arr = ['Rock', 'Paper', 'Scissors']
+    let namber = getRandomInt(arr.length)
 
-    switch(namber) {
-      case 1:
-        return 'Rock'
-      case 2:
-        return 'Paper'
-      default:
-        return 'Scissors'
+    return arr[namber]
+  }
+
+  let getWinner = (result) => {
+    let countWinsUser = props.userCount
+    let countWinsComp = props.compCount
+    let textWins = 'no winner'
+
+    if (result === 'user') {
+      ++countWinsUser
+      textWins = 'You winner'
+    }
+    else if (result === 'comp') {
+      ++countWinsComp
+      textWins = 'You lose'
+    }
+
+    return {
+      userCount: countWinsUser,
+      compCount: countWinsComp,
+      textWins: textWins,
     }
   }
 
@@ -109,8 +100,6 @@ const GameRPS = (props) => {
 }
 
 let mapStateToProps = (state) => {
-  console.log(state);
-  
   return {
     compCount: state.rps.compCount,
     randomChoise: state.rps.randomChoise,
