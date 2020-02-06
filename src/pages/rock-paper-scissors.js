@@ -1,9 +1,7 @@
 import React from 'react';
 import { choiceElement } from '../redux/reduser/rps-reduser';
 import { connect } from 'react-redux';
-import { Scissors, Paper, Rock } from '../ui';
-// import styled from 'styled-components'
-
+import { RPSHeader, RPSButtons, RPSContainer } from '../ui';
 
 const GameRPS = (props) => {
   let clickHandler = (event) => {
@@ -68,38 +66,19 @@ const GameRPS = (props) => {
     }
   }
 
+  const arrNames = ['Rock', 'Paper', 'Scissors']
+
   return (
-    <div>
-      <p>user-choise: {props.userChoise}</p>
-      <p>com-choise: {props.randomChoise}</p>
-      <p>winner: {props.winner}</p>
-      <p>user-Count: {props.userCount}</p>
-      <p>comp-Count: {props.compCount}</p>
-      <button
-        id='Rock'
-        type='button'
-        onClick={clickHandler}
-      >
-        <Rock />
-        rock
-      </button>
-      <button
-        id='Paper'
-        type='button'
-        onClick={clickHandler}
-      >
-        <Paper />
-        paper
-      </button>
-      <button
-        id='Scissors'
-        type='button'
-        onClick={clickHandler}
-        >
-          <Scissors />
-          scissors
-        </button>
-    </div>
+    <RPSContainer>
+      <RPSHeader
+        userChoice={props.userChoise}
+        userCount={props.userCount}
+        compChoice={props.randomChoise}
+        compCount={props.compCount}
+        winner={props.winner}
+      />
+      <RPSButtons names={arrNames} onClick={clickHandler}/>
+    </RPSContainer>
   )
 }
 
