@@ -17,12 +17,13 @@ export const Computer = () => {
   )
 }
 
-export const Icon = (props) => {
-  let svg = setElementSVG(props.name)
+export const Icon = ({name, className}) => {
+  let svg = setElementSVG(name)
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={svg.viewBox}>
+      viewBox={svg.viewBox}
+      className={className}>
       {svg.path}
     </svg>
   )

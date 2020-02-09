@@ -14,18 +14,18 @@ const Button = styled.button`
 
 const IconStyle = styled(Icon)`
   pointer-events: none;
-  background-color: red;
 `
 
-export const RPSButtons = (props) => {
+export const RPSButtons = ({names, onClick}) => {
   return (
     <Container>
-      {props.names.map(name => {
+      {names.map(name => {
         return (
           <Button
             id={name}
+            key={name}
             type='button'
-            onClick={props.onClick}
+            onClick={onClick}
           >
             <IconStyle name={name}/>
             {name}
