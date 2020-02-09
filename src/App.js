@@ -6,6 +6,7 @@ import MainMenuContainer from './ui/main-menu/main-menu';
 import HeaderContainer from './ui/header/header'
 import MainContent from './ui/main-content/main-content';
 import GameRPS from './pages/rock-paper-scissors';
+import { MainNav } from './ui';
 
 const App = (prors) => {
 
@@ -15,7 +16,8 @@ const App = (prors) => {
         <MainMenuContainer />
         <HeaderContainer />
         <MainContent>
-          <Route path='/' render={() => <GameRPS/>} />
+          <Route exact path='/' render={() => <MainNav />} />
+          <Route path='/rock-paper-scissors' render={() => <GameRPS/>} />
         </MainContent>
       </>
   );
