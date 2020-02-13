@@ -1,4 +1,5 @@
-import { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import thunkMiddileware from 'redux-thunk';
 
 import rpsReduser from './reduser/rps-reduser'
 import mainMenuReduser from './reduser/main-menu-reduser'
@@ -8,7 +9,7 @@ let redusers = combineReducers({
   rps: rpsReduser,
 })
 
-let store = createStore(redusers)
+let store = createStore(redusers, applyMiddleware(thunkMiddileware))
 
 export default store
 window.store = store

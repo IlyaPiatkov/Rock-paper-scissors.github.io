@@ -1,5 +1,6 @@
 const CHOICE_ELEMENT = 'USER-CHOICE'
 const GAME_OPTIONS = 'GAME-OPTIONS'
+const TOGGLE_IS_LOADING = 'TOGGLE-IS-LOADING'
 
 let initialState = {
   userChoice: 'no choise',
@@ -8,6 +9,7 @@ let initialState = {
   userCount: 0,
   compCount: 0,
   gameElements: ['Rock', 'Paper', 'Scissors'],
+  isLoading: false,
 }
 
 const rpsReduser = (state = initialState, action) => {
@@ -33,12 +35,21 @@ const rpsReduser = (state = initialState, action) => {
       return stateCopy
     }
 
+    case TOGGLE_IS_LOADING: {
+      let stateCopy = { 
+        ...state,
+        isLoading: action.isLoading,
+      }
+      return stateCopy
+    }
+
     default:
       return state
   }
 }
 
-export const choiceElement = (buttonId, result, compChoice) => {
+// Action
+const getChoiceElement = (buttonId, result, compChoice) => {
   return (
     {
       type: CHOICE_ELEMENT,
@@ -57,5 +68,26 @@ export const rpsOptions = () => {
   )
 }
 
+const toggleIsLoading = (isLoading) => {
+  return (
+    {
+      type: TOGGLE_IS_LOADING,
+      isLoading,
+    }
+  )
+}
+
+// Thunk
+export const choiceElement = (buttonId, result, compChoice) => {
+  return (dispatch) => {
+    dispatch(toggleIsLoading(true))
+
+    setTimeout(() => {
+      dispatch(getChoiceElement(buttonId, result, compChoice))
+      dispatch(toggleIsLoading(false))
+    }, 3000);
+  }
+
+}
 
 export default rpsReduser

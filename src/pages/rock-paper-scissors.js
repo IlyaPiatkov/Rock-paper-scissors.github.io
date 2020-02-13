@@ -1,7 +1,7 @@
 import React from 'react';
 import { choiceElement } from '../redux/reduser/rps-reduser';
 import { connect } from 'react-redux';
-import { RPSHeader, RPSButtons, RPSContainer } from '../ui';
+import { RPSHeader, RPSButtons, RPSContainer, Loader } from '../ui';
 
 const GameRPS = ({
   compCount,
@@ -10,14 +10,15 @@ const GameRPS = ({
   userCount,
   winner,
   gameElements,
-  createDispatch,
+  choiceElement,
+  isLoading,
   }) => {
   let clickHandler = (event) => {
     const buttonId = event.target.id
     const name = generatorNames(gameElements)
     const getResultGame = resultGame(buttonId, name)
 
-    createDispatch(
+    choiceElement(
       buttonId,
       getWinner(getResultGame),
       name
@@ -75,16 +76,19 @@ const GameRPS = ({
   }
 
   return (
-    <RPSContainer>
-      <RPSHeader
-        userChoice={userChoice}
-        userCount={userCount}
-        compChoice={compChoice}
-        compCount={compCount}
-        winner={winner}
-      />
-      <RPSButtons names={gameElements} onClick={clickHandler}/>
-    </RPSContainer>
+    <>
+      <RPSContainer>
+        <RPSHeader
+          userChoice={userChoice}
+          userCount={userCount}
+          compChoice={compChoice}
+          compCount={compCount}
+          winner={winner}
+        />
+        <RPSButtons names={gameElements} onClick={clickHandler}/>
+      </RPSContainer>
+      {isLoading && <Loader/>}
+    </>
   )
 }
 
@@ -96,11 +100,12 @@ let mapStateToProps = (state) => {
     userCount: state.rps.userCount,
     winner: state.rps.winner,
     gameElements: state.rps.gameElements,
+    isLoading: state.rps.isLoading,
   }
 }
 
 let mapDispatchToProps = (dispatch) => ({
-  createDispatch: (id, getResultGame, name) => {dispatch(choiceElement(id, getResultGame, name))}
+  choiceElement: (id, getResultGame, name) => {dispatch(choiceElement(id, getResultGame, name))},
 })
 
 const GameRPSContainer = connect(mapStateToProps, mapDispatchToProps)(GameRPS)
