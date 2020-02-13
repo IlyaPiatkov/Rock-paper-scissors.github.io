@@ -1,11 +1,13 @@
 const CHOICE_ELEMENT = 'USER-CHOICE'
+const GAME_OPTIONS = 'GAME-OPTIONS'
 
 let initialState = {
-  userChoise: 'no choise',
-  randomChoise: 'no choise',
+  userChoice: 'no choise',
+  compChoice: 'no choise',
   winner: 'no winner default',
   userCount: 0,
   compCount: 0,
+  gameElements: ['Rock', 'Paper', 'Scissors'],
 }
 
 const rpsReduser = (state = initialState, action) => {
@@ -14,11 +16,19 @@ const rpsReduser = (state = initialState, action) => {
     case CHOICE_ELEMENT: {
       let stateCopy = { 
         ...state,
-        userChoise: action.idButton,
-        winner: action.winner.textWins,
-        userCount: action.winner.userCount,
-        compCount: action.winner.compCount,
-        randomChoise: action.randomChoise
+        userChoice: action.buttonId,
+        winner: action.result.textWins,
+        userCount: action.result.userCount,
+        compCount: action.result.compCount,
+        compChoice: action.compChoice
+      }
+      return stateCopy
+    }
+
+    case GAME_OPTIONS: {
+      let stateCopy = { 
+        ...state,
+        gameElements: action.newElements,
       }
       return stateCopy
     }
@@ -28,13 +38,21 @@ const rpsReduser = (state = initialState, action) => {
   }
 }
 
-export const choiceElement = (id, result, randomChoise) => {
+export const choiceElement = (buttonId, result, compChoice) => {
   return (
     {
       type: CHOICE_ELEMENT,
-      idButton: id,
-      winner: result,
-      randomChoise,
+      buttonId,
+      result,
+      compChoice,
+    }
+  )
+}
+
+export const rpsOptions = () => {
+  return (
+    {
+      type: GAME_OPTIONS,
     }
   )
 }

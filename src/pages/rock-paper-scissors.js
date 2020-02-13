@@ -3,14 +3,23 @@ import { choiceElement } from '../redux/reduser/rps-reduser';
 import { connect } from 'react-redux';
 import { RPSHeader, RPSButtons, RPSContainer } from '../ui';
 
-const GameRPS = (props) => {
+const GameRPS = ({
+  compCount,
+  compChoice,
+  userChoice,
+  userCount,
+  winner,
+  gameElements,
+  createDispatch,
+  }) => {
   let clickHandler = (event) => {
-    const name = generatorNames()
-    const resultGameSend = resultGame(event.target.id, name)
+    const buttonId = event.target.id
+    const name = generatorNames(gameElements)
+    const getResultGame = resultGame(buttonId, name)
 
-    props.createDispatch(
-      event.target.id,
-      getWinner(resultGameSend),
+    createDispatch(
+      buttonId,
+      getWinner(getResultGame),
       name
     )
   }
@@ -38,16 +47,15 @@ const GameRPS = (props) => {
     return Math.floor(Math.random() * Math.floor(max));
   }
 
-  let generatorNames = () => {
-    let arr = ['Rock', 'Paper', 'Scissors']
+  let generatorNames = (arr) => {
     let namber = getRandomInt(arr.length)
 
     return arr[namber]
   }
 
   let getWinner = (result) => {
-    let countWinsUser = props.userCount
-    let countWinsComp = props.compCount
+    let countWinsUser = userCount
+    let countWinsComp = compCount
     let textWins = 'no winner'
 
     if (result === 'user') {
@@ -66,18 +74,16 @@ const GameRPS = (props) => {
     }
   }
 
-  const arrNames = ['Rock', 'Paper', 'Scissors']
-
   return (
     <RPSContainer>
       <RPSHeader
-        userChoice={props.userChoise}
-        userCount={props.userCount}
-        compChoice={props.randomChoise}
-        compCount={props.compCount}
-        winner={props.winner}
+        userChoice={userChoice}
+        userCount={userCount}
+        compChoice={compChoice}
+        compCount={compCount}
+        winner={winner}
       />
-      <RPSButtons names={arrNames} onClick={clickHandler}/>
+      <RPSButtons names={gameElements} onClick={clickHandler}/>
     </RPSContainer>
   )
 }
@@ -85,17 +91,18 @@ const GameRPS = (props) => {
 let mapStateToProps = (state) => {
   return {
     compCount: state.rps.compCount,
-    randomChoise: state.rps.randomChoise,
-    userChoise: state.rps.userChoise,
+    compChoice: state.rps.compChoice,
+    userChoice: state.rps.userChoice,
     userCount: state.rps.userCount,
     winner: state.rps.winner,
+    gameElements: state.rps.gameElements,
   }
 }
 
-let mapDispatchTooProps = (dispatch) => ({
-  createDispatch: (id, resultGameSend, name) => {dispatch(choiceElement(id, resultGameSend, name))}
+let mapDispatchToProps = (dispatch) => ({
+  createDispatch: (id, getResultGame, name) => {dispatch(choiceElement(id, getResultGame, name))}
 })
 
-const GameRPSContainer = connect(mapStateToProps, mapDispatchTooProps)(GameRPS)
+const GameRPSContainer = connect(mapStateToProps, mapDispatchToProps)(GameRPS)
 
 export default GameRPSContainer
