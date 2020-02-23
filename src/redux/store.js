@@ -4,10 +4,12 @@ import { reducer as formReducer } from 'redux-form'
 
 import rpsReduser from './reduser/rps-reduser'
 import mainMenuReduser from './reduser/main-menu-reduser'
+import profileReduser from './reduser/profile-reduser';
 
 let redusers = combineReducers({
   mainMenu: mainMenuReduser,
   rps: rpsReduser,
+  profile: profileReduser,
   form: formReducer,
 })
 

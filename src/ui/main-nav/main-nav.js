@@ -32,6 +32,9 @@ export const MainNav = () => {
       <MainItem>
         <MainLink to='rock-paper-scissors'>Rock Paper Scissors</MainLink>
       </MainItem>
+      <MainItem>
+        <MainLink to='rps-options'>rps options</MainLink>
+      </MainItem>
     </MainList>
   )
 }

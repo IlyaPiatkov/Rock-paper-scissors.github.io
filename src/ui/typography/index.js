@@ -1,0 +1,1 @@
+export { mixinTypography } from './typography'
