@@ -1,1 +1,1 @@
-export { required, maxLength, minLength } from './validate'
+export { required, maxLength, minLength, email } from './validate'

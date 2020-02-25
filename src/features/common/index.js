@@ -1,2 +1,2 @@
-export { required, maxLength, minLength } from './atom'
+export { required, maxLength, minLength, email } from './atom'
 export { ElementInput, ElementRadio } from './molecule'

@@ -13,7 +13,7 @@ export const ElementInput = Element => ({
 
   return (
     <FormBlock>
-      {label && <FormLabel medium>{label}</FormLabel>}
+      {label && <FormLabel medium htmlFor={props.id}>{label}</FormLabel>}
       <InputBlock error={hasError}>
         <Element {...input} {...props}/>
       </InputBlock>

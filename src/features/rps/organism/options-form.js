@@ -64,7 +64,7 @@ const RPSOptionsForm = (props) => {
         </FormRadioWrap>
       </FormFieldset>
 
-      <ButtonDefault>go</ButtonDefault>
+      <ButtonDefault>Save</ButtonDefault>
     </FormContainer>
   )
 }

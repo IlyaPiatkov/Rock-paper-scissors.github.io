@@ -78,6 +78,7 @@ export const FormLabelRadio = styled.label`
 export const FormRadioWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
+  grid-row-gap: 1rem;
 `
 
 export const FormFieldset = styled.fieldset`

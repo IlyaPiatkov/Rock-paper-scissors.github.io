@@ -35,6 +35,9 @@ export const MainNav = () => {
       <MainItem>
         <MainLink to='rps-options'>rps options</MainLink>
       </MainItem>
+      <MainItem>
+        <MainLink to='login'>Login</MainLink>
+      </MainItem>
     </MainList>
   )
 }
