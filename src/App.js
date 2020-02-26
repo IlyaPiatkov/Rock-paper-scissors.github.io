@@ -8,9 +8,9 @@ import OptionsRPSContainer from './pages/rps-options';
 
 import MainMenuContainer from './ui/main-menu/main-menu';
 import HeaderContainer from './ui/header/header'
-import MainContent from './ui/main-content/main-content';
-import { MainNav } from './ui';
+import { MainNav, MainContainer } from './ui';
 import { LoginContainer } from './pages/login';
+import { Rules } from './pages/rps-rules';
 
 const App = (prors) => {
 
@@ -19,12 +19,13 @@ const App = (prors) => {
         <GlobalStyle />
         <MainMenuContainer />
         <HeaderContainer />
-        <MainContent>
+        <MainContainer>
           <Route exact path='/' render={() => <MainNav />} />
           <Route path='/rock-paper-scissors' render={() => <GameRPS/>} />
           <Route path='/rps-options' render={() => <OptionsRPSContainer/>} />
           <Route path='/login' render={() => <LoginContainer/>} />
-        </MainContent>
+          <Route path='/rps-rules' render={() => <Rules/>} />
+        </MainContainer>
       </>
   );
 }

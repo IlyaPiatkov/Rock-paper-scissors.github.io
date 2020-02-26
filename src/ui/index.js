@@ -15,3 +15,11 @@ export {
   InputBlock,
 } from './form'
 export { ButtonDefault } from './button'
+export {
+  ModalOverlay,
+  ModalContainer,
+  ModalClose,
+} from './modal'
+export { Text } from './text'
+export { MainContainer, MainContent } from './main-content'
+
