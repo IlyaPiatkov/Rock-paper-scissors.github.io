@@ -10,7 +10,7 @@ import { Modal } from '../features';
 const Login = ({setLoginData, isErrorServer, errorServer}) => {
   const submit = values => {
     console.log(values)
-    setLoginData(values.emeil, values.password)
+    setLoginData(values.email, values.password)
   }
 
   const closeModal = () => {
@@ -39,7 +39,7 @@ let mapStateToProps = (state) => {
 }
 
 let mapDispatchToProps = (dispatch) => ({
-  setLoginData: (emeil, password) => {dispatch(login(emeil, password))},
+  setLoginData: (email, password) => {dispatch(login(email, password))},
   errorServer: (isErrorServer) => {dispatch(errorServer(isErrorServer))}
 })
 
