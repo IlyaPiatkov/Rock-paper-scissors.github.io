@@ -6,10 +6,10 @@ import { errorServer, registr } from '../redux/reduser/auth-reduser';
 import { Title, MainContent } from '../ui';
 import { Modal, withAuthRedirect, RegistrReduxForm } from '../features';
 
-const Registr = ({setLoginData, isErrorServer, errorServer}) => {
+const Registr = ({setUserData, isErrorServer, errorServer}) => {
   const submit = values => {
     console.log(values)
-    setLoginData(values.email, values.password)
+    setUserData(values.email, values.password)
   }
 
   const closeModal = () => {
@@ -40,7 +40,7 @@ let mapStateToProps = (state) => {
 }
 
 let mapDispatchToProps = (dispatch) => ({
-  setLoginData: (email, password) => {dispatch(registr(email, password))},
+  setUserData: (email, password) => {dispatch(registr(email, password))},
   errorServer: (isErrorServer) => {dispatch(errorServer(isErrorServer))}
 })
 

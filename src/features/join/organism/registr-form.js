@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-import { FormContainer, ButtonDefault } from '../../../ui';
+import { FormContainer, ButtonDefault, FormError } from '../../../ui';
 import {
   ElementInput,
   required,
@@ -15,10 +15,12 @@ const Checkbox = ElementCheckbox("input")
 
 const minLength5 = minLength(5)
 
-const RegistrForm = ({handleSubmit}) => {
+const RegistrForm = ({handleSubmit, error}) => {
 
   return (
     <FormContainer onSubmit={handleSubmit}>
+      {error && <FormError small> { error } </FormError>}
+
       <Field
         label="You email"
         name="email"

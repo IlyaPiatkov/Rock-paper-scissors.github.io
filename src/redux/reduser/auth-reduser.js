@@ -1,4 +1,5 @@
 import { authAPI } from "../../api/api"
+import { stopSubmit } from "redux-form"
 
 const SET_LODIN_DATA = 'SET_LODIN_DATA'
 const ERROR_SERVER = 'ERROR_SERVER'
@@ -37,7 +38,7 @@ const authReduser = (state = initialState, action) => {
 }
 
 // action
-const setLoginData = (userId, email, isAuth) => ({type: SET_LODIN_DATA, userId, email, isAuth})
+const setUserData = (userId, email, isAuth) => ({type: SET_LODIN_DATA, userId, email, isAuth})
 export const errorServer = (isErrorServer) => ({type: ERROR_SERVER, isErrorServer})
 
 // Thunk
@@ -47,7 +48,11 @@ export const login = (email, password) => {
       .then((response) => {
         if (response.data.resultCode === 0) {
           const {userId} = response.data.data
-          dispatch(setLoginData(userId, email, true))
+          dispatch(setUserData(userId, email, true))
+        }
+        if (response.data.resultCode === 1) {
+          let messages = (response.data.messages.length > 0 ? response.data.messages[0] : "Common errors")
+          dispatch(stopSubmit("login", {_error: messages}))
         }
       })
       .catch((error) => {
@@ -62,7 +67,7 @@ export const logout = () => {
     authAPI.logout()
       .then((response) => {
         if (response.data.resultCode === 0) {
-          dispatch(setLoginData(null, null, false))
+          dispatch(setUserData(null, null, false))
         }
       })
       .catch((error) => {
@@ -78,7 +83,11 @@ export const registr = (email, password) => {
       .then((response) => {
         if (response.data.resultCode === 0) {
           const {userId, email} = response.data.data
-          dispatch(setLoginData(userId, email, true))
+          dispatch(setUserData(userId, email, true))
+        }
+        else {
+          let messages = (response.data.messages.length > 0 ? response.data.messages[0] : "Common errors")
+          dispatch(stopSubmit("registr", {_error: messages}))
         }
       })
       .catch((error) => {

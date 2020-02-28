@@ -6,10 +6,10 @@ import { login, errorServer } from '../redux/reduser/auth-reduser';
 import { Title, MainContent } from '../ui';
 import { Modal, withAuthRedirect, LoginReduxForm } from '../features';
 
-const Login = ({setLoginData, isErrorServer, errorServer}) => {
+const Login = ({setUserData, isErrorServer, errorServer}) => {
   const submit = values => {
     console.log(values)
-    setLoginData(values.email, values.password)
+    setUserData(values.email, values.password)
   }
 
   const closeModal = () => {
@@ -40,7 +40,7 @@ let mapStateToProps = (state) => {
 }
 
 let mapDispatchToProps = (dispatch) => ({
-  setLoginData: (email, password) => {dispatch(login(email, password))},
+  setUserData: (email, password) => {dispatch(login(email, password))},
   errorServer: (isErrorServer) => {dispatch(errorServer(isErrorServer))}
 })
 

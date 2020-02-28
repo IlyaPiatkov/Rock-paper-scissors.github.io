@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-import { FormContainer, ButtonDefault } from '../../../ui';
+import { FormContainer, ButtonDefault, FormError } from '../../../ui';
 import {
   ElementInput,
   required,
@@ -13,10 +13,12 @@ const DefaultInput = ElementInput("input")
 
 const minLength5 = minLength(5)
 
-const LoginForm = ({handleSubmit}) => {
+const LoginForm = ({handleSubmit, error}) => {
 
   return (
     <FormContainer onSubmit={handleSubmit}>
+      {error && <FormError small> { error } </FormError>}
+
       <Field
         label="You email"
         name="email"
@@ -40,7 +42,6 @@ const LoginForm = ({handleSubmit}) => {
       <ButtonDefault type="submit">
         Enter
       </ButtonDefault>
-
     </FormContainer>
   )
 }
