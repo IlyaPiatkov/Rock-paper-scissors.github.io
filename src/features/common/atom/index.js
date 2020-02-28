@@ -1,1 +1,7 @@
-export { required, maxLength, minLength, email } from './validate'
+export { 
+  required,
+  maxLength, 
+  minLength, 
+  email 
+} from './validate'
+export { getRandomInt } from './random'

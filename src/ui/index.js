@@ -1,6 +1,6 @@
 export { Icon, UserMen, Computer } from './icon'
 export { RPSHeader, RPSButtons, RPSContainer, RPSOptions } from './rps'
-export { MainNav } from './main-nav'
+export { MainList, MainItem } from './main-nav'
 export { Loader } from './loader'
 export { mixinTypography } from './typography'
 export { Title } from './title'
@@ -14,7 +14,7 @@ export {
   FormFieldset,
   InputBlock,
 } from './form'
-export { ButtonDefault } from './button'
+export { buttonStyle, ButtonDefault } from './button'
 export {
   ModalOverlay,
   ModalContainer,

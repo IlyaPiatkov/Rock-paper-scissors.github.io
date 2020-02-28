@@ -4,7 +4,6 @@ const SET_LODIN_DATA = 'SET_LODIN_DATA'
 const ERROR_SERVER = 'ERROR_SERVER'
 
 let initialState = {
-  login: null,
   email: null,
   isAuth: false,
   isErrorServer: false,
@@ -15,8 +14,9 @@ const authReduser = (state = initialState, action) => {
     case SET_LODIN_DATA: {
       let stateCopy = {
         ...state,
-        email: action.email,
+        userId: action.userId,
         isAuth: action.isAuth,
+        email: action.email,
       }
 
       return stateCopy
@@ -37,7 +37,7 @@ const authReduser = (state = initialState, action) => {
 }
 
 // action
-const setLoginData = (emeil, password, isAuth) => ({type: SET_LODIN_DATA, emeil, password, isAuth})
+const setLoginData = (userId, email, isAuth) => ({type: SET_LODIN_DATA, userId, email, isAuth})
 export const errorServer = (isErrorServer) => ({type: ERROR_SERVER, isErrorServer})
 
 // Thunk
@@ -46,8 +46,8 @@ export const login = (email, password) => {
     authAPI.login(email, password)
       .then((response) => {
         if (response.data.resultCode === 0) {
-          const {email, password} = response.data.data
-          dispatch(setLoginData(email, password, true))
+          const {userId} = response.data.data
+          dispatch(setLoginData(userId, email, true))
         }
       })
       .catch((error) => {

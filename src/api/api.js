@@ -1,16 +1,15 @@
 import * as axios from 'axios'
 
 const instance = axios.create({
-  // baseURL: 'https://some-domain.com/api/',
-  // withCredentials: true,
-  // headers: {'API-KEY': 'KEY'},
+  baseURL: 'http://tornadogame.club/api/v1.0',
+  withCredentials: true,
 });
 
 export const authAPI = {
   login(email, password) {
-    return instance.post('/auth/login', { email, password })
+    return instance.post('/login/', { email, password })
   },
   logout() {
-    return instance.delete('/auth/login')
+    return instance.delete('/login/')
   }
 }

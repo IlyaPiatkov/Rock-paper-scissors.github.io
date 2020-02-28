@@ -1,1 +1,1 @@
-export { MainNav } from './main-nav'
+export { MainList, MainItem } from './main-nav'

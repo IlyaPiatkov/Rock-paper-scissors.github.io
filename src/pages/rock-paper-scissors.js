@@ -1,13 +1,21 @@
 import React from 'react';
 import { choiceElement } from '../redux/reduser/rps-reduser';
 import { connect } from 'react-redux';
-import { RPSHeader, RPSButtons, RPSContainer, Loader } from '../ui';
+
+import {
+  RPSHeader,
+  RPSButtons,
+  RPSContainer,
+  Loader
+} from '../ui';
+import { getRandomInt } from '../features/common/atom/random';
 
 const GameRPS = ({
   compCount,
   compChoice,
   userChoice,
   userCount,
+  userName,
   winner,
   gameElements,
   choiceElement,
@@ -44,10 +52,6 @@ const GameRPS = ({
     }
   }
 
-  let getRandomInt = (max) => {
-    return Math.floor(Math.random() * Math.floor(max));
-  }
-
   let generatorNames = (arr) => {
     let namber = getRandomInt(arr.length)
 
@@ -81,6 +85,7 @@ const GameRPS = ({
         <RPSHeader
           userChoice={userChoice}
           userCount={userCount}
+          userName={userName}
           compChoice={compChoice}
           compCount={compCount}
           winner={winner}
@@ -98,6 +103,7 @@ let mapStateToProps = (state) => {
     compChoice: state.rps.compChoice,
     userChoice: state.rps.userChoice,
     userCount: state.rps.userCount,
+    userName: state.profile.name,
     winner: state.rps.winner,
     gameElements: state.rps.gameElements,
     isLoading: state.rps.isLoading,

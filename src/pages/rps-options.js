@@ -6,7 +6,7 @@ import { setUserName } from '../redux/reduser/profile-reduser'
 import { RPSOptionsReduxForm } from '../features'
 import { Title, RPSOptions } from '../ui';
 
-const OptionsRPS = ({setUserName, name, isAuth}) => {
+const OptionsRPS = ({setUserName, name}) => {
 
   const submit = values => {
     console.log(values)
@@ -16,10 +16,7 @@ const OptionsRPS = ({setUserName, name, isAuth}) => {
   return (
     <RPSOptions>
       <Title large center>Options RPS</Title>
-      {isAuth
-        ? ""
-        : <RPSOptionsReduxForm onSubmit={submit} userName={name}/>
-      }
+      <RPSOptionsReduxForm onSubmit={submit} userName={name}/>
     </RPSOptions>
   )
 }
@@ -27,7 +24,6 @@ const OptionsRPS = ({setUserName, name, isAuth}) => {
 let mapStateToProps = (state) => {
   return {
     name: state.profile.name,
-    isAuth: state.profile.isAuth,
   }
 }
 

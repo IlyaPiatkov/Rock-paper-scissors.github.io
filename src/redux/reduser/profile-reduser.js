@@ -1,8 +1,7 @@
 const USER_NAME = 'USER-NAME'
 
 let initialState = {
-  name: "",
-  isAuth: false,
+  name: "No name",
 }
 
 const profileReduser = (state = initialState, action) => {
@@ -11,7 +10,6 @@ const profileReduser = (state = initialState, action) => {
       let stateCopy = {
         ...state,
         name: action.name,
-        isAuth: true,
       }
 
       return stateCopy

@@ -55,26 +55,33 @@ const Winner = styled.span`
   text-align: center;
 `
 
-export const RPSHeader = (props) => {
+export const RPSHeader = ({
+  userCount,
+  userChoice,
+  userName,
+  compCount,
+  compChoice,
+  winner,
+}) => {
   return (
     <Header>
       <Block right>
-        <Name>You</Name>
+        <Name>{userName}</Name>
         <Avatar>
           <UserMen />
         </Avatar>
-        <Counter>{props.userCount}</Counter>
-        <Choice>{props.userChoice}</Choice>
+        <Counter>{userCount}</Counter>
+        <Choice>{userChoice}</Choice>
       </Block>
       <Block left>
         <Name>Comp</Name>
         <Avatar>
           <Computer />
         </Avatar>
-        <Counter>{props.compCount}</Counter>
-        <Choice>{props.compChoice}</Choice>
+        <Counter>{compCount}</Counter>
+        <Choice>{compChoice}</Choice>
       </Block>
-      <Winner>{props.winner}</Winner>
+      <Winner>{winner}</Winner>
     </Header>
   )
 }
