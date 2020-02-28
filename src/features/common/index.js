@@ -1,13 +1,15 @@
-export { 
-  required, 
-  maxLength, 
-  minLength, 
+export {
+  required,
+  maxLength,
+  minLength,
   email,
   getRandomInt
 } from './atom'
 export {
   ElementInput,
   ElementRadio,
-  withAuthRedirect
+  ElementCheckbox,
+  withAuthRedirect,
+  FooterContainer,
 } from './molecule'
 export { Modal } from './organism'

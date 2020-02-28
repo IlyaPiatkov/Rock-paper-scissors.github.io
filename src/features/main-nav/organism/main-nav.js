@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { MainList, MainItem, buttonStyle } from '../../../ui'
+import { MainList, buttonStyle } from '../../../ui'
 import styled from 'styled-components'
 
 const MainLink = styled(NavLink)`
@@ -12,20 +12,17 @@ const MainLink = styled(NavLink)`
 const MainNav = ({isAuth}) => {
   return (
     <MainList>
-      <MainItem>
+      <li>
         <MainLink to='rock-paper-scissors' default>Rock Paper Scissors</MainLink>
-      </MainItem>
-      <MainItem>
+      </li>
+      <li>
         <MainLink to='rps-options' default>RPS options</MainLink>
-      </MainItem>
-      <MainItem>
+      </li>
+      <li>
         <MainLink to='rps-rules' default>RPS rules</MainLink>
-      </MainItem>
-      {!isAuth && (
-        <MainItem>
-          <MainLink to='login' default>Login</MainLink>
-        </MainItem>
-      )}
+      </li>
+      {/* {!isAuth && (
+      )} */}
       
     </MainList>
   )
@@ -37,8 +34,8 @@ let mapStateToProps = (state) => {
   }
 }
 
-let mapDispatchToProps = (dispatch) => ({
-  // choiceElement: (id, getResultGame, name) => {dispatch(choiceElement(id, getResultGame, name))},
-})
+// let mapDispatchToProps = (dispatch) => ({
 
-export const MainNavContainer = connect(mapStateToProps, mapDispatchToProps)(MainNav)
+// })
+
+export const MainNavContainer = connect(mapStateToProps)(MainNav)

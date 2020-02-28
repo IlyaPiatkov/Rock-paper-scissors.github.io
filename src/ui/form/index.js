@@ -4,6 +4,7 @@ export {
   FormBlock,
   FormLabel,
   FormLabelRadio,
+  FormLabelCheckbox,
   FormError,
   FormFieldset,
   InputBlock,

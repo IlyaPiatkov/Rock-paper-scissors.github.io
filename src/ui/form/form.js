@@ -19,6 +19,61 @@ export const FormLabel = styled.label`
   ${mixinTypography}
 `
 
+export const FormLabelCheckbox = styled.label`
+  display: flex;
+  align-items: center;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+    width: 2rem;
+    height: 2rem;
+    border: 0.1rem solid ${p => p.error ? '#e20012' : '#000'};
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+
+  svg {
+    width: 1.4rem;
+    height: 1.4rem;
+    pointer-events: none;
+
+    path {
+      fill: none;
+      stroke: #000;
+      stroke-width: 0.4rem;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 101;
+      transition: all 350ms cubic-bezier(1,0,.37,.91);
+    }
+  }
+
+  &:active div {
+    transform: scale(1.05);
+    border-radius: 1rem;
+  }
+
+  input {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+
+    &:checked + div svg path {
+      stroke-dashoffset: 0;
+    }
+
+    &:focus + div {
+      transform: scale(1.03);
+    }
+  }
+
+  ${mixinTypography}
+`
+
 export const FormLabelRadio = styled.label`
   cursor: pointer;
   user-select: none;

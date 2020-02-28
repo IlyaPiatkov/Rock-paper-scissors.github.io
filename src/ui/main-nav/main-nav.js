@@ -7,7 +7,3 @@ export const MainList = styled.ul`
     margin-top: 1rem;
   }
 `
-
-export const MainItem = styled.li`
-  text-align: center;
-`

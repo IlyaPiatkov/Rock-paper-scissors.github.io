@@ -72,4 +72,20 @@ export const logout = () => {
   }
 }
 
+export const registr = (email, password) => {
+  return (dispatch) => {
+    authAPI.registr(email, password)
+      .then((response) => {
+        if (response.data.resultCode === 0) {
+          const {userId, email} = response.data.data
+          dispatch(setLoginData(userId, email, true))
+        }
+      })
+      .catch((error) => {
+        dispatch(errorServer(true))
+        console.warn(error);
+      })
+  }
+}
+
 export default authReduser

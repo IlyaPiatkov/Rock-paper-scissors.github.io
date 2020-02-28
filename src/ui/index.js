@@ -1,6 +1,6 @@
 export { Icon, UserMen, Computer } from './icon'
 export { RPSHeader, RPSButtons, RPSContainer, RPSOptions } from './rps'
-export { MainList, MainItem } from './main-nav'
+export { MainList } from './main-nav'
 export { Loader } from './loader'
 export { mixinTypography } from './typography'
 export { Title } from './title'
@@ -10,11 +10,16 @@ export {
   FormBlock,
   FormLabel,
   FormLabelRadio,
+  FormLabelCheckbox,
   FormError,
   FormFieldset,
   InputBlock,
 } from './form'
-export { buttonStyle, ButtonDefault } from './button'
+export {
+  buttonStyle,
+  ButtonDefault,
+  ButtonPrimary,
+} from './button'
 export {
   ModalOverlay,
   ModalContainer,
@@ -22,4 +27,8 @@ export {
 } from './modal'
 export { Text } from './text'
 export { MainContainer, MainContent } from './main-content'
+export {
+  FooterWrap,
+  FooterButtons,
+} from './footer'
 

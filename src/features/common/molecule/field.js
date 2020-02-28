@@ -1,8 +1,15 @@
 import React from 'react'
 
-import { FormBlock, FormLabel, FormError, FormLabelRadio, InputBlock } from '../../../ui';
+import {
+  FormBlock,
+  FormLabel,
+  FormError,
+  FormLabelRadio,
+  InputBlock,
+  FormLabelCheckbox
+} from '../../../ui';
 
-export const ElementInput = Element => ({ 
+export const ElementInput = Element => ({
   input,
   meta,
   label,
@@ -34,5 +41,25 @@ export const ElementRadio = Element => ({ input, meta, label, ...props }) => {
       </svg>
       <span>{label}</span>
     </FormLabelRadio>
+  )
+}
+
+export const ElementCheckbox = Element => ({ input, meta, label, ...props }) => {
+
+  const hasError = meta.touched && meta.error;
+
+  return (
+    <FormBlock>
+      <FormLabelCheckbox medium error={hasError}>
+        <Element {...input} {...props} type="checkbox" />
+        <div>
+          <svg viewBox="0,0,50,50">
+            <path d="M5 30 L 20 45 L 45 5"></path>
+          </svg>
+        </div>
+        <span>{label}</span>
+      </FormLabelCheckbox>
+      { hasError && <FormError small> { meta.error } </FormError> }
+    </FormBlock>
   )
 }

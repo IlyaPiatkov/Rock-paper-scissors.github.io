@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { login, errorServer } from '../redux/reduser/auth-reduser';
+import { errorServer, registr } from '../redux/reduser/auth-reduser';
 
 import { Title, MainContent } from '../ui';
-import { Modal, withAuthRedirect, LoginReduxForm } from '../features';
+import { Modal, withAuthRedirect, RegistrReduxForm } from '../features';
 
-const Login = ({setLoginData, isErrorServer, errorServer}) => {
+const Registr = ({setLoginData, isErrorServer, errorServer}) => {
   const submit = values => {
     console.log(values)
     setLoginData(values.email, values.password)
@@ -18,8 +18,8 @@ const Login = ({setLoginData, isErrorServer, errorServer}) => {
 
   return (
     <MainContent>
-      <Title large center>Login</Title>
-      <LoginReduxForm onSubmit={submit}/>
+      <Title large center>Registration</Title>
+      <RegistrReduxForm onSubmit={submit}/>
       {isErrorServer &&
         <Modal
           title={'Oops'}
@@ -31,7 +31,7 @@ const Login = ({setLoginData, isErrorServer, errorServer}) => {
   )
 }
 
-let LoginRedirect = withAuthRedirect(Login)
+let RegistrRedirect = withAuthRedirect(Registr)
 
 let mapStateToProps = (state) => {
   return {
@@ -40,8 +40,8 @@ let mapStateToProps = (state) => {
 }
 
 let mapDispatchToProps = (dispatch) => ({
-  setLoginData: (email, password) => {dispatch(login(email, password))},
+  setLoginData: (email, password) => {dispatch(registr(email, password))},
   errorServer: (isErrorServer) => {dispatch(errorServer(isErrorServer))}
 })
 
-export const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(LoginRedirect)
+export const RegistrContainer = connect(mapStateToProps, mapDispatchToProps)(RegistrRedirect)

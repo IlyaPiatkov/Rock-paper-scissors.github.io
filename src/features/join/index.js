@@ -1,1 +1,1 @@
-export { LoginReduxForm } from './organism'
+export { LoginReduxForm, RegistrReduxForm } from './organism'

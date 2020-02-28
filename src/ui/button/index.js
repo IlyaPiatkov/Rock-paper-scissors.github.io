@@ -1,1 +1,5 @@
-export { buttonStyle, ButtonDefault } from './button'
+export {
+  buttonStyle,
+  ButtonDefault,
+  ButtonPrimary,
+} from './button'
