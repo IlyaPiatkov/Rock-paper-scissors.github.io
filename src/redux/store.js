@@ -1,21 +1,27 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import thunkMiddileware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 
 import rpsReduser from './reduser/rps-reduser'
-import mainMenuReduser from './reduser/main-menu-reduser'
-import profileReduser from './reduser/profile-reduser';
-import authReduser from './reduser/auth-reduser';
+import { mainMenuReducer } from './reduser/main-menu-reduser'
+import { profileReducer } from './reduser/profile-reduser'
+import { authReducer } from './reduser/auth-reduser'
 
-let redusers = combineReducers({
-  mainMenu: mainMenuReduser,
-  rps: rpsReduser,
-  profile: profileReduser,
-  auth: authReduser,
-  form: formReducer,
-})
+const middleware = getDefaultMiddleware({
+  immutableCheck: false,
+  serializableCheck: false,
+  thunk: true,
+});
 
-let store = createStore(redusers, applyMiddleware(thunkMiddileware))
+export const store = configureStore({
+  reducer: {
+    mainMenu: mainMenuReducer,
+    rps: rpsReduser,
+    profile: profileReducer,
+    auth: authReducer,
+    form: formReducer,
+  },
+  middleware,
+  devTools: process.env.NODE_ENV !== 'production',
+});
 
-export default store
 window.store = store

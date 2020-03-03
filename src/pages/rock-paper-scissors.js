@@ -10,6 +10,31 @@ import {
 } from '../ui';
 import { getRandomInt } from '../features/common/atom/random';
 
+let resultGame = (id, name) => {
+  switch(`${id}-${name}`){
+    case 'Rock-Scissors':
+      return 'user'
+    case 'Rock-Paper':
+      return 'comp'
+    case 'Paper-Rock':
+      return 'user'
+    case 'Paper-Scissors':
+      return 'comp'
+    case 'Scissors-Paper':
+      return 'user'
+    case 'Scissors-Rock':
+      return 'comp'
+    default:
+      return
+  }
+}
+
+let generatorNames = (arr) => {
+  let namber = getRandomInt(arr.length)
+
+  return arr[namber]
+}
+
 const GameRPS = ({
   compCount,
   compChoice,
@@ -31,31 +56,6 @@ const GameRPS = ({
       getWinner(getResultGame),
       name
     )
-  }
-
-  let resultGame = (id, name) => {
-    switch(`${id}-${name}`){
-      case 'Rock-Scissors':
-        return 'user'
-      case 'Rock-Paper':
-        return 'comp'
-      case 'Paper-Rock':
-        return 'user'
-      case 'Paper-Scissors':
-        return 'comp'
-      case 'Scissors-Paper':
-        return 'user'
-      case 'Scissors-Rock':
-        return 'comp'
-      default:
-        return
-    }
-  }
-
-  let generatorNames = (arr) => {
-    let namber = getRandomInt(arr.length)
-
-    return arr[namber]
   }
 
   let getWinner = (result) => {
@@ -111,9 +111,7 @@ let mapStateToProps = (state) => {
 }
 
 let mapDispatchToProps = (dispatch) => ({
-  choiceElement: (id, getResultGame, name) => {dispatch(choiceElement(id, getResultGame, name))},
+  choiceElement: (id, getResultGame, name) => dispatch(choiceElement(id, getResultGame, name)),
 })
 
-const GameRPSContainer = connect(mapStateToProps, mapDispatchToProps)(GameRPS)
-
-export default GameRPSContainer
+export const GameRPSContainer = connect(mapStateToProps, mapDispatchToProps)(GameRPS)

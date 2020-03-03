@@ -1,6 +1,35 @@
+import { createSlice } from '@reduxjs/toolkit'
+import * as R from 'ramda'
+
 const CHOICE_ELEMENT = 'USER-CHOICE'
 const GAME_OPTIONS = 'GAME-OPTIONS'
 const TOGGLE_IS_LOADING = 'TOGGLE-IS-LOADING'
+
+
+
+// const rps = createSlice({
+//   name: 'players',
+//   initialState: {},
+//   reducers: {
+//     addPlayers: (_, player) => player.reduce((acc, item) => ({ ...acc, [item]: { score: 0, currentChoice: null, } }), {}),
+//     removePlayers: () => {},
+//     resetPlayer: (state) => Object.keys(state).reduce((acc, keyPlayer) => ({ ...acc, [keyPlayer]: { score: 0, currentChoice: null, } }), {}),
+//     incrementScorePlayer: (state, keyPlayer) => R.over(R.lensPath([keyPlayer, 'score']), R.inc, state),
+//     setChoicePlayer: (state, [keyPlayer, element]) => R.set(R.lensPath([keyPlayer, 'currentChoice']), element, state),
+//   }
+// })
+
+// const rps = createSlice({
+//   name: 'currentGame',
+//   initialState: {
+//     currentWinner: null,
+//     rounds: 0
+//   },
+//   reducers: {
+//     resetWinners: () => ({currentWinner: null, rounds: 0}),
+//     setWinners: (state, [keyPlayer, element]) => 
+//   }
+// })
 
 let initialState = {
   userChoice: 'no choise',
@@ -8,6 +37,7 @@ let initialState = {
   winner: 'no winner default',
   userCount: 0,
   compCount: 0,
+
   gameElements: ['Rock', 'Paper', 'Scissors'],
   isLoading: false,
 }

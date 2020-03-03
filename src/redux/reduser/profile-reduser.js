@@ -1,24 +1,21 @@
-const USER_NAME = 'USER-NAME'
+import { createSlice } from "@reduxjs/toolkit"
 
 let initialState = {
   name: "No name",
 }
 
-const profileReduser = (state = initialState, action) => {
-  switch(action.type) {
-    case USER_NAME:
-      let stateCopy = {
-        ...state,
-        name: action.name,
-      }
-
-      return stateCopy
-
-    default:
-      return state
+const profile = createSlice({
+  name: "profile",
+  initialState,
+  reducers: {
+    setUserName: (state, action) => ({
+      ...state,
+      name: action.payload,
+    })
   }
-}
+})
 
-export const setUserName = (name) => ({type: USER_NAME, name})
+const { actions, reducer } = profile
 
-export default profileReduser
+export const { setUserName } = actions
+export const profileReducer = reducer

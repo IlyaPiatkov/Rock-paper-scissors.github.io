@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Hamburger from '../hamburger/hamburger'
-import { openMenu } from '../../redux/reduser/main-menu-reduser'
+import { toggleMenu } from '../../redux/reduser/main-menu-reduser'
 
 const Container = styled.header`
   position: fixed;
@@ -30,15 +30,15 @@ const Link = styled(NavLink)`
   display: flex;
 `
 
-const Header = (props) => {
+const Header = ({isOpenMenu, toggleMenu}) => {
   return (
-    <Container isOpenMenu={props.isOpenMenu}>
+    <Container isOpenMenu={isOpenMenu}>
       <Link to='/'>
         <Logo src='img/logo.svg' alt='logo site' />
       </Link>
       <Hamburger
-        showMenu={props.showMenu}
-        isOpenMenu={props.isOpenMenu}
+        showMenu={toggleMenu}
+        isOpenMenu={isOpenMenu}
         />
       </Container>
   )
@@ -47,9 +47,7 @@ const Header = (props) => {
 let mapStateToProps = (state) => ({isOpenMenu: state.mainMenu.isOpenMenu})
 
 let mapDispatchTooProps = (dispatch) => ({
-  showMenu: () => {dispatch(openMenu())}
+  toggleMenu: () => {dispatch(toggleMenu())}
 })
 
-const HeaderContainer = connect(mapStateToProps, mapDispatchTooProps)(Header)
-
-export default HeaderContainer;
+export const HeaderContainer = connect(mapStateToProps, mapDispatchTooProps)(Header)

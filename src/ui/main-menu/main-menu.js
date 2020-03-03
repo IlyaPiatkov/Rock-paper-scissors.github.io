@@ -82,6 +82,4 @@ const MainMenu = (props) => {
 
 let mapStateToProps = (state) => ({isOpenMenu: state.mainMenu.isOpenMenu})
 
-const MainMenuContainer = connect(mapStateToProps)(MainMenu)
-
-export default MainMenuContainer;
+export const MainMenuContainer = connect(mapStateToProps)(MainMenu)

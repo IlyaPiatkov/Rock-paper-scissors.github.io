@@ -9,7 +9,6 @@ import { Title, RPSOptions } from '../ui';
 const OptionsRPS = ({setUserName, name}) => {
 
   const submit = values => {
-    console.log(values)
     setUserName(values.firstName)
   }
 
@@ -31,6 +30,4 @@ let mapDispatchToProps = (dispatch) => ({
   setUserName: (name) => {dispatch(setUserName(name))},
 })
 
-const OptionsRPSContainer = connect(mapStateToProps, mapDispatchToProps)(OptionsRPS)
-
-export default OptionsRPSContainer
+export const OptionsRPSContainer = connect(mapStateToProps, mapDispatchToProps)(OptionsRPS)

@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { login, errorServer } from '../redux/reduser/auth-reduser';
+import { errorServer, login } from '../redux/reduser/auth-reduser';
 
 import { Title, MainContent } from '../ui';
 import { Modal, withAuthRedirect, LoginReduxForm } from '../features';
 
 const Login = ({setUserData, isErrorServer, errorServer}) => {
   const submit = values => {
-    console.log(values)
     setUserData(values.email, values.password)
   }
 

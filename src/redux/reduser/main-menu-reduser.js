@@ -1,25 +1,25 @@
-const OPEN_MENU = 'OPEN-MENU'
+import { createSlice } from "@reduxjs/toolkit"
 
 let initialState = {
   isOpenMenu: false,
 }
 
-const mainMenuReduser = (state = initialState, action) => {
-  switch(action.type) {
-    case OPEN_MENU:
+const mainMenu = createSlice({
+  name: "mainMenu",
+  initialState,
+  reducers: {
+    toggleMenu: (state) => {
       let stateCopy = { ...state }
-      if (stateCopy.isOpenMenu) {
-        stateCopy.isOpenMenu = false
-      } else {
-        stateCopy.isOpenMenu = true
-      }
+      state.isOpenMenu
+        ? stateCopy.isOpenMenu = false
+        : stateCopy.isOpenMenu = true
+
       return stateCopy
-
-    default:
-      return state
+    }
   }
-}
+})
 
-export const openMenu = () => ({type: OPEN_MENU})
+const { actions, reducer } = mainMenu
 
-export default mainMenuReduser
+export const { toggleMenu } = actions
+export const mainMenuReducer = reducer

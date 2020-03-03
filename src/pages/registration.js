@@ -8,7 +8,6 @@ import { Modal, withAuthRedirect, RegistrReduxForm } from '../features';
 
 const Registr = ({setUserData, isErrorServer, errorServer}) => {
   const submit = values => {
-    console.log(values)
     setUserData(values.email, values.password)
   }
 
