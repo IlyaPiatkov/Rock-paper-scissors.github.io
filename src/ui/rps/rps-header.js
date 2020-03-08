@@ -1,6 +1,6 @@
-import React from 'react';
-import styled, { css } from 'styled-components'
-import { UserMen, Computer } from '../icon';
+import React from "react"
+import styled, { css } from "styled-components"
+import { UserMen, Computer } from "../icon"
 
 const Header = styled.div`
   display: grid;
@@ -12,18 +12,22 @@ const Block = styled.div`
   display: grid;
   grid-gap: 20px 10px;
 
-  ${props => props.left && css`
-    grid-template-areas:
-      "name name"
-      "counter avatar"
-      "choise choise";
-  `}
-  ${props => props.right && css`
-    grid-template-areas:
-      "name name"
-      "avatar counter"
-      "choise choise";
-  `}
+  ${props =>
+    props.left &&
+    css`
+      grid-template-areas:
+        "name name"
+        "counter avatar"
+        "choise choise";
+    `}
+  ${props =>
+    props.right &&
+    css`
+      grid-template-areas:
+        "name name"
+        "avatar counter"
+        "choise choise";
+    `}
 `
 
 const Avatar = styled.div`
@@ -59,9 +63,9 @@ export const RPSHeader = ({
   userCount,
   userChoice,
   userName,
-  compCount,
-  compChoice,
-  winner,
+  winnerText,
+  compScore,
+  currentChoice
 }) => {
   return (
     <Header>
@@ -78,10 +82,10 @@ export const RPSHeader = ({
         <Avatar>
           <Computer />
         </Avatar>
-        <Counter>{compCount}</Counter>
-        <Choice>{compChoice}</Choice>
+        <Counter>{compScore}</Counter>
+        <Choice>{currentChoice}</Choice>
       </Block>
-      <Winner>{winner}</Winner>
+      <Winner>{winnerText}</Winner>
     </Header>
   )
 }

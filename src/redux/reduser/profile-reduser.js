@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 let initialState = {
   name: "No name",
+  userId: "player",
 }
 
 const profile = createSlice({

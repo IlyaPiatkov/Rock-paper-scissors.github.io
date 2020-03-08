@@ -1,1 +1,2 @@
-export { RPSOptionsReduxForm } from './organism'
+export { generatorName, resultGame } from "./atom"
+export { RPSOptionsReduxForm } from "./organism"
