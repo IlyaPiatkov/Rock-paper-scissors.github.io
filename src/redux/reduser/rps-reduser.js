@@ -3,10 +3,6 @@ import * as R from "ramda"
 
 import { generatorName, resultGame } from "../../features/rps"
 
-const CHOICE_ELEMENT = "USER-CHOICE"
-const GAME_OPTIONS = "GAME-OPTIONS"
-const TOGGLE_IS_LOADING = "TOGGLE-IS-LOADING"
-
 const players = createSlice({
   name: "players",
   initialState: {
@@ -49,7 +45,8 @@ const game = createSlice({
   initialState: {
     currentWinner: null,
     rounds: 0,
-    winnerText: ""
+    winnerText: "",
+    isLoading: false
   },
   reducers: {
     resetWinners: () => ({ currentWinner: null, rounds: 0 }),
@@ -59,117 +56,70 @@ const game = createSlice({
     setWinnerText: (state, action) => ({
       ...state,
       winnerText: action.payload
+    }),
+    toggleIsLoading: (state, action) => ({
+      ...state,
+      isLoading: action.payload
     })
   }
 })
 
 const { actions: actions1, reducer: reducer1 } = game
 
-export const { setWinners, setRounds, setWinnerText } = actions1
+export const {
+  setWinners,
+  setRounds,
+  setWinnerText,
+  toggleIsLoading
+} = actions1
 export const gameReducer = reducer1
 
-let initialState = {
-  userChoice: "no choise",
-  compChoice: "no choise",
-  winner: "no winner default",
-  userCount: 0,
-  compCount: 0,
-
-  gameElements: ["Rock", "Paper", "Scissors"],
-  isLoading: false
-}
-
-const rpsReduser = (state = initialState, action) => {
-  switch (action.type) {
-    case CHOICE_ELEMENT: {
-      let stateCopy = {
-        ...state,
-        userChoice: action.buttonId,
-        winner: action.result.textWins,
-        userCount: action.result.userCount,
-        compCount: action.result.compCount,
-        compChoice: action.compChoice
-      }
-      return stateCopy
-    }
-
-    case GAME_OPTIONS: {
-      let stateCopy = {
-        ...state,
-        gameElements: action.newElements
-      }
-      return stateCopy
-    }
-
-    case TOGGLE_IS_LOADING: {
-      let stateCopy = {
-        ...state,
-        isLoading: action.isLoading
-      }
-      return stateCopy
-    }
-
-    default:
-      return state
-  }
-}
-
-// Action
-const getChoiceElement = (buttonId, result, compChoice) => {
-  return {
-    type: CHOICE_ELEMENT,
-    buttonId,
-    result,
-    compChoice
-  }
-}
-
-const toggleIsLoading = isLoading => {
-  return {
-    type: TOGGLE_IS_LOADING,
-    isLoading
-  }
-}
-
-// Thunk
-export const choiceElement = (buttonId, result, compChoice) => {
+export const setPlayers = (players, currentPlayer) => {
   return dispatch => {
-    dispatch(toggleIsLoading(true))
+    let arrPlayers = [currentPlayer]
 
-    setTimeout(() => {
-      dispatch(getChoiceElement(buttonId, result, compChoice))
-      dispatch(toggleIsLoading(false))
-    }, 0)
-  }
-}
-
-export const setPlayers = arrPlayers => {
-  return dispatch => {
+    for (let i = 1; i < players; i++) {
+      arrPlayers.push(`bot${i}`)
+    }
     dispatch(addPlayers(arrPlayers))
   }
 }
 
-export const setResultGame = (choiceUser, modeGame, players) => {
+export const setResultGame = (
+  choiceUser,
+  modeGame,
+  currentPlayer,
+  enemyPlayers
+) => {
   return dispatch => {
-    const choiceComp = generatorName(modeGame)
+    // dispatch(toggleIsLoading(true))
+    // debugger
+
+    const choiceEnemyPlayers = enemyPlayers.map(item => {
+      let choiceComp = generatorName(modeGame)
+      return {
+        userId: item,
+        choice: choiceComp
+      }
+    })
+
     const winners = resultGame(
-      { userId: "player", choice: choiceUser },
-      { userId: "bot1", choice: choiceComp }
+      { userId: currentPlayer, choice: choiceUser },
+      choiceEnemyPlayers
     )
-    let winnerText = winners ? `Winner ${winners}` : `No winner`
-    let arr = [
-      { userId: "player", choice: choiceUser },
-      { userId: "bot1", choice: choiceComp }
-    ]
-    arr.map(item => dispatch(setChoicePlayer(item)))
+
+    choiceEnemyPlayers.push({
+      userId: currentPlayer,
+      choice: choiceUser
+    })
+    choiceEnemyPlayers.map(item => dispatch(setChoicePlayer(item)))
 
     dispatch(setWinners({ userId: winners }))
     dispatch(setRounds())
     if (winners) {
       dispatch(incrementScorePlayer({ userId: winners }))
     }
-    dispatch(setWinnerText(winnerText))
+    dispatch(setWinnerText(winners ? `Winner ${winners}` : `No winner`))
+    // dispatch(toggleIsLoading(false))
   }
 }
-
-export default rpsReduser

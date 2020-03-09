@@ -1,49 +1,44 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import {
-  choiceElement,
-  setPlayers,
-  setResultGame
-} from "../redux/reduser/rps-reduser"
+import { setResultGame } from "../redux/reduser/rps-reduser"
 
 import { RPSHeader, RPSButtons, RPSContainer, Loader } from "../ui"
 import { getModeGameList } from "../redux/selectors/selectors"
 import {
-  getScore,
   getCurrentChoice,
   getWinnerText,
-  getPlayers
+  getPlayers,
+  getEnemyPlayers,
+  getCurrentPlayer,
+  getFullInfoPlayers
 } from "../redux/selectors/rps-selector"
 
 const GameRPS = ({
-  compChoice,
-  userChoice,
-  userCount,
   userName,
   modeGame,
   isLoading,
   setResultGame,
-  compScore,
   currentChoice,
   winnerText,
-  players
+  players,
+  enemyPlayers,
+  currentPlayer,
+  fullInfoPlayers
 }) => {
   let clickHandler = event => {
     const choiceUser = event.target.id
-
-    setResultGame(choiceUser, modeGame, players)
+    setResultGame(choiceUser, modeGame, currentPlayer, enemyPlayers)
   }
+
+  console.log(fullInfoPlayers)
 
   return (
     <>
       <RPSContainer>
         <RPSHeader
-          userChoice={userChoice}
-          userCount={userCount}
+          players={players}
           userName={userName}
-          compChoice={compChoice}
-          compScore={compScore}
           currentChoice={currentChoice}
           winnerText={winnerText}
         />
@@ -56,27 +51,21 @@ const GameRPS = ({
 
 let mapStateToProps = state => {
   return {
-    compCount: state.rps.compCount,
-    compChoice: state.rps.compChoice,
-    userChoice: state.rps.userChoice,
-    userCount: state.rps.userCount,
     userName: state.profile.name,
-    winner: state.rps.winner,
-    isLoading: state.rps.isLoading,
+    isLoading: state.game.isLoading,
     modeGame: getModeGameList(state),
-    compScore: getScore(state),
     currentChoice: getCurrentChoice(state),
     winnerText: getWinnerText(state),
-    players: getPlayers(state)
+    players: getPlayers(state),
+    enemyPlayers: getEnemyPlayers(state),
+    currentPlayer: getCurrentPlayer(state),
+    fullInfoPlayers: getFullInfoPlayers(state)
   }
 }
 
 let mapDispatchToProps = dispatch => ({
-  choiceElement: (id, getResultGame, name) =>
-    dispatch(choiceElement(id, getResultGame, name)),
-  setPlayers: arrPlayers => dispatch(setPlayers(arrPlayers)),
-  setResultGame: (choiceUser, modeGame) =>
-    dispatch(setResultGame(choiceUser, modeGame))
+  setResultGame: (choiceUser, modeGame, currentPlayer, enemyPlayers) =>
+    dispatch(setResultGame(choiceUser, modeGame, currentPlayer, enemyPlayers))
 })
 
 export const GameRPSContainer = connect(

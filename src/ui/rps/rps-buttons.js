@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components'
-import { Icon } from '../icon';
+import React from "react"
+import styled from "styled-components"
+import { Icon } from "../icon"
 
 const Container = styled.div`
   display: grid;
@@ -16,18 +16,13 @@ const IconStyle = styled(Icon)`
   pointer-events: none;
 `
 
-export const RPSButtons = ({names, onClick}) => {
+export const RPSButtons = ({ names, onClick }) => {
   return (
     <Container>
-      {names.map(name => {
+      {names.map((name, key) => {
         return (
-          <Button
-            id={name}
-            key={name}
-            type='button'
-            onClick={onClick}
-          >
-            <IconStyle name={name}/>
+          <Button id={name} key={key} type="button" onClick={onClick}>
+            <IconStyle name={name} />
             {name}
           </Button>
         )

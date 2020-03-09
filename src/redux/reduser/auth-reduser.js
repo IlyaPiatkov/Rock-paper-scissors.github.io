@@ -2,11 +2,12 @@ import { stopSubmit } from "redux-form"
 import { createSlice } from "@reduxjs/toolkit"
 
 import { authAPI } from "../../api/api"
+import { setUserId } from "./profile-reduser"
 
 let initialState = {
   email: null,
   isAuth: false,
-  isErrorServer: false,
+  isErrorServer: false
 }
 
 const auth = createSlice({
@@ -17,11 +18,11 @@ const auth = createSlice({
       ...state,
       userId: action.payload.userId,
       email: action.payload.email,
-      isAuth: action.payload.isAuth,
+      isAuth: action.payload.isAuth
     }),
     errorServer: (state, action) => ({
       ...state,
-      isErrorServer: action.payload,
+      isErrorServer: action.payload
     })
   }
 })
@@ -32,58 +33,61 @@ export const { setUserData, errorServer } = actions
 export const authReducer = reducer
 
 // Thunk
-export const login = (email, password) =>
-  async (dispatch) => {
-    try {
-      const response = await authAPI.login(email, password)
+export const login = (email, password) => async dispatch => {
+  try {
+    const response = await authAPI.login(email, password)
 
-      if (response.data.resultCode === 0) {
-        const { userId } = response.data.data
-        dispatch(setUserData({userId, email, isAuth: true}))
-      }
-      if (response.data.resultCode === 1) {
-        let messages = (response.data.messages.length > 0 ? response.data.messages[0] : "Common errors")
-        dispatch(stopSubmit("login", { _error: messages }))
-      }
-
-    } catch (error) {
-      dispatch(errorServer(true))
-      console.warn(error);
+    if (response.data.resultCode === 0) {
+      const { userId } = response.data.data
+      dispatch(setUserData({ userId, email, isAuth: true }))
+      dispatch(setUserId(userId))
     }
+    if (response.data.resultCode === 1) {
+      let messages =
+        response.data.messages.length > 0
+          ? response.data.messages[0]
+          : "Common errors"
+      dispatch(stopSubmit("login", { _error: messages }))
+    }
+  } catch (error) {
+    dispatch(errorServer(true))
+    console.warn(error)
   }
-
+}
 
 export const logout = () => {
-  return (dispatch) => {
-    authAPI.logout()
-      .then((response) => {
+  return dispatch => {
+    authAPI
+      .logout()
+      .then(response => {
         if (response.data.resultCode === 0) {
-          dispatch(setUserData({userId: null, email: null, isAuth: false}))
+          dispatch(setUserData({ userId: null, email: null, isAuth: false }))
         }
       })
-      .catch((error) => {
+      .catch(error => {
         dispatch(errorServer(true))
-        console.warn(error);
+        console.warn(error)
       })
   }
 }
 
-export const registr = (email, password) =>
-  async (dispatch) => {
-    try {
-      const response = await authAPI.registr(email, password)
+export const registr = (email, password) => async dispatch => {
+  try {
+    const response = await authAPI.registr(email, password)
 
-      if (response.data.resultCode === 0) {
-        debugger
-        const { userId, email } = response.data.data
-        dispatch(setUserData({userId, email, isAuth: true}))
-      }
-      else {
-        let messages = (response.data.messages.length > 0 ? response.data.messages[0] : "Common errors")
-        dispatch(stopSubmit("registr", { _error: messages }))
-      }
-    } catch(error) {
-      dispatch(errorServer(true))
-      console.warn(error);
+    if (response.data.resultCode === 0) {
+      const { userId, email } = response.data.data
+      dispatch(setUserData({ userId, email, isAuth: true }))
+      dispatch(setUserId(userId))
+    } else {
+      let messages =
+        response.data.messages.length > 0
+          ? response.data.messages[0]
+          : "Common errors"
+      dispatch(stopSubmit("registr", { _error: messages }))
     }
+  } catch (error) {
+    dispatch(errorServer(true))
+    console.warn(error)
   }
+}

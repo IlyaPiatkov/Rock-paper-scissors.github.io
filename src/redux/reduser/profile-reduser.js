@@ -1,22 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-let initialState = {
-  name: "No name",
-  userId: "player",
-}
-
 const profile = createSlice({
   name: "profile",
-  initialState,
+  initialState: {
+    name: "No name",
+    userId: "player"
+  },
   reducers: {
     setUserName: (state, action) => ({
       ...state,
-      name: action.payload,
+      name: action.payload
+    }),
+    setUserId: (state, action) => ({
+      ...state,
+      userId: action.payload
     })
   }
 })
 
 const { actions, reducer } = profile
 
-export const { setUserName } = actions
+export const { setUserName, setUserId } = actions
 export const profileReducer = reducer

@@ -59,17 +59,26 @@ const Winner = styled.span`
   text-align: center;
 `
 
-export const RPSHeader = ({
-  userCount,
-  userChoice,
-  userName,
-  winnerText,
-  compScore,
-  currentChoice
-}) => {
+export const RPSHeader = ({ players, userName, winnerText }) => {
   return (
     <Header>
-      <Block right>
+      {players.map((item, key) => {
+        console.log(item)
+
+        let positionBlock = key === 0 || key === 2 ? true : false
+
+        return (
+          <Block right={positionBlock} left={!positionBlock} key={key}>
+            <Name>{item}</Name>
+            <Avatar>
+              <UserMen />
+            </Avatar>
+            <Counter>0</Counter>
+            <Choice>0</Choice>
+          </Block>
+        )
+      })}
+      {/* <Block right>
         <Name>{userName}</Name>
         <Avatar>
           <UserMen />
@@ -84,7 +93,7 @@ export const RPSHeader = ({
         </Avatar>
         <Counter>{compScore}</Counter>
         <Choice>{currentChoice}</Choice>
-      </Block>
+      </Block> */}
       <Winner>{winnerText}</Winner>
     </Header>
   )

@@ -1,7 +1,7 @@
 import { reducer as formReducer } from "redux-form"
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit"
 
-import rpsReduser, { playersReducer, gameReducer } from "./reduser/rps-reduser"
+import { playersReducer, gameReducer } from "./reduser/rps-reduser"
 import { mainMenuReducer } from "./reduser/main-menu-reduser"
 import { profileReducer } from "./reduser/profile-reduser"
 import { authReducer } from "./reduser/auth-reduser"
@@ -16,7 +16,6 @@ const middleware = getDefaultMiddleware({
 export const store = configureStore({
   reducer: {
     mainMenu: mainMenuReducer,
-    rps: rpsReduser,
     game: gameReducer,
     players: playersReducer,
     profile: profileReducer,
