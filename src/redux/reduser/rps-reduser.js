@@ -95,29 +95,25 @@ export const setResultGame = (
     // dispatch(toggleIsLoading(true))
     // debugger
 
-    const choiceEnemyPlayers = enemyPlayers.map(item => {
-      let choiceComp = generatorName(modeGame)
-      return {
-        userId: item,
-        choice: choiceComp
-      }
-    })
-
-    const winners = resultGame(
-      { userId: currentPlayer, choice: choiceUser },
-      choiceEnemyPlayers
-    )
+    let choiceEnemyPlayers = enemyPlayers.map(item => ({
+      userId: item,
+      choice: generatorName(modeGame)
+    }))
 
     choiceEnemyPlayers.push({
       userId: currentPlayer,
       choice: choiceUser
     })
+
+    const winners = resultGame(choiceEnemyPlayers)
+
     choiceEnemyPlayers.map(item => dispatch(setChoicePlayer(item)))
 
     dispatch(setWinners({ userId: winners }))
     dispatch(setRounds())
     if (winners) {
-      dispatch(incrementScorePlayer({ userId: winners }))
+      winners.map(item => dispatch(incrementScorePlayer({ userId: item })))
+      // dispatch(incrementScorePlayer({ userId: winners }))
     }
     dispatch(setWinnerText(winners ? `Winner ${winners}` : `No winner`))
     // dispatch(toggleIsLoading(false))
