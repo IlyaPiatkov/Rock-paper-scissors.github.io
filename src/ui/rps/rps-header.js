@@ -1,6 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import { UserMen, Computer } from "../icon"
+import { Icon } from "../icon"
 
 const Header = styled.div`
   display: grid;
@@ -59,41 +59,24 @@ const Winner = styled.span`
   text-align: center;
 `
 
-export const RPSHeader = ({ players, userName, winnerText }) => {
+export const RPSHeader = ({ playersInfo, winnerText }) => {
   return (
     <Header>
-      {players.map((item, key) => {
-        console.log(item)
-
+      {playersInfo.map((item, key) => {
         let positionBlock = key === 0 || key === 2 ? true : false
+        let iconName = item[0] !== `bot${key}` ? "user" : "bot"
 
         return (
           <Block right={positionBlock} left={!positionBlock} key={key}>
-            <Name>{item}</Name>
+            <Name>{item[0]}</Name>
             <Avatar>
-              <UserMen />
+              <Icon name={iconName} />
             </Avatar>
-            <Counter>0</Counter>
-            <Choice>0</Choice>
+            <Counter>{item[1].score}</Counter>
+            <Choice>{item[1].currentChoice}</Choice>
           </Block>
         )
       })}
-      {/* <Block right>
-        <Name>{userName}</Name>
-        <Avatar>
-          <UserMen />
-        </Avatar>
-        <Counter>{userCount}</Counter>
-        <Choice>{userChoice}</Choice>
-      </Block>
-      <Block left>
-        <Name>Comp</Name>
-        <Avatar>
-          <Computer />
-        </Avatar>
-        <Counter>{compScore}</Counter>
-        <Choice>{currentChoice}</Choice>
-      </Block> */}
       <Winner>{winnerText}</Winner>
     </Header>
   )

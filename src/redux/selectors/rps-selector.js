@@ -9,33 +9,11 @@ export const getWinnerText = createSelector(
   state => state.winnerText
 )
 
-export const getPlayers = createSelector(
-  rootPlayersSelector,
-  state => Object.keys(state)
-  // state
+export const getPlayers = createSelector(rootPlayersSelector, state =>
+  Object.keys(state)
 )
-export const getFullInfoPlayers = createSelector(
-  rootPlayersSelector,
-  rootProfileSelector,
-  (players, profile) => {
-    let arr = players
-    // player: {
-    //   score: 1,
-    //   currentChoice: 'Paper'
-    // },
-    // bot1: {
-    //   score: 0,
-    //   currentChoice: 'Rock'
-    // }
-
-    for (let key in arr) {
-      // ключи
-      // console.log(key) // name, age, isAdmin
-      // значения ключей
-      // console.log(arr[key]) // John, 30, true
-    }
-    return arr
-  }
+export const getPlayersInfo = createSelector(rootPlayersSelector, players =>
+  Object.entries(players)
 )
 export const getEnemyPlayers = createSelector(
   rootPlayersSelector,

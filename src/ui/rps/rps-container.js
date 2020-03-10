@@ -1,11 +1,12 @@
-import React from 'react';
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
 const Container = styled.div`
   display: grid;
   grid-template-areas: "header" "footer";
+  grid-row-gap: 3rem;
   align-content: space-between;
-  
+
   // TODO del
   min-height: calc(100vh - 100px);
 
@@ -18,10 +19,6 @@ const Container = styled.div`
   }
 `
 
-export const RPSContainer = (props) => {
-  return (
-    <Container>
-      {props.children}
-    </Container>
-  )
+export const RPSContainer = props => {
+  return <Container>{props.children}</Container>
 }

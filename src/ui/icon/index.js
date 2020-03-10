@@ -1,1 +1,1 @@
-export { Icon, UserMen, Computer } from './icon'
+export { Icon } from "./icon"

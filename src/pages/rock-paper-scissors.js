@@ -8,10 +8,9 @@ import { getModeGameList } from "../redux/selectors/selectors"
 import {
   getCurrentChoice,
   getWinnerText,
-  getPlayers,
   getEnemyPlayers,
   getCurrentPlayer,
-  getFullInfoPlayers
+  getPlayersInfo
 } from "../redux/selectors/rps-selector"
 
 const GameRPS = ({
@@ -21,23 +20,20 @@ const GameRPS = ({
   setResultGame,
   currentChoice,
   winnerText,
-  players,
   enemyPlayers,
   currentPlayer,
-  fullInfoPlayers
+  playersInfo
 }) => {
   let clickHandler = event => {
     const choiceUser = event.target.id
     setResultGame(choiceUser, modeGame, currentPlayer, enemyPlayers)
   }
 
-  console.log(fullInfoPlayers)
-
   return (
     <>
       <RPSContainer>
         <RPSHeader
-          players={players}
+          playersInfo={playersInfo}
           userName={userName}
           currentChoice={currentChoice}
           winnerText={winnerText}
@@ -56,10 +52,9 @@ let mapStateToProps = state => {
     modeGame: getModeGameList(state),
     currentChoice: getCurrentChoice(state),
     winnerText: getWinnerText(state),
-    players: getPlayers(state),
     enemyPlayers: getEnemyPlayers(state),
     currentPlayer: getCurrentPlayer(state),
-    fullInfoPlayers: getFullInfoPlayers(state)
+    playersInfo: getPlayersInfo(state)
   }
 }
 
