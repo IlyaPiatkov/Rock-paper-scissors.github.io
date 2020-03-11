@@ -87,7 +87,7 @@ export const setPlayers = (players, currentPlayer) => {
 
 export const setResultGame = (
   choiceUser,
-  modeGame,
+  ModeGameList,
   currentPlayer,
   enemyPlayers
 ) => {
@@ -97,7 +97,7 @@ export const setResultGame = (
 
     let choiceEnemyPlayers = enemyPlayers.map(item => ({
       userId: item,
-      choice: generatorName(modeGame)
+      choice: generatorName(ModeGameList)
     }))
 
     choiceEnemyPlayers.push({
@@ -105,7 +105,7 @@ export const setResultGame = (
       choice: choiceUser
     })
 
-    const winners = resultGame(choiceEnemyPlayers)
+    const winners = resultGame(choiceEnemyPlayers, ModeGameList)
 
     choiceEnemyPlayers.map(item => dispatch(setChoicePlayer(item)))
 
@@ -113,7 +113,6 @@ export const setResultGame = (
     dispatch(setRounds())
     if (winners) {
       winners.map(item => dispatch(incrementScorePlayer({ userId: item })))
-      // dispatch(incrementScorePlayer({ userId: winners }))
     }
     dispatch(setWinnerText(winners ? `Winner ${winners}` : `No winner`))
     // dispatch(toggleIsLoading(false))

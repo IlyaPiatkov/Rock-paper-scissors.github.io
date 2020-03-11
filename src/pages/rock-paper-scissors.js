@@ -15,7 +15,7 @@ import {
 
 const GameRPS = ({
   userName,
-  modeGame,
+  ModeGameList,
   isLoading,
   setResultGame,
   currentChoice,
@@ -26,7 +26,7 @@ const GameRPS = ({
 }) => {
   let clickHandler = event => {
     const choiceUser = event.target.id
-    setResultGame(choiceUser, modeGame, currentPlayer, enemyPlayers)
+    setResultGame(choiceUser, ModeGameList, currentPlayer, enemyPlayers)
   }
 
   return (
@@ -38,7 +38,7 @@ const GameRPS = ({
           currentChoice={currentChoice}
           winnerText={winnerText}
         />
-        <RPSButtons names={modeGame} onClick={clickHandler} />
+        <RPSButtons names={ModeGameList} onClick={clickHandler} />
       </RPSContainer>
       {isLoading && <Loader />}
     </>
@@ -49,7 +49,7 @@ let mapStateToProps = state => {
   return {
     userName: state.profile.name,
     isLoading: state.game.isLoading,
-    modeGame: getModeGameList(state),
+    ModeGameList: getModeGameList(state),
     currentChoice: getCurrentChoice(state),
     winnerText: getWinnerText(state),
     enemyPlayers: getEnemyPlayers(state),
@@ -59,8 +59,10 @@ let mapStateToProps = state => {
 }
 
 let mapDispatchToProps = dispatch => ({
-  setResultGame: (choiceUser, modeGame, currentPlayer, enemyPlayers) =>
-    dispatch(setResultGame(choiceUser, modeGame, currentPlayer, enemyPlayers))
+  setResultGame: (choiceUser, ModeGameList, currentPlayer, enemyPlayers) =>
+    dispatch(
+      setResultGame(choiceUser, ModeGameList, currentPlayer, enemyPlayers)
+    )
 })
 
 export const GameRPSContainer = connect(

@@ -1,58 +1,13 @@
-// export const resultGame = (user, comp) => {
-//   switch (`${user.choice}-${comp[0].choice}`) {
-//     case "Rock-Scissors":
-//       return user.userId
-//     case "Rock-Water":
-//       return user.userId
-//     case "Rock-Paper":
-//       return comp[0].userId
-//     case "Rock-Fire":
-//       return comp[0].userId
-//     case "Paper-Rock":
-//       return user.userId
-//     case "Paper-Water":
-//       return user.userId
-//     case "Paper-Scissors":
-//       return comp[0].userId
-//     case "Paper-Fire":
-//       return comp[0].userId
-//     case "Scissors-Paper":
-//       return user.userId
-//     case "Scissors-Water":
-//       return user.userId
-//     case "Scissors-Rock":
-//       return comp[0].userId
-//     case "Scissors-Fire":
-//       return comp[0].userId
-//     case "Water-Fire":
-//       return user.userId
-//     case "Water-Rock":
-//       return comp[0].userId
-//     case "Water-Paper":
-//       return comp[0].userId
-//     case "Water-Scissors":
-//       return comp[0].userId
-//     case "Fire-Rock":
-//       return user.userId
-//     case "Fire-Paper":
-//       return user.userId
-//     case "Fire-Scissors":
-//       return user.userId
-//     case "Fire-Water":
-//       return comp[0].userId
-//     default:
-//       return null
-//   }
-// }
+export const resultGame = (players, ModeGameList) => {
+  let mode = ModeGameList.length
 
-export const resultGame = enter => {
   let rock = []
   let paper = []
   let scissors = []
   let fire = []
   let water = []
 
-  enter.map(item => {
+  players.map(item => {
     switch (item.choice) {
       case "Rock":
         rock.push(item.userId)
@@ -80,20 +35,46 @@ export const resultGame = enter => {
     }
   })
 
-  if (rock.length && scissors.length && paper.length) {
-    console.warn("wins", "draw")
-    return null
-  } else if (rock.length && scissors.length) {
-    console.warn("wins", "rock")
-    return rock
-  } else if (scissors.length && paper.length) {
-    console.warn("wins", "scissors")
-    return scissors
-  } else if (paper.length && rock.length) {
-    console.warn("wins", "paper")
-    return paper
+  if (mode === 3) {
+    if (rock.length && scissors.length && paper.length) {
+      console.warn("wins", "draw")
+      return null
+    } else if (rock.length && scissors.length) {
+      console.warn("wins", "rock")
+      return rock
+    } else if (scissors.length && paper.length) {
+      console.warn("wins", "scissors")
+      return scissors
+    } else if (paper.length && rock.length) {
+      console.warn("wins", "paper")
+      return paper
+    } else if (paper.length && rock.length) {
+      console.warn("wins", "paper")
+      return paper
+    } else {
+      console.warn("wins", "draw")
+      return null
+    }
   } else {
-    console.warn("error condition")
-    return null
+    // TODO не робе для 5 елементів
+    if (rock.length && scissors.length && water.length) {
+      console.warn("wins", "rock")
+      return rock
+    } else if (scissors.length && paper.length && water.length) {
+      console.warn("wins", "scissors")
+      return scissors
+    } else if (paper.length && rock.length && water.length) {
+      console.warn("wins", "paper")
+      return paper
+    } else if (fire.length && paper.length && rock.length && water.length) {
+      console.warn("wins", "fire")
+      return fire
+    } else if (water.length && fire.length) {
+      console.warn("wins", "water")
+      return water
+    } else {
+      console.warn("error condition")
+      return null
+    }
   }
 }
