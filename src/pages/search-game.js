@@ -10,8 +10,10 @@ import {
   SearchCircle,
   SearchList,
   SearchItem,
+  SearchInfo,
   Icon,
-  Text
+  Text,
+  ButtonDefault
 } from "../ui"
 
 const SearchGame = () => {
@@ -31,13 +33,17 @@ const SearchGame = () => {
         <SearchList>
           <SearchItem>
             <Icon name="user" />
-            <Text>name</Text>
-            <button>ready</button>
+            <Text medium>name</Text>
+            <SearchInfo>
+              <ButtonDefault type="button">Ready</ButtonDefault>
+            </SearchInfo>
           </SearchItem>
           <SearchItem>
             <Icon name="user" />
-            <Text>name</Text>
-            <button>ready</button>
+            <Text medium>name</Text>
+            <SearchInfo>
+              <Text medium>Ready</Text>
+            </SearchInfo>
           </SearchItem>
         </SearchList>
       </SearchWrap>

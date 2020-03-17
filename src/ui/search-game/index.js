@@ -4,5 +4,6 @@ export {
   SearchProgress,
   SearchCircle,
   SearchList,
-  SearchItem
+  SearchItem,
+  SearchInfo
 } from "./search-game"

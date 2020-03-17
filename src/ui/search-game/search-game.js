@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from "styled-components"
+import { buttonStyle } from "../button"
 
 export const SearchWrap = styled.div`
   > :nth-child(n + 2) {
@@ -125,10 +126,35 @@ export const SearchCircle = styled.div`
 
 export const SearchList = styled.ul`
   list-style: none;
+
+  > :nth-child(n + 2) {
+    margin-top: 2rem;
+  }
 `
 
 export const SearchItem = styled.li`
+  position: relative;
   display: flex;
-  padding: 0.5rem;
+  align-items: center;
+  padding: 0.5rem 6.5rem 0.5rem 0.5rem;
+  min-height: 3.6rem;
   border: 0.1rem solid #000;
+
+  svg {
+    margin-right: 1rem;
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+`
+
+export const SearchInfo = styled.div`
+  position: absolute;
+  top: -0.1rem;
+  right: -0.1rem;
+  bottom: -0.1rem;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 6rem;
 `
