@@ -1,36 +1,46 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { connect } from 'react-redux'
+import React from "react"
+import { NavLink } from "react-router-dom"
+import { connect } from "react-redux"
 
-import { MainList, buttonStyle } from '../../../ui'
-import styled from 'styled-components'
+import { MainList, buttonStyle } from "../../../ui"
+import styled from "styled-components"
 
 const MainLink = styled(NavLink)`
   ${buttonStyle}
 `
 
-const MainNav = ({isAuth}) => {
+const MainNav = ({ isAuth }) => {
   return (
     <MainList>
       <li>
-        <MainLink to='rock-paper-scissors' default>Rock Paper Scissors</MainLink>
+        <MainLink to="rock-paper-scissors" default>
+          Rock Paper Scissors
+        </MainLink>
       </li>
       <li>
-        <MainLink to='rps-options' default>RPS options</MainLink>
+        <MainLink to="search-game" default>
+          Multiplayer game
+        </MainLink>
       </li>
       <li>
-        <MainLink to='rps-rules' default>RPS rules</MainLink>
+        <MainLink to="rps-options" default>
+          RPS options
+        </MainLink>
+      </li>
+      <li>
+        <MainLink to="rps-rules" default>
+          RPS rules
+        </MainLink>
       </li>
       {/* {!isAuth && (
       )} */}
-      
     </MainList>
   )
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = state => {
   return {
-    isAuth: state.auth.isAuth,
+    isAuth: state.auth.isAuth
   }
 }
 

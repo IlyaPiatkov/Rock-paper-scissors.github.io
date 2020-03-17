@@ -20,3 +20,11 @@ export { ModalOverlay, ModalContainer, ModalClose } from "./modal"
 export { Text } from "./text"
 export { MainContainer, MainContent } from "./main-content"
 export { FooterWrap, FooterButtons } from "./footer"
+export {
+  SearchWrap,
+  SearchMaps,
+  SearchProgress,
+  SearchCircle,
+  SearchList,
+  SearchItem
+} from "./search-game"
