@@ -34,7 +34,7 @@ const RPSOptionsForm = ({handleSubmit, userName, modeGame}) => {
         type="text"
         placeholder="Name"
         value={userName}
-        validate={[required, maxLength15, minLength2]}
+        // validate={[required, maxLength15, minLength2]}
       />
 
       <FormFieldset>

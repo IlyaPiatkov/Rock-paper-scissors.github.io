@@ -6,13 +6,16 @@ import { generatorName, resultGame } from "../../features/rps"
 const players = createSlice({
   name: "players",
   initialState: {
-    player: { score: 0, currentChoice: null },
-    bot1: { score: 0, currentChoice: null }
+    player: { score: 0, currentChoice: null, isWinPrevRound: false },
+    bot1: { score: 0, currentChoice: null, isWinPrevRound: false }
   },
   reducers: {
     addPlayers: (state, action) =>
       action.payload.reduce(
-        (acc, item) => ({ ...acc, [item]: { score: 0, currentChoice: null } }),
+        (acc, item) => ({
+          ...acc,
+          [item]: { score: 0, currentChoice: null, isWinPrevRound: false }
+        }),
         {}
       ),
     removePlayers: () => {},
@@ -31,28 +34,45 @@ const players = createSlice({
         R.lensPath([action.payload.userId, "currentChoice"]),
         action.payload.choice,
         state
+      ),
+    setWinnerPrevRound: (state, action) =>
+      R.set(R.lensPath([action.payload.userId, "isWinPrevRound"]), true, state),
+    resetWinnerPrevRound: state =>
+      Object.keys(state).reduce(
+        (acc, keyPlayer) => ({
+          ...acc,
+          [keyPlayer]: { ...state[keyPlayer], isWinPrevRound: false }
+        }),
+        {}
       )
   }
 })
 
 const { actions, reducer } = players
 
-export const { addPlayers, incrementScorePlayer, setChoicePlayer } = actions
+export const {
+  addPlayers,
+  incrementScorePlayer,
+  setChoicePlayer,
+  setWinnerPrevRound,
+  resetWinnerPrevRound
+} = actions
 export const playersReducer = reducer
 
 const game = createSlice({
   name: "currentGame",
   initialState: {
     currentWinner: null,
-    rounds: 0,
+    rounds: 1,
     winnerText: "",
     isLoading: false
   },
   reducers: {
-    resetWinners: () => ({ currentWinner: null, rounds: 0 }),
+    resetWinners: () => ({ currentWinner: null, rounds: 1 }),
     setWinners: (state, action) =>
       R.set(R.lensProp("currentWinner"), action.payload.userId, state),
     setRounds: state => R.over(R.lensProp("rounds"), R.inc, state),
+    resetRounds: state => R.set(R.lensProp("rounds"), 1, state),
     setWinnerText: (state, action) => ({
       ...state,
       winnerText: action.payload
@@ -69,8 +89,10 @@ const { actions: actions1, reducer: reducer1 } = game
 export const {
   setWinners,
   setRounds,
+  resetRounds,
   setWinnerText,
-  toggleIsLoading
+  toggleIsLoading,
+  resetWinners
 } = actions1
 export const gameReducer = reducer1
 
@@ -89,11 +111,14 @@ export const setResultGame = (
   choiceUser,
   ModeGameList,
   currentPlayer,
-  enemyPlayers
+  enemyPlayers,
+  round,
+  currentWinner
 ) => {
   return dispatch => {
     // dispatch(toggleIsLoading(true))
     // debugger
+    console.log("currentWinner", currentWinner)
 
     let choiceEnemyPlayers = enemyPlayers.map(item => ({
       userId: item,
@@ -105,16 +130,26 @@ export const setResultGame = (
       choice: choiceUser
     })
 
-    const winners = resultGame(choiceEnemyPlayers, ModeGameList)
-
     choiceEnemyPlayers.map(item => dispatch(setChoicePlayer(item)))
 
-    dispatch(setWinners({ userId: winners }))
-    dispatch(setRounds())
-    if (winners) {
-      winners.map(item => dispatch(incrementScorePlayer({ userId: item })))
+    const winners = resultGame(choiceEnemyPlayers, ModeGameList)
+
+    if (winners === null) {
+      dispatch(setWinnerText("Draw"))
+      return
+    } else if (winners.length > 1) {
+      // dispatch(resetWinners())
+      dispatch(setRounds())
+      dispatch(setWinnerText("Go to the next round: " + winners))
+      winners.map(item => dispatch(setWinnerPrevRound({ userId: item })))
+    } else {
+      dispatch(setWinnerText("Winner: " + winners))
+      dispatch(resetWinnerPrevRound())
+      dispatch(resetRounds())
+      dispatch(incrementScorePlayer({ userId: winners[0] }))
     }
-    dispatch(setWinnerText(winners ? `Winner ${winners}` : `No winner`))
+
+    dispatch(setWinners({ userId: winners }))
     // dispatch(toggleIsLoading(false))
   }
 }

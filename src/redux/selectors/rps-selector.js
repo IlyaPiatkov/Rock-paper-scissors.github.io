@@ -12,8 +12,22 @@ export const getWinnerText = createSelector(
 export const getPlayers = createSelector(rootPlayersSelector, state =>
   Object.keys(state)
 )
-export const getPlayersInfo = createSelector(rootPlayersSelector, players =>
-  Object.entries(players)
+export const getRound = createSelector(rootGameSelector, state => state.rounds)
+export const getCurrentWinner = createSelector(
+  rootGameSelector,
+  state => state.currentWinner
+)
+export const getPlayersInfo = createSelector(
+  rootPlayersSelector,
+  rootProfileSelector,
+  (players, profile) => {
+    let userId = profile.userId
+    let info = {
+      ...players,
+      [userId]: { ...players[userId], name: profile.name }
+    }
+    return Object.entries(info)
+  }
 )
 export const getEnemyPlayers = createSelector(
   rootPlayersSelector,

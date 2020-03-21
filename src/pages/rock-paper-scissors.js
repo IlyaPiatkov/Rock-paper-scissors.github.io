@@ -10,11 +10,12 @@ import {
   getWinnerText,
   getEnemyPlayers,
   getCurrentPlayer,
-  getPlayersInfo
+  getPlayersInfo,
+  getRound,
+  getCurrentWinner
 } from "../redux/selectors/rps-selector"
 
 const GameRPS = ({
-  userName,
   ModeGameList,
   isLoading,
   setResultGame,
@@ -22,11 +23,20 @@ const GameRPS = ({
   winnerText,
   enemyPlayers,
   currentPlayer,
-  playersInfo
+  playersInfo,
+  round,
+  currentWinner
 }) => {
   let clickHandler = event => {
     const choiceUser = event.target.id
-    setResultGame(choiceUser, ModeGameList, currentPlayer, enemyPlayers)
+    setResultGame(
+      choiceUser,
+      ModeGameList,
+      currentPlayer,
+      enemyPlayers,
+      round,
+      currentWinner
+    )
   }
 
   return (
@@ -34,9 +44,8 @@ const GameRPS = ({
       <RPSContainer>
         <RPSHeader
           playersInfo={playersInfo}
-          userName={userName}
-          currentChoice={currentChoice}
           winnerText={winnerText}
+          round={round}
         />
         <RPSButtons names={ModeGameList} onClick={clickHandler} />
       </RPSContainer>
@@ -54,14 +63,30 @@ let mapStateToProps = state => {
     winnerText: getWinnerText(state),
     enemyPlayers: getEnemyPlayers(state),
     currentPlayer: getCurrentPlayer(state),
-    playersInfo: getPlayersInfo(state)
+    playersInfo: getPlayersInfo(state),
+    round: getRound(state),
+    currentWinner: getCurrentWinner(state)
   }
 }
 
 let mapDispatchToProps = dispatch => ({
-  setResultGame: (choiceUser, ModeGameList, currentPlayer, enemyPlayers) =>
+  setResultGame: (
+    choiceUser,
+    ModeGameList,
+    currentPlayer,
+    enemyPlayers,
+    round,
+    currentWinner
+  ) =>
     dispatch(
-      setResultGame(choiceUser, ModeGameList, currentPlayer, enemyPlayers)
+      setResultGame(
+        choiceUser,
+        ModeGameList,
+        currentPlayer,
+        enemyPlayers,
+        round,
+        currentWinner
+      )
     )
 })
 
