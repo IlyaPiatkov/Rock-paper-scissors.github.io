@@ -1,14 +1,14 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { setUserName } from "../redux/reduser/profile-reduser"
-import { setPlayers } from "../redux/reduser/rps-reduser"
-import { setModeGame } from "../redux/reduser/option-reduser"
+import { setUserName } from "../../redux/reduser/profile-reduser"
+import { setPlayers } from "../../redux/reduser/rps-reduser"
+import { setModeGame } from "../../redux/reduser/option-reduser"
 
-import { RPSOptionsReduxForm } from "../features"
-import { Title, RPSOptions } from "../ui"
-import { getModeGame } from "../redux/selectors/selectors"
-import { getCurrentPlayer } from "../redux/selectors/rps-selector"
+import { RPSOptionsReduxForm, CommonContentTemplate } from "../../features"
+import { Title } from "../../ui"
+import { getModeGame } from "../../redux/selectors/selectors"
+import { getCurrentPlayer } from "../../redux/selectors/rps-selector"
 
 const OptionsRPS = ({
   setUserName,
@@ -25,7 +25,7 @@ const OptionsRPS = ({
   }
 
   return (
-    <RPSOptions>
+    <CommonContentTemplate>
       <Title large center>
         Options RPS
       </Title>
@@ -34,7 +34,7 @@ const OptionsRPS = ({
         userName={name}
         modeGame={modeGame}
       />
-    </RPSOptions>
+    </CommonContentTemplate>
   )
 }
 
@@ -55,7 +55,7 @@ let mapDispatchToProps = dispatch => ({
   setModeGame: modeGame => dispatch(setModeGame(modeGame))
 })
 
-export const OptionsRPSContainer = connect(
+export const OptionsPage = connect(
   mapStateToProps,
   mapDispatchToProps
 )(OptionsRPS)

@@ -1,10 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { setResultGame } from "../redux/reduser/rps-reduser"
+import { setResultGame } from "../../redux/reduser/rps-reduser"
 
-import { RPSHeader, RPSButtons, RPSContainer, Loader } from "../ui"
-import { getModeGameList } from "../redux/selectors/selectors"
+import { RPSHeader, RPSButtons, RPSContainer, Loader } from "../../ui"
+import { getModeGameList } from "../../redux/selectors/selectors"
 import {
   getCurrentChoice,
   getWinnerText,
@@ -13,9 +13,10 @@ import {
   getPlayersInfo,
   getRound,
   getCurrentWinner
-} from "../redux/selectors/rps-selector"
+} from "../../redux/selectors/rps-selector"
+import { CommonContentTemplate } from "../../features"
 
-const GameRPS = ({
+const Game = ({
   ModeGameList,
   isLoading,
   setResultGame,
@@ -40,7 +41,7 @@ const GameRPS = ({
   }
 
   return (
-    <>
+    <CommonContentTemplate>
       <RPSContainer>
         <RPSHeader
           playersInfo={playersInfo}
@@ -50,13 +51,12 @@ const GameRPS = ({
         <RPSButtons names={ModeGameList} onClick={clickHandler} />
       </RPSContainer>
       {isLoading && <Loader />}
-    </>
+    </CommonContentTemplate>
   )
 }
 
 let mapStateToProps = state => {
   return {
-    userName: state.profile.name,
     isLoading: state.game.isLoading,
     ModeGameList: getModeGameList(state),
     currentChoice: getCurrentChoice(state),
@@ -90,7 +90,4 @@ let mapDispatchToProps = dispatch => ({
     )
 })
 
-export const GameRPSContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GameRPS)
+export const GamePage = connect(mapStateToProps, mapDispatchToProps)(Game)

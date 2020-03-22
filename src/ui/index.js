@@ -1,5 +1,5 @@
 export { Icon } from "./icon"
-export { RPSHeader, RPSButtons, RPSContainer, RPSOptions } from "./rps"
+export { RPSHeader, RPSButtons, RPSContainer } from "./rps"
 export { MainList } from "./main-nav"
 export { Loader } from "./loader"
 export { mixinTypography } from "./typography"
@@ -29,3 +29,5 @@ export {
   SearchItem,
   SearchInfo
 } from "./search-game"
+export { HeaderContainer } from "./header"
+export { MainMenuContainer } from "./main-menu"
