@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/Rock-paper-scissors.github.io/static/js/main.b98d4d1f.chunk.js",
+    "main.js.map": "/Rock-paper-scissors.github.io/static/js/main.b98d4d1f.chunk.js.map",
+    "runtime-main.js": "/Rock-paper-scissors.github.io/static/js/runtime-main.20ae327d.js",
+    "runtime-main.js.map": "/Rock-paper-scissors.github.io/static/js/runtime-main.20ae327d.js.map",
+    "static/js/2.1ac61b24.chunk.js": "/Rock-paper-scissors.github.io/static/js/2.1ac61b24.chunk.js",
+    "static/js/2.1ac61b24.chunk.js.map": "/Rock-paper-scissors.github.io/static/js/2.1ac61b24.chunk.js.map",
+    "index.html": "/Rock-paper-scissors.github.io/index.html",
+    "precache-manifest.a0c3be7b8e4431332db10444e89aa9f0.js": "/Rock-paper-scissors.github.io/precache-manifest.a0c3be7b8e4431332db10444e89aa9f0.js",
+    "service-worker.js": "/Rock-paper-scissors.github.io/service-worker.js",
+    "static/js/2.1ac61b24.chunk.js.LICENSE": "/Rock-paper-scissors.github.io/static/js/2.1ac61b24.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.20ae327d.js",
+    "static/js/2.1ac61b24.chunk.js",
+    "static/js/main.b98d4d1f.chunk.js"
+  ]
+}
