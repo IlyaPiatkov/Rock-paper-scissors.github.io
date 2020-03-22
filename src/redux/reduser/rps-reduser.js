@@ -7,7 +7,9 @@ const players = createSlice({
   name: "players",
   initialState: {
     player: { score: 0, currentChoice: null, isWinPrevRound: false },
-    bot1: { score: 0, currentChoice: null, isWinPrevRound: false }
+    bot1: { score: 0, currentChoice: null, isWinPrevRound: false },
+    bot2: { score: 0, currentChoice: null, isWinPrevRound: false },
+    bot3: { score: 0, currentChoice: null, isWinPrevRound: false }
   },
   reducers: {
     addPlayers: (state, action) =>
@@ -68,7 +70,7 @@ const game = createSlice({
     isLoading: false
   },
   reducers: {
-    resetWinners: () => ({ currentWinner: null, rounds: 1 }),
+    resetWinners: state => R.set(R.lensProp("currentWinner"), null, state),
     setWinners: (state, action) =>
       R.set(R.lensProp("currentWinner"), action.payload.userId, state),
     setRounds: state => R.over(R.lensProp("rounds"), R.inc, state),
@@ -116,40 +118,43 @@ export const setResultGame = (
   currentWinner
 ) => {
   return dispatch => {
-    // dispatch(toggleIsLoading(true))
-    // debugger
-    console.log("currentWinner", currentWinner)
+    dispatch(toggleIsLoading(true))
 
-    let choiceEnemyPlayers = enemyPlayers.map(item => ({
+    let choicePlayers = enemyPlayers.map(item => ({
       userId: item,
       choice: generatorName(ModeGameList)
     }))
 
-    choiceEnemyPlayers.push({
+    choicePlayers.push({
       userId: currentPlayer,
       choice: choiceUser
     })
 
-    choiceEnemyPlayers.map(item => dispatch(setChoicePlayer(item)))
+    if (currentWinner) {
+      choicePlayers = choicePlayers.filter(el =>
+        currentWinner.includes(el.userId)
+      )
+    }
 
-    const winners = resultGame(choiceEnemyPlayers, ModeGameList)
+    choicePlayers.map(item => dispatch(setChoicePlayer(item)))
+
+    const winners = resultGame(choicePlayers, ModeGameList)
 
     if (winners === null) {
       dispatch(setWinnerText("Draw"))
       return
     } else if (winners.length > 1) {
-      // dispatch(resetWinners())
       dispatch(setRounds())
       dispatch(setWinnerText("Go to the next round: " + winners))
       winners.map(item => dispatch(setWinnerPrevRound({ userId: item })))
+      dispatch(setWinners({ userId: winners }))
     } else {
       dispatch(setWinnerText("Winner: " + winners))
+      dispatch(incrementScorePlayer({ userId: winners[0] }))
       dispatch(resetWinnerPrevRound())
       dispatch(resetRounds())
-      dispatch(incrementScorePlayer({ userId: winners[0] }))
+      dispatch(resetWinners())
     }
-
-    dispatch(setWinners({ userId: winners }))
-    // dispatch(toggleIsLoading(false))
+    dispatch(toggleIsLoading(false))
   }
 }
