@@ -7,9 +7,9 @@ const players = createSlice({
   name: "players",
   initialState: {
     player: { score: 0, currentChoice: null, isWinPrevRound: false },
-    bot1: { score: 0, currentChoice: null, isWinPrevRound: false },
-    bot2: { score: 0, currentChoice: null, isWinPrevRound: false },
-    bot3: { score: 0, currentChoice: null, isWinPrevRound: false }
+    bot1: { score: 0, currentChoice: null, isWinPrevRound: false }
+    // bot2: { score: 0, currentChoice: null, isWinPrevRound: false },
+    // bot3: { score: 0, currentChoice: null, isWinPrevRound: false }
   },
   reducers: {
     addPlayers: (state, action) =>

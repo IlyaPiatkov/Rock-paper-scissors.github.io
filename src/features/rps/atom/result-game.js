@@ -7,6 +7,7 @@ export const resultGame = (players, ModeGameList) => {
   let fire = []
   let water = []
 
+  // eslint-disable-next-line
   players.map(item => {
     switch (item.choice) {
       case "Rock":

@@ -1,5 +1,4 @@
 import styled, { keyframes, css } from "styled-components"
-import { buttonStyle } from "../button"
 
 export const SearchWrap = styled.div`
   > :nth-child(n + 2) {

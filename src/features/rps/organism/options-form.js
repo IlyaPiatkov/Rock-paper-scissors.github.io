@@ -1,5 +1,5 @@
-import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import React from "react"
+import { Field, reduxForm } from "redux-form"
 
 import {
   required,
@@ -7,14 +7,14 @@ import {
   minLength,
   ElementInput,
   ElementRadio
-} from '../../common'
+} from "../../common"
 import {
   FormContainer,
   FormLabel,
   FormFieldset,
   FormRadioWrap,
   ButtonDefault
-} from '../../../ui';
+} from "../../../ui"
 
 const maxLength15 = maxLength(15)
 const minLength2 = minLength(2)
@@ -22,8 +22,7 @@ const minLength2 = minLength(2)
 const defaultInput = ElementInput("input")
 const RadioInput = ElementRadio("input")
 
-const RPSOptionsForm = ({handleSubmit, userName, modeGame}) => {
-
+const RPSOptionsForm = ({ handleSubmit, userName, modeGame }) => {
   return (
     <FormContainer onSubmit={handleSubmit}>
       <Field
@@ -34,11 +33,13 @@ const RPSOptionsForm = ({handleSubmit, userName, modeGame}) => {
         type="text"
         placeholder="Name"
         value={userName}
-        // validate={[required, maxLength15, minLength2]}
+        validate={[required, maxLength15, minLength2]}
       />
 
       <FormFieldset>
-        <FormLabel as="legend" medium>Number of Participants</FormLabel>
+        <FormLabel as="legend" medium>
+          Number of Participants
+        </FormLabel>
         <FormRadioWrap>
           <Field
             label="1"
@@ -64,9 +65,11 @@ const RPSOptionsForm = ({handleSubmit, userName, modeGame}) => {
         </FormRadioWrap>
       </FormFieldset>
       <FormFieldset>
-        <FormLabel as="legend" medium>Mode game</FormLabel>
+        <FormLabel as="legend" medium>
+          Mode game
+        </FormLabel>
         <FormRadioWrap>
-          {modeGame.map((item, key) => 
+          {modeGame.map((item, key) => (
             <Field
               label={item}
               name="modeGame"
@@ -75,7 +78,7 @@ const RPSOptionsForm = ({handleSubmit, userName, modeGame}) => {
               value={item}
               key={key}
             />
-          )}
+          ))}
         </FormRadioWrap>
       </FormFieldset>
 
