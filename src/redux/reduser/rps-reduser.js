@@ -142,7 +142,6 @@ export const setResultGame = (
 
     if (winners === null) {
       dispatch(setWinnerText("Draw"))
-      return
     } else if (winners.length > 1) {
       dispatch(setRounds())
       dispatch(setWinnerText("Go to the next round: " + winners))
@@ -155,6 +154,8 @@ export const setResultGame = (
       dispatch(resetRounds())
       dispatch(resetWinners())
     }
-    dispatch(toggleIsLoading(false))
+    setTimeout(() => {
+      dispatch(toggleIsLoading(false))
+    }, 1500)
   }
 }
