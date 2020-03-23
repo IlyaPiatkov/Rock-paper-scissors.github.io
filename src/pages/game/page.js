@@ -1,12 +1,11 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { connect } from "react-redux"
 
-import { setResultGame } from "../../redux/reduser/rps-reduser"
+import { setResultGame, setPlayers } from "../../redux/reduser/rps-reduser"
 
 import { RPSHeader, RPSButtons, RPSContainer, Loader } from "../../ui"
-import { getModeGameList } from "../../redux/selectors/selectors"
+import { getModeGameList, getAuth } from "../../redux/selectors/selectors"
 import {
-  getCurrentChoice,
   getWinnerText,
   getEnemyPlayers,
   getCurrentPlayer,
@@ -19,8 +18,9 @@ import { CommonContentTemplate } from "../../features"
 const Game = ({
   ModeGameList,
   isLoading,
+  isAuth,
   setResultGame,
-  currentChoice,
+  setPlayers,
   winnerText,
   enemyPlayers,
   currentPlayer,
@@ -28,6 +28,14 @@ const Game = ({
   round,
   currentWinner
 }) => {
+  useEffect(() => {
+    console.log(isAuth)
+    if (isAuth) {
+      setPlayers("2", currentPlayer)
+    }
+    // eslint-disable-next-line
+  }, [isAuth, currentPlayer])
+
   let clickHandler = event => {
     const choiceUser = event.target.id
     setResultGame(
@@ -35,7 +43,6 @@ const Game = ({
       ModeGameList,
       currentPlayer,
       enemyPlayers,
-      round,
       currentWinner
     )
   }
@@ -59,13 +66,13 @@ let mapStateToProps = state => {
   return {
     isLoading: state.game.isLoading,
     ModeGameList: getModeGameList(state),
-    currentChoice: getCurrentChoice(state),
     winnerText: getWinnerText(state),
     enemyPlayers: getEnemyPlayers(state),
     currentPlayer: getCurrentPlayer(state),
     playersInfo: getPlayersInfo(state),
     round: getRound(state),
-    currentWinner: getCurrentWinner(state)
+    currentWinner: getCurrentWinner(state),
+    isAuth: getAuth(state)
   }
 }
 
@@ -87,7 +94,9 @@ let mapDispatchToProps = dispatch => ({
         round,
         currentWinner
       )
-    )
+    ),
+  setPlayers: (players, currentPlayer) =>
+    dispatch(setPlayers(players, currentPlayer))
 })
 
 export const GamePage = connect(mapStateToProps, mapDispatchToProps)(Game)

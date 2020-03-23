@@ -1,7 +1,7 @@
 export { Icon } from "./icon"
 export { RPSHeader, RPSButtons, RPSContainer } from "./rps"
 export { MainList } from "./main-nav"
-export { Loader } from "./loader"
+export { Loader, Preloader } from "./loader"
 export { mixinTypography } from "./typography"
 export { Title } from "./title"
 export {

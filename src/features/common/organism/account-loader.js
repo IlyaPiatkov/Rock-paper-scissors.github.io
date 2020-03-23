@@ -1,7 +1,9 @@
-import { useEffect } from "react"
+import React, { useEffect } from "react"
 import { connect } from "react-redux"
 
 import { login } from "../../../redux/reduser/auth-reduser"
+
+import { Preloader } from "../../../ui"
 
 const Loader = ({ children, setUserData }) => {
   useEffect(() => {
@@ -11,6 +13,8 @@ const Loader = ({ children, setUserData }) => {
 
     // mockSession()
   }, [setUserData])
+
+  // return <Preloader />
 
   return children
 }

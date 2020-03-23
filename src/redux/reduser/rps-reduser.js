@@ -114,7 +114,6 @@ export const setResultGame = (
   ModeGameList,
   currentPlayer,
   enemyPlayers,
-  round,
   currentWinner
 ) => {
   return dispatch => {

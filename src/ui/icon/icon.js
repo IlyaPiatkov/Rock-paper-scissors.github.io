@@ -90,6 +90,101 @@ const setElementSVG = svg => {
           </>
         )
       }
+    case "RPS":
+      return {
+        viewBox: "0 0 420.7 343.3",
+        key: "RPS",
+        path: (
+          <>
+            <g>
+              <path
+                d="M14 63C6 64 3 58 3 50 2 39 13 17 21 11c7-5 15-6 19 0"
+                strokeLinejoin="round"
+                stroke="#000"
+                strokeWidth="5.0474689999999995"
+                strokeLinecap="round"
+                fill="#fff"
+              />
+              <path
+                d="M97 6C80-2 45 3 30 21c-7 8-18 31-15 42 4 18 15 31 30 40 5 4 12 7 17 9 21 7 39-4 46-9 14 5 29 13 43 21 20 13 27-21 8-32-9-5-16-11-37-22 13 1 32 2 45 5 20 5 20-28-5-33l-47-6c-2-4 0-21-18-30z"
+                strokeLinejoin="round"
+                stroke="#000"
+                strokeWidth="5.0474689999999995"
+                strokeLinecap="round"
+                fill="#fff"
+              />
+              <path d="M123 68c-16-3-24 0-28 0l23 4 6 2-1-6zM109 101c-9-3-20-5-28-5l27 9 1-4z" />
+              <path
+                d="M28 55c9 9 12 11 17 14M31 44c13 8 19 10 28 14M36 31l20 7"
+                strokeLinejoin="round"
+                stroke="#000"
+                strokeWidth="5.0474689999999995"
+                strokeLinecap="round"
+                fill="none"
+              />
+              <path d="M117 34c-21-4-26-12-34-20 7 10 7 19 31 24l3-4z" />
+            </g>
+            <g>
+              <path
+                d="M113 334c-3 9-10 8-17 5-10-5-24-26-25-35s2-16 9-17"
+                strokeLinejoin="round"
+                stroke="#000"
+                strokeWidth="5.04751"
+                strokeLinecap="round"
+                fill="#fff"
+              />
+              <path
+                d="M80 214c-11 2-5 20 4 36 3 7-7 33 0 50 4 11 19 31 29 34 18 5 34 2 50-7 6-3 12-7 16-11 14-13 61-29 64-34 9-11-7-18-16-15-5 1-38 8-33 4 10-9 25-18 38-27 21-12-5-34-24-22l-37 22c7-11 17-28 26-37 14-16-15-32-31-12-11 14-29 40-53 58 0-15-1-46-33-39z"
+                strokeLinejoin="round"
+                stroke="#000"
+                strokeWidth="5.04751"
+                strokeLinecap="round"
+                fill="#fff"
+              />
+              <path
+                d="M170 241c-10 13-12 22-14 25l14-18 5-4zM192 269c-7 6-14 15-18 23a1257 1257 0 0023-17l-5-6z"
+                color="#000"
+              />
+              <path
+                d="M113 319l21-8M105 311l25-18M96 300l15-14"
+                strokeLinejoin="round"
+                stroke="#000"
+                strokeWidth="5.04751"
+                strokeLinecap="round"
+                fill="none"
+              />
+            </g>
+            <g>
+              <path
+                d="M403 131c8 3 12-3 14-10 4-11-3-35-9-42s-13-9-18-5"
+                strokeLinejoin="round"
+                stroke="#000"
+                strokeWidth="5.047346"
+                strokeLinecap="round"
+                fill="#fff"
+              />
+              <path
+                d="M335 57c19-5 52 9 62 29 5 10 10 35 5 44-8 17-21 27-38 33-6 2-13 4-19 4-24 3-43-2-43-19-20-1-20-32-6-35-19-12-7-37 15-32 3-3 4-20 24-24z"
+                strokeLinejoin="round"
+                stroke="#000"
+                strokeWidth="5.047346"
+                strokeLinecap="round"
+                fill="#fff"
+              />
+              <path d="M298 116c15 2 21-1 26-2l-24-3-5-2v7h3zM300 151c10 0 21-1 29-4l-27-1-2 5z" />
+              <path
+                d="M392 120c-11 7-15 7-21 10M391 109l-30 7M389 95l-21 2"
+                strokeLinejoin="round"
+                stroke="#000"
+                strokeWidth="5.047346"
+                strokeLinecap="round"
+                fill="none"
+              />
+              <path d="M310 79c21 1 28-6 38-12-10 8-12 17-37 17l-1-5z" />
+            </g>
+          </>
+        )
+      }
     default:
       return null
   }

@@ -4,15 +4,14 @@ import { createSlice } from "@reduxjs/toolkit"
 import { authAPI } from "../../api/api"
 import { setUserId } from "./profile-reduser"
 
-let initialState = {
-  email: null,
-  isAuth: false,
-  isErrorServer: false
-}
-
 const auth = createSlice({
   name: "auth",
-  initialState,
+  initialState: {
+    email: null,
+    isAuth: false,
+    isErrorServer: false,
+    userId: null
+  },
   reducers: {
     setUserData: (state, action) => ({
       ...state,

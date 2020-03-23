@@ -39,5 +39,3 @@ export const getCurrentPlayer = createSelector(
   rootProfileSelector,
   state => state.userId
 )
-
-export const getCurrentChoice = state => state.players.bot1.currentChoice

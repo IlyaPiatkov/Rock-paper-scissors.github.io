@@ -59,7 +59,6 @@ let mapStateToProps = state => {
     // userName: state.profile.name,
     // isLoading: state.game.isLoading,
     // ModeGameList: getModeGameList(state),
-    // currentChoice: getCurrentChoice(state),
     // winnerText: getWinnerText(state),
     // enemyPlayers: getEnemyPlayers(state),
     // currentPlayer: getCurrentPlayer(state),
