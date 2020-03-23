@@ -6,5 +6,5 @@ export {
   withAuthRedirect,
   FooterContainer
 } from "./molecule"
-export { Modal } from "./organism"
+export { Modal, AccountLoader } from "./organism"
 export { CommonContentTemplate } from "./templates"
