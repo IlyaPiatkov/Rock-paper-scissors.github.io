@@ -38,7 +38,6 @@ export const authReducer = reducer
 
 // Thunk
 export const login = (email, password) => async dispatch => {
-  dispatch(initialization(true))
   try {
     const response = await authAPI.login(email, password)
 
@@ -58,7 +57,6 @@ export const login = (email, password) => async dispatch => {
     dispatch(errorServer(true))
     console.warn(error)
   }
-  dispatch(initialization(false))
 }
 
 export const logout = () => {
