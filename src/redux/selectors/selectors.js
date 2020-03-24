@@ -13,3 +13,4 @@ export const getModeGame = createSelector(rootOptionsSelector, state =>
 )
 
 export const getAuth = createSelector(rootAuthSelector, state => state.isAuth)
+export const getIsLoad = createSelector(rootAuthSelector, state => state.isLoad)

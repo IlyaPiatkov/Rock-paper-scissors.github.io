@@ -3,12 +3,33 @@ import styled, { keyframes } from "styled-components"
 
 import { Icon } from "../icon"
 
-const run = keyframes`
-  from {
-    transform: rotate(0deg);
+const stagger = keyframes`
+  0% {
+    transform: rotate(0);
   }
-  to {
-    transform: rotate(360deg);
+  10% {
+    transform: rotate(2deg);
+  }
+  20% {
+    transform: rotate(-2deg);
+  }
+  30% {
+    transform: rotate(1deg);
+  }
+  40% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(0.5deg);
+  }
+  50% {
+    transform: rotate(-0.5deg);
+  }
+  60% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(0);
   }
 `
 
@@ -28,7 +49,20 @@ const Overlay = styled.div`
 const Container = styled.div`
   width: 70%;
   max-width: 30rem;
-  animation: ${run} 30s linear infinite;
+
+  g:nth-child(1) {
+    animation: ${stagger} 3s linear 0.1s infinite;
+  }
+
+  g:nth-child(2) {
+    animation: ${stagger} 3s linear 0.2s infinite;
+    transform-origin: 50% 150%;
+  }
+
+  g:nth-child(3) {
+    animation: ${stagger} 3s linear infinite;
+    transform-origin: 100% 50%;
+  }
 `
 
 export const Preloader = () => {
