@@ -6,8 +6,8 @@ import { generatorName, resultGame } from "../../features/rps"
 const players = createSlice({
   name: "players",
   initialState: {
-    player: { score: 0, currentChoice: null, isWinPrevRound: false },
-    bot1: { score: 0, currentChoice: null, isWinPrevRound: false }
+    // player: { score: 0, currentChoice: null, isWinPrevRound: false },
+    // bot1: { score: 0, currentChoice: null, isWinPrevRound: false }
     // bot2: { score: 0, currentChoice: null, isWinPrevRound: false },
     // bot3: { score: 0, currentChoice: null, isWinPrevRound: false }
   },
@@ -102,7 +102,7 @@ export const setPlayers = (players, currentPlayer) => {
   return dispatch => {
     let arrPlayers = [currentPlayer]
 
-    for (let i = 1; i < players; i++) {
+    for (let i = 0; i < players; i++) {
       arrPlayers.push(`bot${i}`)
     }
     dispatch(addPlayers(arrPlayers))

@@ -2,26 +2,32 @@ import React from "react"
 import { connect } from "react-redux"
 
 import { setUserName } from "../../redux/reduser/profile-reduser"
-import { setPlayers } from "../../redux/reduser/rps-reduser"
-import { setModeGame } from "../../redux/reduser/option-reduser"
+import { setModeGame, setEnemies } from "../../redux/reduser/option-reduser"
+
+import {
+  getModeList,
+  getModeGame,
+  getEnemies,
+  getUserName
+} from "../../redux/selectors/selectors"
+import { getCurrentPlayer } from "../../redux/selectors/rps-selector"
 
 import { RPSOptionsReduxForm, CommonContentTemplate } from "../../features"
 import { Title } from "../../ui"
-import { getModeGame } from "../../redux/selectors/selectors"
-import { getCurrentPlayer } from "../../redux/selectors/rps-selector"
 
 const OptionsRPS = ({
   setUserName,
-  name,
-  setPlayers,
+  userName,
   setModeGame,
+  setEnemies,
+  modeList,
   modeGame,
-  currentPlayer
+  enemies
 }) => {
   const submit = values => {
-    setPlayers(values.numberParticipants, currentPlayer)
     setUserName(values.firstName)
     setModeGame(values.modeGame)
+    setEnemies(values.enemies)
   }
 
   return (
@@ -31,8 +37,8 @@ const OptionsRPS = ({
       </Title>
       <RPSOptionsReduxForm
         onSubmit={submit}
-        userName={name}
-        modeGame={modeGame}
+        modeList={modeList}
+        initialValues={{ firstName: userName, enemies, modeGame }}
       />
     </CommonContentTemplate>
   )
@@ -40,19 +46,20 @@ const OptionsRPS = ({
 
 let mapStateToProps = state => {
   return {
-    name: state.profile.name,
+    userName: getUserName(state),
+    modeList: getModeList(state),
     modeGame: getModeGame(state),
+    enemies: getEnemies(state),
     currentPlayer: getCurrentPlayer(state)
   }
 }
 
 let mapDispatchToProps = dispatch => ({
-  setUserName: name => {
-    dispatch(setUserName(name))
+  setUserName: userName => {
+    dispatch(setUserName(userName))
   },
-  setPlayers: (players, currentPlayer) =>
-    dispatch(setPlayers(players, currentPlayer)),
-  setModeGame: modeGame => dispatch(setModeGame(modeGame))
+  setModeGame: modeGame => dispatch(setModeGame(modeGame)),
+  setEnemies: enemies => dispatch(setEnemies(enemies))
 })
 
 export const OptionsPage = connect(

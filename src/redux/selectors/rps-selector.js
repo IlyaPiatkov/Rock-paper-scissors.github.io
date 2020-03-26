@@ -24,7 +24,7 @@ export const getPlayersInfo = createSelector(
     let userId = profile.userId
     let info = {
       ...players,
-      [userId]: { ...players[userId], name: profile.name }
+      [userId]: { ...players[userId], userName: profile.userName }
     }
     return Object.entries(info)
   }

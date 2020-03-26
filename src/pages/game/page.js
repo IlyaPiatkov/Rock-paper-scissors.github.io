@@ -3,8 +3,7 @@ import { connect } from "react-redux"
 
 import { setResultGame, setPlayers } from "../../redux/reduser/rps-reduser"
 
-import { RPSHeader, RPSButtons, RPSContainer, Loader } from "../../ui"
-import { getModeGameList, getAuth } from "../../redux/selectors/selectors"
+import { getModeGameList, getEnemies } from "../../redux/selectors/selectors"
 import {
   getWinnerText,
   getEnemyPlayers,
@@ -13,12 +12,13 @@ import {
   getRound,
   getCurrentWinner
 } from "../../redux/selectors/rps-selector"
+
+import { RPSHeader, RPSButtons, RPSContainer, Loader } from "../../ui"
 import { CommonContentTemplate } from "../../features"
 
 const Game = ({
   ModeGameList,
   isLoading,
-  isAuth,
   setResultGame,
   setPlayers,
   winnerText,
@@ -26,15 +26,12 @@ const Game = ({
   currentPlayer,
   playersInfo,
   round,
-  currentWinner
+  currentWinner,
+  enemies
 }) => {
   useEffect(() => {
-    console.log(isAuth)
-    if (isAuth) {
-      setPlayers("2", currentPlayer)
-    }
-    // eslint-disable-next-line
-  }, [isAuth, currentPlayer])
+    setPlayers(enemies, currentPlayer)
+  }, [setPlayers, enemies, currentPlayer])
 
   let clickHandler = event => {
     const choiceUser = event.target.id
@@ -72,7 +69,7 @@ let mapStateToProps = state => {
     playersInfo: getPlayersInfo(state),
     round: getRound(state),
     currentWinner: getCurrentWinner(state),
-    isAuth: getAuth(state)
+    enemies: getEnemies(state)
   }
 }
 

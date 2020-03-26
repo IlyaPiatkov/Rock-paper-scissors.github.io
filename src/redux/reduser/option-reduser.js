@@ -1,8 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit"
 
 const MODE = {
-  classic: ['Rock', 'Paper', 'Scissors'],
-  extended: ['Rock', 'Paper', 'Scissors', 'Fire', 'Water'],
+  classic: ["Rock", "Paper", "Scissors"],
+  extended: ["Rock", "Paper", "Scissors", "Fire", "Water"]
 }
 
 const optionsGame = createSlice({
@@ -10,20 +10,23 @@ const optionsGame = createSlice({
   initialState: {
     modeGame: Object.keys(MODE)[0],
     dataGameList: MODE,
+    enemies: "1"
   },
   reducers: {
     setModeGame: (state, action) => ({
       ...state,
-      modeGame: action.payload,
+      modeGame: action.payload
+    }),
+    setEnemies: (state, action) => ({
+      ...state,
+      enemies: action.payload
     })
   }
 })
 
 const { actions, reducer } = optionsGame
 
-export const {
-  setModeGame,
-} = actions
+export const { setModeGame, setEnemies } = actions
 export const optionsReducer = reducer
 
 // Thunk

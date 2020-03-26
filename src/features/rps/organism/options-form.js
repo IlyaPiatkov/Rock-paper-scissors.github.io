@@ -22,7 +22,7 @@ const minLength2 = minLength(2)
 const defaultInput = ElementInput("input")
 const RadioInput = ElementRadio("input")
 
-const RPSOptionsForm = ({ handleSubmit, userName, modeGame }) => {
+const RPSOptionsForm = ({ handleSubmit, modeList }) => {
   return (
     <FormContainer onSubmit={handleSubmit}>
       <Field
@@ -32,7 +32,6 @@ const RPSOptionsForm = ({ handleSubmit, userName, modeGame }) => {
         component={defaultInput}
         type="text"
         placeholder="Name"
-        value={userName}
         validate={[required, maxLength15, minLength2]}
       />
 
@@ -43,24 +42,24 @@ const RPSOptionsForm = ({ handleSubmit, userName, modeGame }) => {
         <FormRadioWrap>
           <Field
             label="1"
-            name="numberParticipants"
+            name="enemies"
+            component={RadioInput}
+            type="radio"
+            value="1"
+          />
+          <Field
+            label="2"
+            name="enemies"
             component={RadioInput}
             type="radio"
             value="2"
           />
           <Field
-            label="2"
-            name="numberParticipants"
+            label="3"
+            name="enemies"
             component={RadioInput}
             type="radio"
             value="3"
-          />
-          <Field
-            label="3"
-            name="numberParticipants"
-            component={RadioInput}
-            type="radio"
-            value="4"
           />
         </FormRadioWrap>
       </FormFieldset>
@@ -69,7 +68,7 @@ const RPSOptionsForm = ({ handleSubmit, userName, modeGame }) => {
           Mode game
         </FormLabel>
         <FormRadioWrap>
-          {modeGame.map((item, key) => (
+          {modeList.map((item, key) => (
             <Field
               label={item}
               name="modeGame"

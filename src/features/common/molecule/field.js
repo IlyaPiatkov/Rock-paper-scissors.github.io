@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 import {
   FormBlock,
@@ -7,30 +7,27 @@ import {
   FormLabelRadio,
   InputBlock,
   FormLabelCheckbox
-} from '../../../ui';
+} from "../../../ui"
 
-export const ElementInput = Element => ({
-  input,
-  meta,
-  label,
-  ...props
-  }) => {
-
-  const hasError = meta.touched && meta.error;
+export const ElementInput = Element => ({ input, meta, label, ...props }) => {
+  const hasError = meta.touched && meta.error
 
   return (
     <FormBlock>
-      {label && <FormLabel medium htmlFor={props.id}>{label}</FormLabel>}
+      {label && (
+        <FormLabel medium htmlFor={props.id}>
+          {label}
+        </FormLabel>
+      )}
       <InputBlock error={hasError}>
-        <Element {...input} {...props}/>
+        <Element {...input} {...props} />
       </InputBlock>
-      { hasError && <FormError small> { meta.error } </FormError> }
+      {hasError && <FormError small> {meta.error} </FormError>}
     </FormBlock>
   )
 }
 
 export const ElementRadio = Element => ({ input, meta, label, ...props }) => {
-
   return (
     <FormLabelRadio medium isChecked={input.checked}>
       <Element {...input} {...props} />
@@ -44,9 +41,13 @@ export const ElementRadio = Element => ({ input, meta, label, ...props }) => {
   )
 }
 
-export const ElementCheckbox = Element => ({ input, meta, label, ...props }) => {
-
-  const hasError = meta.touched && meta.error;
+export const ElementCheckbox = Element => ({
+  input,
+  meta,
+  label,
+  ...props
+}) => {
+  const hasError = meta.touched && meta.error
 
   return (
     <FormBlock>
@@ -59,7 +60,7 @@ export const ElementCheckbox = Element => ({ input, meta, label, ...props }) => 
         </div>
         <span>{label}</span>
       </FormLabelCheckbox>
-      { hasError && <FormError small> { meta.error } </FormError> }
+      {hasError && <FormError small> {meta.error} </FormError>}
     </FormBlock>
   )
 }

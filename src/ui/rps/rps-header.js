@@ -120,7 +120,7 @@ export const RPSHeader = ({ playersInfo, winnerText, round }) => {
             key={key}
             disabled={disabled}
           >
-            <Name>{item[1].name ? item[1].name : item[0]}</Name>
+            <Name>{item[1].userName ? item[1].userName : item[0]}</Name>
             <Avatar>
               <Icon name={iconName} />
             </Avatar>
