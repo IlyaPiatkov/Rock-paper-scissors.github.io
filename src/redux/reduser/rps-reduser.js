@@ -117,7 +117,7 @@ export const setResultGame = (
   currentWinner
 ) => {
   return dispatch => {
-    dispatch(toggleIsLoading(true))
+    // dispatch(toggleIsLoading(true))
 
     let choicePlayers = enemyPlayers.map(item => ({
       userId: item,
@@ -153,8 +153,8 @@ export const setResultGame = (
       dispatch(resetRounds())
       dispatch(resetWinners())
     }
-    setTimeout(() => {
-      dispatch(toggleIsLoading(false))
-    }, 1500)
+    // setTimeout(() => {
+    //   dispatch(toggleIsLoading(false))
+    // }, 1500)
   }
 }

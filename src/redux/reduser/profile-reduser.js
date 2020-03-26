@@ -13,7 +13,7 @@ const profile = createSlice({
     }),
     setUserId: (state, action) => ({
       ...state,
-      userId: action.payload
+      userId: action.payload.toString()
     })
   }
 })
