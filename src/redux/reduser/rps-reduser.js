@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import * as R from "ramda"
 
 import { generatorName, resultGame } from "../../features/rps"
+import { ARRAY_NAMES } from "../../libs"
 
 const players = createSlice({
   name: "players",
@@ -16,11 +17,17 @@ const players = createSlice({
       action.payload.reduce(
         (acc, item) => ({
           ...acc,
-          [item]: { score: 0, currentChoice: null, isWinPrevRound: false }
+          [item.userId]: {
+            userId: item.userId,
+            userName: item.userName,
+            score: 0,
+            currentChoice: null,
+            isWinPrevRound: false
+          }
         }),
         {}
       ),
-    removePlayers: () => {},
+    removePlayers: () => ({}),
     resetPlayer: state =>
       Object.keys(state).reduce(
         (acc, keyPlayer) => ({
@@ -34,7 +41,7 @@ const players = createSlice({
     setChoicePlayer: (state, action) =>
       R.set(
         R.lensPath([action.payload.userId, "currentChoice"]),
-        action.payload.choice,
+        action.payload.currentChoice,
         state
       ),
     setWinnerPrevRound: (state, action) =>
@@ -57,7 +64,8 @@ export const {
   incrementScorePlayer,
   setChoicePlayer,
   setWinnerPrevRound,
-  resetWinnerPrevRound
+  resetWinnerPrevRound,
+  removePlayers
 } = actions
 export const playersReducer = reducer
 
@@ -66,7 +74,7 @@ const game = createSlice({
   initialState: {
     currentWinner: null,
     rounds: 1,
-    winnerText: "",
+    winnerText: null,
     isLoading: false
   },
   reducers: {
@@ -79,6 +87,7 @@ const game = createSlice({
       ...state,
       winnerText: action.payload
     }),
+    resetWinnerText: state => R.set(R.lensProp("winnerText"), null, state),
     toggleIsLoading: (state, action) => ({
       ...state,
       isLoading: action.payload
@@ -94,16 +103,21 @@ export const {
   resetRounds,
   setWinnerText,
   toggleIsLoading,
-  resetWinners
+  resetWinners,
+  resetWinnerText
 } = actions1
 export const gameReducer = reducer1
 
-export const setPlayers = (players, currentPlayer) => {
+// Thunk
+export const setPlayers = (enemies, currentPlayer) => {
   return dispatch => {
     let arrPlayers = [currentPlayer]
 
-    for (let i = 0; i < players; i++) {
-      arrPlayers.push(`bot${i}`)
+    for (let i = 0; i < enemies; i++) {
+      arrPlayers.push({
+        userId: `bot${i}`,
+        userName: generatorName(ARRAY_NAMES)
+      })
     }
     dispatch(addPlayers(arrPlayers))
   }
@@ -120,13 +134,13 @@ export const setResultGame = (
     // dispatch(toggleIsLoading(true))
 
     let choicePlayers = enemyPlayers.map(item => ({
-      userId: item,
-      choice: generatorName(ModeGameList)
+      ...item,
+      currentChoice: generatorName(ModeGameList)
     }))
 
     choicePlayers.push({
-      userId: currentPlayer,
-      choice: choiceUser
+      ...currentPlayer,
+      currentChoice: choiceUser
     })
 
     if (currentWinner) {
@@ -142,13 +156,25 @@ export const setResultGame = (
     if (winners === null) {
       dispatch(setWinnerText("Draw"))
     } else if (winners.length > 1) {
+      let arrWinnersName = []
+      let arrWinnersId = []
+      winners.forEach(item => {
+        arrWinnersName.push(item.userName ? item.userName : item.userId)
+        arrWinnersId.push(item.userId)
+        dispatch(setWinnerPrevRound({ userId: item.userId }))
+      })
+      dispatch(setWinners({ userId: arrWinnersId }))
+      dispatch(setWinnerText("Go to the next round: " + arrWinnersName))
       dispatch(setRounds())
-      dispatch(setWinnerText("Go to the next round: " + winners))
-      winners.map(item => dispatch(setWinnerPrevRound({ userId: item })))
-      dispatch(setWinners({ userId: winners }))
     } else {
-      dispatch(setWinnerText("Winner: " + winners))
-      dispatch(incrementScorePlayer({ userId: winners[0] }))
+      winners.forEach(item => {
+        dispatch(
+          setWinnerText(
+            "Winner: " + (item.userName ? item.userName : item.userId)
+          )
+        )
+        dispatch(incrementScorePlayer({ userId: item.userId }))
+      })
       dispatch(resetWinnerPrevRound())
       dispatch(resetRounds())
       dispatch(resetWinners())
@@ -156,5 +182,13 @@ export const setResultGame = (
     // setTimeout(() => {
     //   dispatch(toggleIsLoading(false))
     // }, 1500)
+  }
+}
+
+export const resetGame = () => {
+  return dispatch => {
+    dispatch(resetRounds())
+    dispatch(resetWinners())
+    dispatch(resetWinnerText())
   }
 }

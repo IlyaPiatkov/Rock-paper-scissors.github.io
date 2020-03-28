@@ -10,7 +10,6 @@ import {
   getEnemies,
   getUserName
 } from "../../redux/selectors/selectors"
-import { getCurrentPlayer } from "../../redux/selectors/rps-selector"
 
 import { RPSOptionsReduxForm, CommonContentTemplate } from "../../features"
 import { Title } from "../../ui"
@@ -49,8 +48,7 @@ let mapStateToProps = state => {
     userName: getUserName(state),
     modeList: getModeList(state),
     modeGame: getModeGame(state),
-    enemies: getEnemies(state),
-    currentPlayer: getCurrentPlayer(state)
+    enemies: getEnemies(state)
   }
 }
 

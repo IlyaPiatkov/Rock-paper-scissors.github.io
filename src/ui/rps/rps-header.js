@@ -19,7 +19,7 @@ const Block = styled.div`
       grid-template-areas:
         "name name"
         "counter avatar"
-        "choise choise";
+        "choice choice";
     `}
   ${p =>
     p.right &&
@@ -27,30 +27,7 @@ const Block = styled.div`
       grid-template-areas:
         "name name"
         "avatar counter"
-        "choise choise";
-    `}
-
-  ${p =>
-    p.disabled &&
-    css`
-      &::after,
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 8rem;
-        width: 1rem;
-        height: 100%;
-        background-color: #000;
-      }
-
-      &::after {
-        transform: rotate(45deg);
-      }
-
-      &::before {
-        transform: rotate(-45deg);
-      }
+        "choice choice";
     `}
 `
 
@@ -67,14 +44,17 @@ const Counter = styled.div`
 `
 
 const Choice = styled.div`
-  grid-area: choise;
+  grid-area: choice;
   text-align: center;
 `
 
 const Name = styled.span`
   grid-area: name;
-  text-align: center;
   font-size: 2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
 `
 
 const Winner = styled.span`
@@ -105,27 +85,51 @@ const Round = styled.span`
   animation: ${roundScale} 2s ease forwards;
 `
 
-export const RPSHeader = ({ playersInfo, winnerText, round }) => {
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+
+  &::after,
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1rem;
+    height: 100%;
+    background-color: #000;
+  }
+
+  &::after {
+    transform: rotate(45deg);
+  }
+
+  &::before {
+    transform: rotate(-45deg);
+  }
+`
+
+export const RPSHeader = ({ players, winnerText, round }) => {
   return (
     <Header>
-      {playersInfo.map((item, key) => {
+      {players.map((item, key) => {
         let positionBlock = key === 0 || key === 2 ? true : false
-        let iconName = item[0] !== `bot${key}` ? "user" : "bot"
-        let disabled = !item[1].isWinPrevRound && round !== 1 ? true : false
+        let iconName = item.userId !== `bot${key - 1}` ? "user" : "bot"
+        let disabled = !item.isWinPrevRound && round !== 1 ? true : false
 
         return (
-          <Block
-            right={positionBlock}
-            left={!positionBlock}
-            key={key}
-            disabled={disabled}
-          >
-            <Name>{item[1].userName ? item[1].userName : item[0]}</Name>
+          <Block right={positionBlock} left={!positionBlock} key={key}>
+            <Name>{item.userName ? item.userName : item.userId}</Name>
             <Avatar>
               <Icon name={iconName} />
             </Avatar>
-            <Counter>{item[1].score}</Counter>
-            <Choice>{item[1].currentChoice}</Choice>
+            <Counter>{item.score}</Counter>
+            {item.currentChoice && <Choice>{item.currentChoice}</Choice>}
+            {disabled && <Overlay />}
           </Block>
         )
       })}

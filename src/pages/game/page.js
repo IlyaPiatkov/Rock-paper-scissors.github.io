@@ -1,16 +1,20 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
 
-import { setResultGame, setPlayers } from "../../redux/reduser/rps-reduser"
+import {
+  setResultGame,
+  setPlayers,
+  resetGame
+} from "../../redux/reduser/rps-reduser"
 
 import { getModeGameList, getEnemies } from "../../redux/selectors/selectors"
 import {
   getWinnerText,
   getEnemyPlayers,
   getCurrentPlayer,
-  getPlayersInfo,
   getRound,
-  getCurrentWinner
+  getCurrentWinner,
+  getPlayers
 } from "../../redux/selectors/rps-selector"
 
 import { RPSHeader, RPSButtons, RPSContainer, Loader } from "../../ui"
@@ -24,14 +28,19 @@ const Game = ({
   winnerText,
   enemyPlayers,
   currentPlayer,
-  playersInfo,
   round,
   currentWinner,
-  enemies
+  enemies,
+  players,
+  resetGame
 }) => {
   useEffect(() => {
     setPlayers(enemies, currentPlayer)
-  }, [setPlayers, enemies, currentPlayer])
+
+    return () => {
+      resetGame()
+    }
+  }, [setPlayers, enemies, currentPlayer, resetGame])
 
   let clickHandler = event => {
     const choiceUser = event.target.id
@@ -47,11 +56,7 @@ const Game = ({
   return (
     <CommonContentTemplate>
       <RPSContainer>
-        <RPSHeader
-          playersInfo={playersInfo}
-          winnerText={winnerText}
-          round={round}
-        />
+        <RPSHeader players={players} winnerText={winnerText} round={round} />
         <RPSButtons names={ModeGameList} onClick={clickHandler} />
       </RPSContainer>
       {isLoading && <Loader />}
@@ -66,10 +71,10 @@ let mapStateToProps = state => {
     winnerText: getWinnerText(state),
     enemyPlayers: getEnemyPlayers(state),
     currentPlayer: getCurrentPlayer(state),
-    playersInfo: getPlayersInfo(state),
     round: getRound(state),
     currentWinner: getCurrentWinner(state),
-    enemies: getEnemies(state)
+    enemies: getEnemies(state),
+    players: getPlayers(state)
   }
 }
 
@@ -93,7 +98,8 @@ let mapDispatchToProps = dispatch => ({
       )
     ),
   setPlayers: (players, currentPlayer) =>
-    dispatch(setPlayers(players, currentPlayer))
+    dispatch(setPlayers(players, currentPlayer)),
+  resetGame: () => dispatch(resetGame())
 })
 
 export const GamePage = connect(mapStateToProps, mapDispatchToProps)(Game)
