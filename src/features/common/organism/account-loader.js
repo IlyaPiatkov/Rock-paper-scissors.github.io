@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, Suspense } from "react"
 import { connect } from "react-redux"
 
 import { login } from "../../../redux/reduser/auth-reduser"
@@ -20,7 +20,7 @@ const Loader = ({ children, setUserData, isLoad }) => {
     return <Preloader />
   }
 
-  return children
+  return <Suspense fallback={<Preloader />}>{children}</Suspense>
 }
 
 let mapStateToProps = state => ({ isLoad: getIsLoad(state) })

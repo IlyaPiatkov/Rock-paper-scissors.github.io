@@ -1,5 +1,6 @@
 import React from "react"
 import { Field, reduxForm } from "redux-form"
+import { useTranslation } from "react-i18next"
 
 import {
   required,
@@ -23,21 +24,23 @@ const defaultInput = ElementInput("input")
 const RadioInput = ElementRadio("input")
 
 const RPSOptionsForm = ({ handleSubmit, modeList }) => {
+  const [t] = useTranslation(["common"])
+
   return (
     <FormContainer onSubmit={handleSubmit}>
       <Field
-        label="First Name"
+        label={t("common:label.firstName")}
         name="firstName"
         id="firstName"
         component={defaultInput}
         type="text"
-        placeholder="Name"
+        placeholder={t("common:placeholder.firstName")}
         validate={[required, maxLength15, minLength2]}
       />
 
       <FormFieldset>
         <FormLabel as="legend" medium>
-          Number of Participants
+          {t("common:label.participants")}
         </FormLabel>
         <FormRadioWrap>
           <Field
@@ -65,12 +68,12 @@ const RPSOptionsForm = ({ handleSubmit, modeList }) => {
       </FormFieldset>
       <FormFieldset>
         <FormLabel as="legend" medium>
-          Mode game
+          {t("common:label.modeGame")}
         </FormLabel>
         <FormRadioWrap>
           {modeList.map((item, key) => (
             <Field
-              label={item}
+              label={t(`common:label.${item}`)}
               name="modeGame"
               component={RadioInput}
               type="radio"
@@ -81,7 +84,7 @@ const RPSOptionsForm = ({ handleSubmit, modeList }) => {
         </FormRadioWrap>
       </FormFieldset>
 
-      <ButtonDefault>Save</ButtonDefault>
+      <ButtonDefault>{t("common:save")}</ButtonDefault>
     </FormContainer>
   )
 }

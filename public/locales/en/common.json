@@ -1,0 +1,36 @@
+{
+  "registration": "Registration",
+  "login": "Login",
+  "enter": "Enter",
+  "round": "Round",
+  "save": "Save",
+  "mainNav": {
+    "singleGame": "Single game",
+    "multiplayerGame": "Multiplayer game",
+    "options": "Options",
+    "rules": "Rules"
+  },
+  "game": {
+    "Rock": "Rock",
+    "Paper": "Paper",
+    "Scissors": "Scissors"
+  },
+  "options": {
+    "title": "Options game"
+  },
+  "label": {
+    "firstName": "First Name",
+    "participants": "Number of Participants",
+    "modeGame": "Mode game",
+    "classic": "classic",
+    "extended": "extended"
+  },
+  "placeholder": {
+    "firstName": "Name"
+  },
+  "notFoundPage": {
+    "title": "Oops! Page not found",
+    "text": "we are sorry, but the page you requested was not found",
+    "button": "Homepage"
+  }
+}

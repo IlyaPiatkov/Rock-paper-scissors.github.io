@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import { useTranslation } from "react-i18next"
 
 import { setUserName } from "../../redux/reduser/profile-reduser"
 import { setModeGame, setEnemies } from "../../redux/reduser/option-reduser"
@@ -23,6 +24,8 @@ const OptionsRPS = ({
   modeGame,
   enemies
 }) => {
+  const [t] = useTranslation(["common"])
+
   const submit = values => {
     setUserName(values.firstName)
     setModeGame(values.modeGame)
@@ -32,7 +35,7 @@ const OptionsRPS = ({
   return (
     <CommonContentTemplate>
       <Title large center>
-        Options RPS
+        {t("common:options.title")}
       </Title>
       <RPSOptionsReduxForm
         onSubmit={submit}

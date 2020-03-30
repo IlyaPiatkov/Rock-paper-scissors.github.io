@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import { useTranslation } from "react-i18next"
 
 import { errorServer, registr } from "../../../redux/reduser/auth-reduser"
 
@@ -12,6 +13,8 @@ import {
 } from "../../../features"
 
 const Registr = ({ setUserData, isErrorServer, errorServer }) => {
+  const [t] = useTranslation(["common", "auth"])
+
   const submit = values => {
     setUserData(values.email, values.password)
   }
@@ -24,13 +27,13 @@ const Registr = ({ setUserData, isErrorServer, errorServer }) => {
     <CommonContentTemplate>
       <MainContent>
         <Title large center>
-          Registration
+          {t("common:registration")}
         </Title>
         <RegistrReduxForm onSubmit={submit} />
         {isErrorServer && (
           <Modal
-            title={"Oops"}
-            text={"Something went wrong, try again later"}
+            title={t("auth:modal.errorServerTitle")}
+            text={t("auth:modal.errorServerText")}
             close={closeModal}
           />
         )}

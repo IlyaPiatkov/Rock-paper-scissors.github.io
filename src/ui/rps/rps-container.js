@@ -19,6 +19,6 @@ const Container = styled.div`
   }
 `
 
-export const RPSContainer = props => {
-  return <Container>{props.children}</Container>
+export const RPSContainer = ({ children }) => {
+  return <Container>{children}</Container>
 }

@@ -1,4 +1,5 @@
 import React from "react"
+import "./i18n"
 
 import GlobalStyle from "./global-style"
 import { Routes } from "./pages/routers"

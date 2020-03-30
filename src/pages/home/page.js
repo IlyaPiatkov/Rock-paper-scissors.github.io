@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { NavLink } from "react-router-dom"
 import { connect } from "react-redux"
+import { useTranslation } from "react-i18next"
 
 import { CommonContentTemplate } from "../../features"
 import { MainList, buttonStyle } from "../../ui"
@@ -11,27 +12,29 @@ const MainLink = styled(NavLink)`
 `
 
 const Home = ({ isAuth }) => {
+  const [t] = useTranslation(["common"])
+
   return (
     <CommonContentTemplate>
       <MainList>
         <li>
           <MainLink to="game" default>
-            Single game
+            {t("common:mainNav.singleGame")}
           </MainLink>
         </li>
         <li>
           <MainLink to={isAuth ? "search" : "registration"} default>
-            Multiplayer game
+            {t("common:mainNav.multiplayerGame")}
           </MainLink>
         </li>
         <li>
           <MainLink to="options" default>
-            Options
+            {t("common:mainNav.options")}
           </MainLink>
         </li>
         <li>
           <MainLink to="rules" default>
-            Rules
+            {t("common:mainNav.rules")}
           </MainLink>
         </li>
         {/* {!isAuth && (

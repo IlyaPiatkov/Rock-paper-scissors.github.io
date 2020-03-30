@@ -1,5 +1,7 @@
 import React from "react"
+import { useTranslation } from "react-i18next"
 import styled, { css, keyframes } from "styled-components"
+
 import { Icon } from "../icon"
 
 const Header = styled.div`
@@ -114,6 +116,8 @@ const Overlay = styled.div`
 `
 
 export const RPSHeader = ({ players, winnerText, round }) => {
+  const [t] = useTranslation(["common"])
+
   return (
     <Header>
       {players.map((item, key) => {
@@ -135,7 +139,7 @@ export const RPSHeader = ({ players, winnerText, round }) => {
       })}
       <Winner>{winnerText}</Winner>
       <Round>
-        Round <br />
+        {t("common:round")} <br />
         {round}
       </Round>
     </Header>

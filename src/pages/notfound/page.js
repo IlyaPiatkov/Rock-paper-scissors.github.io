@@ -1,6 +1,8 @@
 import React from "react"
-import styled from "styled-components"
 import { NavLink } from "react-router-dom"
+import { useTranslation } from "react-i18next"
+import styled from "styled-components"
+
 import { buttonStyle } from "../../ui"
 
 const Wrap = styled.div`
@@ -49,18 +51,20 @@ const ButtonBack = styled(NavLink)`
 `
 
 export const NotFoundPage = () => {
+  const [t] = useTranslation(["common"])
+
   return (
     <Wrap>
       <Container>
-        <Title>Oops! Page not found</Title>
+        <Title>{t("common:notFoundPage.title")}</Title>
         <WrapText>
           <span>4</span>
           <span>0</span>
           <span>4</span>
         </WrapText>
-        <Text>we are sorry, but the page you requested was not found</Text>
+        <Text>{t("common:notFoundPage.text")}</Text>
         <ButtonBack default to="/">
-          Homepage
+          {t("common:notFoundPage.button")}
         </ButtonBack>
       </Container>
     </Wrap>
