@@ -18,7 +18,7 @@ export {
 export { buttonStyle, ButtonDefault, ButtonPrimary } from "./button"
 export { ModalOverlay, ModalContainer, ModalClose } from "./modal"
 export { Text } from "./text"
-export { MainContainer, MainContent } from "./main-content"
+export { MainContainer, MainContent, MainWrap } from "./main-content"
 export { FooterWrap, FooterButtons } from "./footer"
 export {
   SearchWrap,
@@ -29,5 +29,6 @@ export {
   SearchItem,
   SearchInfo
 } from "./search-game"
-export { HeaderContainer } from "./header"
-export { MainMenuContainer } from "./main-menu"
+export { Header } from "./header"
+export { MainMenu } from "./main-menu"
+export { Hamburger } from "./hamburger"

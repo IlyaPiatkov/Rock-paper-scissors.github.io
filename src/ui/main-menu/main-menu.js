@@ -1,7 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
 import { NavLink } from "react-router-dom"
-import { connect } from "react-redux"
 
 const NavBar = styled.nav`
   position: absolute;
@@ -10,15 +9,15 @@ const NavBar = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 5rem 1rem 5rem 35%;
   height: 100%;
   width: 100%;
   text-align: center;
-  // background-color: #323639;
-  background-color: #000;
+  background-color: #262626;
+  // background-color: #000;
   opacity: 0;
   transition: all 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
   transform: scale(0);
-  z-index: 25;
 
   ${props =>
     props.isOpenMenu &&
@@ -58,10 +57,9 @@ const Link = styled(NavLink)`
   display: inline-block;
   font-size: 18px;
 `
-
-const MainMenu = props => {
-  return props.isOpenMenu ? (
-    <NavBar isOpenMenu={props.isOpenMenu}>
+export const MainMenu = ({ openMenu }) => {
+  return openMenu.isClose ? (
+    <NavBar isOpenMenu={openMenu}>
       <List>
         <Item>
           <Link to="/Intro">Intro</Link>
@@ -81,7 +79,3 @@ const MainMenu = props => {
     ""
   )
 }
-
-let mapStateToProps = state => ({ isOpenMenu: state.mainMenu.isOpenMenu })
-
-export const MainMenuContainer = connect(mapStateToProps)(MainMenu)

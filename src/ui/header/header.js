@@ -1,10 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
-import { connect } from 'react-redux'
-
-import Hamburger from '../hamburger/hamburger'
-import { toggleMenu } from '../../redux/reduser/main-menu-reduser'
+import React from "react"
+import styled from "styled-components"
+import { NavLink } from "react-router-dom"
 
 const Container = styled.header`
   position: fixed;
@@ -30,24 +26,12 @@ const Link = styled(NavLink)`
   display: flex;
 `
 
-const Header = ({isOpenMenu, toggleMenu}) => {
+export const Header = ({ isOpenMenu }) => {
   return (
     <Container isOpenMenu={isOpenMenu}>
-      <Link to='/'>
-        <Logo src='img/logo.svg' alt='logo site' />
+      <Link to="/">
+        <Logo src="img/logo.svg" alt="logo site" />
       </Link>
-      <Hamburger
-        showMenu={toggleMenu}
-        isOpenMenu={isOpenMenu}
-        />
-      </Container>
+    </Container>
   )
 }
-
-let mapStateToProps = (state) => ({isOpenMenu: state.mainMenu.isOpenMenu})
-
-let mapDispatchTooProps = (dispatch) => ({
-  toggleMenu: () => {dispatch(toggleMenu())}
-})
-
-export const HeaderContainer = connect(mapStateToProps, mapDispatchTooProps)(Header)

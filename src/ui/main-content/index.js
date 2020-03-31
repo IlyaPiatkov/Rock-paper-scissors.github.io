@@ -1,1 +1,1 @@
-export { MainContainer, MainContent } from './main-content'
+export { MainContainer, MainContent, MainWrap } from "./main-content"

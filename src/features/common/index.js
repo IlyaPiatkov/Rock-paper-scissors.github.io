@@ -1,4 +1,11 @@
-export { required, maxLength, minLength, email, getRandomInt } from "./atom"
+export {
+  required,
+  maxLength,
+  minLength,
+  email,
+  getRandomInt,
+  transition
+} from "./atom"
 export {
   ElementInput,
   ElementRadio,
