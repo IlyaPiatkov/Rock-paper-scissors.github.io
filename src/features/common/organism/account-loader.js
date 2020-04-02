@@ -13,7 +13,7 @@ const Loader = ({ children, setUserData, isLoad }) => {
       setUserData("test4@test.com", "qwerty")
     }
 
-    // mockSession()
+    mockSession()
   }, [setUserData])
 
   if (isLoad) {

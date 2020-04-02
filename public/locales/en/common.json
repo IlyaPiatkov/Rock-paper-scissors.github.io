@@ -18,12 +18,18 @@
   "options": {
     "title": "Options game"
   },
+  "search": {
+    "createRoom": "Create room",
+    "searchRoom": "Search room",
+    "searchGame": "Search Game"
+  },
   "label": {
     "firstName": "First Name",
     "participants": "Number of Participants",
     "modeGame": "Mode game",
     "classic": "classic",
-    "extended": "extended"
+    "extended": "extended",
+    "capacityRoom": "Capacity room"
   },
   "placeholder": {
     "firstName": "Name"
@@ -32,5 +38,9 @@
     "title": "Oops! Page not found",
     "text": "we are sorry, but the page you requested was not found",
     "button": "Homepage"
+  },
+  "modal": {
+    "errorServerTitle": "Oops",
+    "errorServerText": "Something went wrong, try again later"
   }
 }

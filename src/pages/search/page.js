@@ -1,5 +1,17 @@
 import React from "react"
 import { connect } from "react-redux"
+import { useTranslation } from "react-i18next"
+
+import {
+  createRoom,
+  searchRoom,
+  errorServer
+} from "../../redux/reduser/search-reduser"
+import {
+  getCapacityRoom,
+  getUserId,
+  getUserName
+} from "../../redux/selectors/selectors"
 
 import {
   MainContent,
@@ -15,14 +27,74 @@ import {
   Text,
   ButtonDefault
 } from "../../ui"
-import { CommonContentTemplate } from "../../features"
+import {
+  CommonContentTemplate,
+  CreateRoomReduxForm,
+  Modal
+} from "../../features"
 
-const Search = () => {
+const Form = ({ handleCreateRoom, handleSearchRoom, capacityRoom, t }) => {
+  return (
+    <>
+      <CreateRoomReduxForm
+        onSubmit={handleCreateRoom}
+        initialValues={{ capacityRoom: capacityRoom }}
+      />
+      <ButtonDefault type="button" onClick={handleSearchRoom}>
+        {t("common:search.searchRoom")}
+      </ButtonDefault>
+    </>
+  )
+}
+
+const List = ({ userName, userId, t }) => (
+  <SearchList>
+    <SearchItem>
+      <Icon name="user" />
+      <Text medium>{userName ? userName : userId}</Text>
+      <SearchInfo>
+        <ButtonDefault type="button">Ready</ButtonDefault>
+      </SearchInfo>
+    </SearchItem>
+    <SearchItem>
+      <Icon name="user" />
+      <Text medium>name</Text>
+      <SearchInfo>
+        <Text medium>Ready</Text>
+      </SearchInfo>
+    </SearchItem>
+  </SearchList>
+)
+
+const Search = ({
+  isErrorServer,
+  isCreatedRoom,
+  createRoom,
+  searchRoom,
+  capacityRoom,
+  errorServer,
+  userName,
+  userId
+}) => {
+  const [t] = useTranslation(["common"])
+
+  const handleCreateRoom = values => {
+    createRoom(values.capacityRoom)
+  }
+
+  const handleSearchRoom = () => {
+    searchRoom()
+  }
+
+  const closeModal = () => {
+    errorServer(false)
+  }
+
   return (
     <CommonContentTemplate>
       <MainContent>
         <Title large center>
-          Search Game
+          {t("common:search.searchGame")}
         </Title>
         <SearchWrap>
           <SearchMaps>
@@ -32,23 +104,25 @@ const Search = () => {
             <SearchCircle third />
             <SearchCircle fourth />
           </SearchMaps>
-          <SearchList>
-            <SearchItem>
-              <Icon name="user" />
-              <Text medium>name</Text>
-              <SearchInfo>
-                <ButtonDefault type="button">Ready</ButtonDefault>
-              </SearchInfo>
-            </SearchItem>
-            <SearchItem>
-              <Icon name="user" />
-              <Text medium>name</Text>
-              <SearchInfo>
-                <Text medium>Ready</Text>
-              </SearchInfo>
-            </SearchItem>
-          </SearchList>
+
+          {isCreatedRoom ? (
+            <List userName={userName} userId={userId} t={t} />
+          ) : (
+            <Form
+              handleCreateRoom={handleCreateRoom}
+              handleSearchRoom={handleSearchRoom}
+              capacityRoom={capacityRoom}
+              t={t}
+            />
+          )}
         </SearchWrap>
+        {isErrorServer && (
+          <Modal
+            title={t("common:modal.errorServerTitle")}
+            text={t("common:modal.errorServerText")}
+            close={closeModal}
+          />
+        )}
       </MainContent>
     </CommonContentTemplate>
   )
@@ -56,21 +130,20 @@ const Search = () => {
 
 let mapStateToProps = state => {
   return {
-    // userName: state.profile.name,
-    // isLoading: state.game.isLoading,
-    // ModeGameList: getModeGameList(state),
-    // winnerText: getWinnerText(state),
-    // enemyPlayers: getEnemyPlayers(state),
-    // currentPlayer: getCurrentPlayer(state),
-    // playersInfo: getPlayersInfo(state)
+    isErrorServer: state.search.isErrorServer,
+    isCreatedRoom: state.search.isCreatedRoom,
+    capacityRoom: getCapacityRoom(state),
+    userId: getUserId(state),
+    userName: getUserName(state)
   }
 }
 
 let mapDispatchToProps = dispatch => ({
-  // setResultGame: (choiceUser, ModeGameList, currentPlayer, enemyPlayers) =>
-  //   dispatch(
-  //     setResultGame(choiceUser, ModeGameList, currentPlayer, enemyPlayers)
-  //   )
+  createRoom: capacity => dispatch(createRoom(capacity)),
+  searchRoom: () => dispatch(searchRoom()),
+  errorServer: isErrorServer => {
+    dispatch(errorServer(isErrorServer))
+  }
 })
 
 export const SearchPage = connect(mapStateToProps, mapDispatchToProps)(Search)

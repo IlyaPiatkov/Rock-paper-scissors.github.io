@@ -13,7 +13,7 @@ import {
 } from "../../../features"
 
 const Registr = ({ setUserData, isErrorServer, errorServer }) => {
-  const [t] = useTranslation(["common", "auth"])
+  const [t] = useTranslation(["common"])
 
   const submit = values => {
     setUserData(values.email, values.password)
@@ -32,8 +32,8 @@ const Registr = ({ setUserData, isErrorServer, errorServer }) => {
         <RegistrReduxForm onSubmit={submit} />
         {isErrorServer && (
           <Modal
-            title={t("auth:modal.errorServerTitle")}
-            text={t("auth:modal.errorServerText")}
+            title={t("common:modal.errorServerTitle")}
+            text={t("common:modal.errorServerText")}
             close={closeModal}
           />
         )}
