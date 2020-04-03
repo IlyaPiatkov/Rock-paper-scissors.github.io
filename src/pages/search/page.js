@@ -3,15 +3,11 @@ import { connect } from "react-redux"
 import { useTranslation } from "react-i18next"
 
 import {
-  createRoom,
   searchRoom,
-  errorServer
+  errorServer,
+  connectRoom
 } from "../../redux/reduser/search-reduser"
-import {
-  getCapacityRoom,
-  getUserId,
-  getUserName
-} from "../../redux/selectors/selectors"
+import { getUserId, getUserName } from "../../redux/selectors/selectors"
 
 import {
   MainContent,
@@ -31,14 +27,21 @@ import {
   CommonContentTemplate,
   CreateRoomReduxForm,
   Modal
+  // transition
 } from "../../features"
+import { createRoom } from "../../redux/reduser/create-reduser"
 
-const Form = ({ handleCreateRoom, handleSearchRoom, capacityRoom, t }) => {
+const Form = ({
+  handleCreateRoom,
+  handleSearchRoom,
+  createRoomCapacity,
+  t
+}) => {
   return (
     <>
       <CreateRoomReduxForm
         onSubmit={handleCreateRoom}
-        initialValues={{ capacityRoom: capacityRoom }}
+        initialValues={{ createRoomCapacity: createRoomCapacity }}
       />
       <ButtonDefault type="button" onClick={handleSearchRoom}>
         {t("common:search.searchRoom")}
@@ -66,29 +69,61 @@ const List = ({ userName, userId, t }) => (
   </SearchList>
 )
 
+const ButtonRooms = ({ handleChoiceRoom, rooms, t }) => {
+  return (
+    <>
+      {rooms.map((item, index) => {
+        return (
+          <ButtonDefault
+            key={item.id}
+            onClick={() => handleChoiceRoom(item.id)}
+          >
+            Room {index + 1}
+          </ButtonDefault>
+        )
+      })}
+    </>
+  )
+}
+
 const Search = ({
   isErrorServer,
   isCreatedRoom,
+  isSearchRoom,
   createRoom,
   searchRoom,
-  capacityRoom,
+  connectRoom,
+  createRoomCapacity,
   errorServer,
   userName,
-  userId
+  userId,
+  rooms
 }) => {
   const [t] = useTranslation(["common"])
+  // const [openModal, toggleModal] = useState({
+  //   isOpen: isErrorServer,
+  //   isClose: false
+  // })
 
   const handleCreateRoom = values => {
-    createRoom(values.capacityRoom)
+    createRoom(values.createRoomCapacity)
   }
 
   const handleSearchRoom = () => {
     searchRoom()
   }
 
+  const handleChoiceRoom = searchRoomId => {
+    connectRoom(searchRoomId)
+  }
+
   const closeModal = () => {
     errorServer(false)
+    // errorServer(openModal.isClose)
+    // transition(openModal, toggleModal, 2000)
   }
+
+  const isShowForm = !isCreatedRoom && !isSearchRoom
 
   return (
     <CommonContentTemplate>
@@ -104,14 +139,19 @@ const Search = ({
             <SearchCircle third />
             <SearchCircle fourth />
           </SearchMaps>
-
-          {isCreatedRoom ? (
-            <List userName={userName} userId={userId} t={t} />
-          ) : (
+          {isCreatedRoom && <List userName={userName} userId={userId} t={t} />}
+          {isSearchRoom && (
+            <ButtonRooms
+              rooms={rooms}
+              t={t}
+              handleChoiceRoom={handleChoiceRoom}
+            />
+          )}
+          {isShowForm && (
             <Form
               handleCreateRoom={handleCreateRoom}
               handleSearchRoom={handleSearchRoom}
-              capacityRoom={capacityRoom}
+              createRoomCapacity={createRoomCapacity}
               t={t}
             />
           )}
@@ -131,8 +171,10 @@ const Search = ({
 let mapStateToProps = state => {
   return {
     isErrorServer: state.search.isErrorServer,
-    isCreatedRoom: state.search.isCreatedRoom,
-    capacityRoom: getCapacityRoom(state),
+    isCreatedRoom: state.create.isCreatedRoom,
+    isSearchRoom: state.search.isSearchRoom,
+    rooms: state.search.rooms,
+    createRoomCapacity: state.create.createRoomCapacity,
     userId: getUserId(state),
     userName: getUserName(state)
   }
@@ -141,6 +183,7 @@ let mapStateToProps = state => {
 let mapDispatchToProps = dispatch => ({
   createRoom: capacity => dispatch(createRoom(capacity)),
   searchRoom: () => dispatch(searchRoom()),
+  connectRoom: searchRoomId => dispatch(connectRoom(searchRoomId)),
   errorServer: isErrorServer => {
     dispatch(errorServer(isErrorServer))
   }

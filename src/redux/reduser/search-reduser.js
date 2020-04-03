@@ -1,21 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { stopSubmit } from "redux-form"
 
 import { roomAPI } from "../../api/api"
 
 const searchGame = createSlice({
   name: "searchGame",
   initialState: {
-    idRoom: null,
-    capacity: "3",
-    isCreatedRoom: false
+    searchRoomId: null,
+    searchRoomCapacity: "3",
+    rooms: [],
+    numberRooms: null,
+    isSearchRoom: false
   },
   reducers: {
-    setInfoRoom: (state, action) => ({
+    setSearchRoom: (state, action) => ({
       ...state,
-      idRoom: action.payload.idRoom,
-      capacity: action.payload.capacity.toString(),
-      isCreatedRoom: action.payload.isCreatedRoom
+      isSearchRoom: action.payload.isSearchRoom,
+      rooms: action.payload.rooms,
+      numberRooms: action.payload.numberRooms
+    }),
+    setInfoSearchRoom: (state, action) => ({
+      ...state,
+      searchRoomId: action.payload.searchRoomId
     }),
     errorServer: (state, action) => ({
       ...state,
@@ -26,46 +31,19 @@ const searchGame = createSlice({
 
 const { actions, reducer } = searchGame
 
-export const { setInfoRoom, errorServer } = actions
+export const { setInfoSearchRoom, setSearchRoom, errorServer } = actions
 export const searchReducer = reducer
 
 // Thunk
-export const createRoom = capacity => async (dispatch, getState) => {
-  try {
-    const authToken = getState().auth.access
-    const response = await roomAPI.create(capacity, authToken)
-
-    if (response.data.resultCode === 0) {
-      const userId = getState().profile.userId
-      const { id, capacity } = response.data.data
-      dispatch(setInfoRoom({ idRoom: id, capacity, isCreatedRoom: true }))
-      console.log(response)
-      console.log("userId", userId)
-      let socket = new WebSocket(`ws://tornadogame.club:8080/${id}/${userId}`)
-      socket.onopen = () => {
-        console.log("socket open")
-      }
-      console.log("socket", socket)
-    } else {
-      let messages =
-        response.data.messages.length > 0
-          ? response.data.messages[0]
-          : "Common errors"
-      dispatch(stopSubmit("createRoom", { _error: messages }))
-    }
-  } catch (error) {
-    dispatch(errorServer(true))
-    console.warn(error)
-  }
-}
-
 export const searchRoom = () => async dispatch => {
   try {
     const response = await roomAPI.search()
 
     if (response.data.resultCode === 0) {
-      // const { id, capacity } = response.data.data
-      console.log("response", response)
+      const { data } = response.data
+      const rooms = Object.values(data)
+      const numberRooms = rooms.length
+      dispatch(setSearchRoom({ isSearchRoom: true, rooms, numberRooms }))
     } else {
       dispatch(errorServer(true))
       console.log("error search")
@@ -74,4 +52,16 @@ export const searchRoom = () => async dispatch => {
     dispatch(errorServer(true))
     console.warn(error)
   }
+}
+
+export const connectRoom = searchRoomId => (dispatch, getState) => {
+  const userId = getState().profile.userId
+
+  dispatch(setInfoSearchRoom({ searchRoomId }))
+
+  let socket = new WebSocket(
+    `ws://tornadogame.club/ws/${searchRoomId}/${userId}`
+  )
+
+  console.log("search socket", socket)
 }

@@ -28,21 +28,21 @@ const CreateRoomForm = ({ handleSubmit, error }) => {
         <FormRadioWrap>
           <Field
             label="1"
-            name="capacityRoom"
+            name="createRoomCapacity"
             component={RadioInput}
             type="radio"
             value="1"
           />
           <Field
             label="2"
-            name="capacityRoom"
+            name="createRoomCapacity"
             component={RadioInput}
             type="radio"
             value="2"
           />
           <Field
             label="3"
-            name="capacityRoom"
+            name="createRoomCapacity"
             component={RadioInput}
             type="radio"
             value="3"

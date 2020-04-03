@@ -6,6 +6,7 @@ import { profileReducer } from "./reduser/profile-reduser"
 import { authReducer } from "./reduser/auth-reduser"
 import { optionsReducer } from "./reduser/option-reduser"
 import { searchReducer } from "./reduser/search-reduser"
+import { createReducer } from "./reduser/create-reduser"
 
 const middleware = getDefaultMiddleware({
   immutableCheck: false,
@@ -17,6 +18,7 @@ export const store = configureStore({
   reducer: {
     game: gameReducer,
     search: searchReducer,
+    create: createReducer,
     players: playersReducer,
     profile: profileReducer,
     options: optionsReducer,

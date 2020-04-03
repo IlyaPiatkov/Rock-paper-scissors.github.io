@@ -3,7 +3,6 @@ import { createSelector } from "@reduxjs/toolkit"
 const rootOptionsSelector = state => state.options
 const rootAuthSelector = state => state.auth
 const rootProfileSelector = state => state.profile
-const rootSearchSelector = state => state.search
 
 export const getModeGameList = createSelector(
   rootOptionsSelector,
@@ -34,7 +33,3 @@ export const getUserId = createSelector(
 )
 export const getAuth = createSelector(rootAuthSelector, state => state.isAuth)
 export const getIsLoad = createSelector(rootAuthSelector, state => state.isLoad)
-export const getCapacityRoom = createSelector(
-  rootSearchSelector,
-  state => state.capacity
-)

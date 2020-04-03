@@ -11,6 +11,7 @@ const auth = createSlice({
     email: null,
     access: null,
     refresh: null,
+    tokenExpire: null,
     isAuth: false,
     isErrorServer: false,
     isLoad: false
@@ -22,6 +23,7 @@ const auth = createSlice({
       email: action.payload.email,
       access: action.payload.access,
       refresh: action.payload.refresh,
+      tokenExpire: action.payload.tokenExpire,
       isAuth: action.payload.isAuth
     }),
     errorServer: (state, action) => ({
@@ -46,8 +48,17 @@ export const login = (email, password) => async dispatch => {
     const response = await authAPI.login(email, password)
 
     if (response.data.resultCode === 0) {
-      const { userId, access, refresh } = response.data.data
-      dispatch(setUserData({ userId, email, access, refresh, isAuth: true }))
+      const { userId, access, refresh, tokenExpire } = response.data.data
+      dispatch(
+        setUserData({
+          userId,
+          email,
+          access,
+          refresh,
+          tokenExpire,
+          isAuth: true
+        })
+      )
       dispatch(setUserId(userId))
     }
     if (response.data.resultCode === 1) {
@@ -85,8 +96,8 @@ export const relogin = () => async (dispatch, getState) => {
     const response = await authAPI.relogin(refresh)
 
     if (response.data.resultCode === 0) {
-      const { access, refresh } = response.data.data
-      dispatch(setUserData({ access, refresh, isAuth: true }))
+      const { access, refresh, tokenExpire } = response.data.data
+      dispatch(setUserData({ access, refresh, tokenExpire, isAuth: true }))
     } else {
       console.warn("error relogin")
     }
