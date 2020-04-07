@@ -1,81 +1,152 @@
 import React from "react"
-import styled, { css } from "styled-components"
 import { NavLink } from "react-router-dom"
+import { connect } from "react-redux"
+import { useTranslation } from "react-i18next"
+import styled, { css, keyframes } from "styled-components"
+
+import { buttonStyle } from "../button"
+
+const run = keyframes`
+  0% {
+    transform: translate(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0);
+    opacity: 1;
+  }
+`
+
+const runBack = keyframes`
+  0% {
+    transform: translate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100%);
+    opacity: 0;
+  }
+`
 
 const NavBar = styled.nav`
   position: absolute;
   top: 0;
   left: 0;
-  display: flex;
+  display: grid;
+  grid-template-areas:
+    "header"
+    "list"
+    "footer";
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
   justify-content: center;
   align-items: center;
-  padding: 5rem 1rem 5rem 35%;
+  padding: 4rem 4rem 4rem 35%;
   height: 100%;
   width: 100%;
   text-align: center;
   background-color: #262626;
-  // background-color: #000;
-  opacity: 0;
-  transition: all 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  transform: scale(0);
 
   ${props =>
-    props.isOpenMenu &&
+    props.isOpen &&
     css`
       && {
-        opacity: 1;
-        transform: scale(1);
-
-        li {
-          opacity: 1;
-          transform: translateX(0);
-        }
       }
     `}
 `
 
 const List = styled.ul`
+  grid-area: list;
   list-style: none;
+  animation: ${p => (p.isOpen ? run : runBack)} 0.5s;
 `
 
 const Item = styled.li`
   padding: 8px 0;
-  transition: all 400ms 510ms;
-  opacity: 0;
-
-  &:nth-child(odd) {
-    transform: translateX(30%);
-  }
-
-  &:nth-child(even) {
-    transform: translateX(-30%);
-  }
+  text-align: right;
 `
 
 const Link = styled(NavLink)`
-  color: #19b698;
+  color: #fff;
   display: inline-block;
   font-size: 18px;
 `
-export const MainMenu = ({ openMenu }) => {
+
+const Overlay = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  width: 35%;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+`
+
+const Header = styled.header`
+  grid-area: header;
+  animation: ${p => (p.isOpen ? run : runBack)} 0.5s;
+`
+
+const Footer = styled.footer`
+  grid-area: footer;
+  display: flex;
+  animation: ${p => (p.isOpen ? run : runBack)} 0.5s;
+`
+
+const ButtonJoin = styled(NavLink)`
+  ${buttonStyle}
+
+  color: #fff;
+`
+
+const Menu = ({ isAuth, openMenu, handleClickMenu }) => {
+  const [t] = useTranslation(["common"])
+
   return openMenu.isClose ? (
-    <NavBar isOpenMenu={openMenu}>
-      <List>
-        <Item>
-          <Link to="/Intro">Intro</Link>
-        </Item>
-        <Item>
-          <Link to="/Services">Services</Link>
-        </Item>
-        <Item>
-          <Link to="/Team">Team</Link>
-        </Item>
-        <Item>
-          <Link to="/Pricing">Pricing</Link>
-        </Item>
-      </List>
-    </NavBar>
+    <>
+      <Overlay button="button" onClick={handleClickMenu} />
+      <NavBar>
+        <Header isOpen={openMenu.isOpen}></Header>
+        <List isOpen={openMenu.isOpen}>
+          <Item>
+            <Link to="/Intro">Intro</Link>
+          </Item>
+          <Item>
+            <Link to="/Services">Services</Link>
+          </Item>
+          <Item>
+            <Link to="/Team">Team</Link>
+          </Item>
+          <Item>
+            <Link to="/Pricing">Pricing</Link>
+          </Item>
+        </List>
+        <Footer isOpen={openMenu.isOpen}>
+          {isAuth ? (
+            <ButtonJoin as="button" ghost>
+              logout
+            </ButtonJoin>
+          ) : (
+            <>
+              <ButtonJoin to="login">{t("common:login")}</ButtonJoin>
+              <ButtonJoin to="registration">
+                {t("common:registration")}
+              </ButtonJoin>
+            </>
+          )}
+        </Footer>
+      </NavBar>
+    </>
   ) : (
     ""
   )
 }
+
+let mapStateToProps = state => {
+  return {
+    isAuth: state.auth.isAuth
+  }
+}
+
+export const MainMenu = connect(mapStateToProps)(Menu)

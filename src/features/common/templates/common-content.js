@@ -8,7 +8,6 @@ import {
   Hamburger
 } from "../../../ui"
 
-import { FooterContainer } from "../molecule"
 import { transition } from "../atom"
 
 export const CommonContentTemplate = ({ children, footer }) => {
@@ -24,12 +23,12 @@ export const CommonContentTemplate = ({ children, footer }) => {
 
   return (
     <>
-      <MainMenu openMenu={openMenu} />
+      <MainMenu handleClickMenu={handleClickMenu} openMenu={openMenu} />
       <Hamburger handleClickMenu={handleClickMenu} openMenu={openMenu} />
       <MainWrap isOpenMenu={openMenu.isOpen}>
         <Header />
         <MainContainer>{children}</MainContainer>
-        {footer ? footer : <FooterContainer />}
+        {footer && footer}
       </MainWrap>
     </>
   )

@@ -9,7 +9,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: "en",
-    debug: true,
+    debug: false,
     whiteList: ["en", "ru"],
     load: "languageOnly",
     ns: ["common"],
