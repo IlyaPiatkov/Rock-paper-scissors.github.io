@@ -119,18 +119,18 @@ const Menu = ({ isAuth, openMenu, handleClickMenu }) => {
             <Link to="/Team">Team</Link>
           </Item>
           <Item>
-            <Link to="/Pricing">Pricing</Link>
+            <Link to="/privacy-policies">Privacy policies</Link>
           </Item>
         </List>
         <Footer isOpen={openMenu.isOpen}>
           {isAuth ? (
             <ButtonJoin as="button" ghost>
-              logout
+              {t("common:logout")}
             </ButtonJoin>
           ) : (
             <>
-              <ButtonJoin to="login">{t("common:login")}</ButtonJoin>
-              <ButtonJoin to="registration">
+              <ButtonJoin to="/login">{t("common:login")}</ButtonJoin>
+              <ButtonJoin to="/registration">
                 {t("common:registration")}
               </ButtonJoin>
             </>

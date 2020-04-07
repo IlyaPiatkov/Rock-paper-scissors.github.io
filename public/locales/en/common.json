@@ -1,6 +1,7 @@
 {
   "registration": "Registration",
   "login": "Login",
+  "logout": "Logout",
   "enter": "Enter",
   "round": "Round",
   "save": "Save",

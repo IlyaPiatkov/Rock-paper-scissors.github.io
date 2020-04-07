@@ -5,6 +5,7 @@ import { LoginPage, registrationPage } from "./join"
 import { OptionsPage } from "./options"
 import { RulesPage } from "./rules"
 import { SearchPage } from "./search"
+import { PrivacyPoliciesPage } from "./privacy-policies"
 
 export const routes = () => [
   {
@@ -41,6 +42,11 @@ export const routes = () => [
     path: "/search",
     exact: true,
     component: SearchPage
+  },
+  {
+    path: "/privacy-policies",
+    exact: true,
+    component: PrivacyPoliciesPage
   },
 
   { component: NotFoundPage }
