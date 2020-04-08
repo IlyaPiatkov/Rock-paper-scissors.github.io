@@ -105,7 +105,7 @@ const Menu = ({ isAuth, openMenu, handleClickMenu }) => {
 
   return openMenu.isClose ? (
     <>
-      <Overlay button="button" onClick={handleClickMenu} />
+      <Overlay type="button" onClick={handleClickMenu} />
       <NavBar>
         <Header isOpen={openMenu.isOpen}></Header>
         <List isOpen={openMenu.isOpen}>

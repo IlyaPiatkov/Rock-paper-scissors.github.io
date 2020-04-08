@@ -1,8 +1,12 @@
 import { stopSubmit } from "redux-form"
 import { createSlice } from "@reduxjs/toolkit"
 
-import { authAPI } from "../../api/api"
-import { setUserId } from "./profile-reduser"
+import Cookies from "browser-cookies"
+
+import { authAPI, profileAPI } from "../../api/api"
+import { setProfileData } from "./profile-reduser"
+
+const TOKENS = "token-access"
 
 const auth = createSlice({
   name: "auth",
@@ -59,7 +63,9 @@ export const login = (email, password) => async dispatch => {
           isAuth: true
         })
       )
-      dispatch(setUserId(userId))
+      dispatch(setProfileData({ userId }))
+
+      Cookies.set(TOKENS, JSON.stringify({ access, refresh, tokenExpire }))
     }
     if (response.data.resultCode === 1) {
       let messages =
@@ -114,7 +120,7 @@ export const registr = (email, password) => async dispatch => {
     if (response.data.resultCode === 0) {
       const { userId, email } = response.data.data
       dispatch(setUserData({ userId, email, isAuth: true }))
-      dispatch(setUserId(userId))
+      dispatch(setProfileData({ userId }))
     } else {
       let messages =
         response.data.messages.length > 0
@@ -124,6 +130,51 @@ export const registr = (email, password) => async dispatch => {
     }
   } catch (error) {
     dispatch(errorServer(true))
+    console.warn(error)
+  }
+}
+
+export const loadSession = () => async dispatch => {
+  try {
+    const tokens = Cookies.get(TOKENS) || null
+
+    if (tokens) {
+      const { access, refresh, tokenExpire } = JSON.parse(tokens)
+      console.log("Date.now", Date.now())
+      console.log("tokenExpire", tokenExpire)
+      console.log("Date.now() > tokenExpire", Date.now() > tokenExpire)
+      // console.log("access", access)
+      // console.log("token", tokens)
+      // console.log("tokenExpire", tokenExpire)
+      // console.log("refresh", refresh)
+
+      if (Date.now() > tokenExpire) {
+        const response = await profileAPI.getUser(access)
+
+        if (response.data.resultCode === 0) {
+          const { userId, username } = response.data.data
+
+          dispatch(
+            setUserData({
+              userId,
+              access,
+              refresh,
+              tokenExpire,
+              isAuth: true
+            })
+          )
+          dispatch(setProfileData({ userId, userName: username })) // TODO rename filed to userName
+        } else {
+          dispatch(errorServer(true))
+          console.warn("error loadSession")
+        }
+      } else {
+        dispatch(relogin())
+      }
+    } else {
+      return null
+    }
+  } catch (error) {
     console.warn(error)
   }
 }

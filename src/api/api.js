@@ -29,3 +29,14 @@ export const roomAPI = {
     return instance.get("/getActiveRooms/")
   }
 }
+
+export const profileAPI = {
+  setUser(userName, authToken) {
+    instance.defaults.headers.common["Authorization"] = `Bearer ${authToken}`
+    return instance.post("/profile/", { username: userName }) // TODO rename filed to userName
+  },
+  getUser(authToken) {
+    instance.defaults.headers.common["Authorization"] = `Bearer ${authToken}`
+    return instance.get("/profile/")
+  }
+}
