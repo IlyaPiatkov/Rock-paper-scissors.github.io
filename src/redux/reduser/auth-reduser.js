@@ -80,26 +80,31 @@ export const login = (email, password) => async dispatch => {
   }
 }
 
-export const logout = () => {
-  return dispatch => {
-    authAPI
-      .logout()
-      .then(response => {
-        if (response.data.resultCode === 0) {
-          dispatch(setUserData({ userId: null, email: null, isAuth: false }))
-        }
-      })
-      .catch(error => {
-        dispatch(errorServer(true))
-        console.warn(error)
-      })
+export const logout = () => async dispatch => {
+  try {
+    const response = await authAPI.logout()
+
+    if (response.data.resultCode === 0) {
+      dispatch(
+        setUserData({
+          userId: null,
+          email: null,
+          access: null,
+          refresh: null,
+          tokenExpire: null,
+          isAuth: false
+        })
+      )
+    }
+  } catch (error) {
+    dispatch(errorServer(true))
+    console.warn(error)
   }
 }
 
-export const relogin = () => async (dispatch, getState) => {
+export const relogin = oldRefresh => async dispatch => {
   try {
-    const refresh = getState().auth.refresh
-    const response = await authAPI.relogin(refresh)
+    const response = await authAPI.relogin(oldRefresh)
 
     if (response.data.resultCode === 0) {
       const { access, refresh, tokenExpire } = response.data.data
@@ -142,13 +147,13 @@ export const loadSession = () => async dispatch => {
       const { access, refresh, tokenExpire } = JSON.parse(tokens)
       console.log("Date.now", Date.now())
       console.log("tokenExpire", tokenExpire)
-      console.log("Date.now() > tokenExpire", Date.now() > tokenExpire)
+      console.log("tokenExpire > Date.now()", tokenExpire > Date.now())
       // console.log("access", access)
       // console.log("token", tokens)
       // console.log("tokenExpire", tokenExpire)
       // console.log("refresh", refresh)
 
-      if (Date.now() > tokenExpire) {
+      if (tokenExpire > Date.now()) {
         const response = await profileAPI.getUser(access)
 
         if (response.data.resultCode === 0) {
@@ -164,12 +169,14 @@ export const loadSession = () => async dispatch => {
             })
           )
           dispatch(setProfileData({ userId, userName: username })) // TODO rename filed to userName
+        } else if (response.data.resultCode === 0) {
+          dispatch(relogin(refresh))
         } else {
           dispatch(errorServer(true))
           console.warn("error loadSession")
         }
       } else {
-        dispatch(relogin())
+        dispatch(relogin(refresh))
       }
     } else {
       return null

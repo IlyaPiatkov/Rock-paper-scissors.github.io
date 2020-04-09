@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next"
 import styled, { css, keyframes } from "styled-components"
 
 import { buttonStyle } from "../button"
+import { logout } from "../../redux/reduser/auth-reduser"
 
 const run = keyframes`
   0% {
@@ -100,8 +101,12 @@ const ButtonJoin = styled(NavLink)`
   color: #fff;
 `
 
-const Menu = ({ isAuth, openMenu, handleClickMenu }) => {
+const Menu = ({ isAuth, openMenu, handleClickMenu, logout }) => {
   const [t] = useTranslation(["common"])
+
+  const handlerLogout = () => {
+    logout()
+  }
 
   return openMenu.isClose ? (
     <>
@@ -124,7 +129,7 @@ const Menu = ({ isAuth, openMenu, handleClickMenu }) => {
         </List>
         <Footer isOpen={openMenu.isOpen}>
           {isAuth ? (
-            <ButtonJoin as="button" ghost>
+            <ButtonJoin as="button" ghost onClick={handlerLogout}>
               {t("common:logout")}
             </ButtonJoin>
           ) : (
@@ -149,4 +154,10 @@ let mapStateToProps = state => {
   }
 }
 
-export const MainMenu = connect(mapStateToProps)(Menu)
+let mapDispatchToProps = dispatch => ({
+  logout: () => {
+    dispatch(logout())
+  }
+})
+
+export const MainMenu = connect(mapStateToProps, mapDispatchToProps)(Menu)
