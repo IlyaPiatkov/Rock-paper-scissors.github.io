@@ -47,7 +47,7 @@ export const { setUserData, errorServer, initialization } = actions
 export const authReducer = reducer
 
 // Thunk
-export const login = (email, password) => async dispatch => {
+export const login = (email, password, rememberMe) => async dispatch => {
   try {
     const response = await authAPI.login(email, password)
 
@@ -65,7 +65,13 @@ export const login = (email, password) => async dispatch => {
       )
       dispatch(setProfileData({ userId }))
 
-      Cookies.set(TOKENS, JSON.stringify({ access, refresh, tokenExpire }))
+      if (rememberMe) {
+        Cookies.set(TOKENS, JSON.stringify({ access, refresh, tokenExpire }), {
+          expires: 7
+        })
+      } else {
+        Cookies.erase(TOKENS)
+      }
     }
     if (response.data.resultCode === 1) {
       let messages =
@@ -95,6 +101,8 @@ export const logout = () => async dispatch => {
           isAuth: false
         })
       )
+
+      Cookies.erase(TOKENS)
     }
   } catch (error) {
     dispatch(errorServer(true))
@@ -145,13 +153,6 @@ export const loadSession = () => async dispatch => {
 
     if (tokens) {
       const { access, refresh, tokenExpire } = JSON.parse(tokens)
-      console.log("Date.now", Date.now())
-      console.log("tokenExpire", tokenExpire)
-      console.log("tokenExpire > Date.now()", tokenExpire > Date.now())
-      // console.log("access", access)
-      // console.log("token", tokens)
-      // console.log("tokenExpire", tokenExpire)
-      // console.log("refresh", refresh)
 
       if (tokenExpire > Date.now()) {
         const response = await profileAPI.getUser(access)

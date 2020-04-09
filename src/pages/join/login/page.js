@@ -16,7 +16,7 @@ const Login = ({ setUserData, isErrorServer, errorServer }) => {
   const [t] = useTranslation(["common"])
 
   const submit = values => {
-    setUserData(values.email, values.password)
+    setUserData(values.email, values.password, values.rememberMe)
   }
 
   const closeModal = () => {
@@ -51,8 +51,8 @@ let mapStateToProps = state => {
 }
 
 let mapDispatchToProps = dispatch => ({
-  setUserData: (email, password) => {
-    dispatch(login(email, password))
+  setUserData: (email, password, rememberMe) => {
+    dispatch(login(email, password, rememberMe))
   },
   errorServer: isErrorServer => {
     dispatch(errorServer(isErrorServer))
