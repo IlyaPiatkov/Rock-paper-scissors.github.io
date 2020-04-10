@@ -60,8 +60,17 @@ export const connectRoom = searchRoomId => (dispatch, getState) => {
   dispatch(setInfoSearchRoom({ searchRoomId }))
 
   let socket = new WebSocket(
-    `ws://tornadogame.club/ws/${searchRoomId}/${userId}`
+    `ws://tornadogame.club:8080/${searchRoomId}/${userId}`
   )
+
+  // socket.onopen = () => {
+  // console.log("onopen")
+  // socket.send("Привет sear")
+
+  // socket.onmessage = event => {
+  // console.log(event)
+  // }
+  // }
 
   console.log("search socket", socket)
 }

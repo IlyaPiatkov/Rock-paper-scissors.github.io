@@ -8,9 +8,14 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: "en",
-    debug: false,
-    whiteList: ["en", "ru"],
+    fallbackLng: {
+      en_US: ["en"],
+      ru_RU: ["ru"],
+      uk_UA: ["ua"],
+      default: ["en"]
+    },
+    debug: true,
+    whiteList: ["en", "ru", "ua"],
     load: "languageOnly",
     ns: ["common"],
     defaultNS: "common",

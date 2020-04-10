@@ -67,7 +67,8 @@ export const login = (email, password, rememberMe) => async dispatch => {
 
       if (rememberMe) {
         Cookies.set(TOKENS, JSON.stringify({ access, refresh, tokenExpire }), {
-          expires: 7
+          expires: 7,
+          httponly: true
         })
       } else {
         Cookies.erase(TOKENS)
@@ -117,6 +118,11 @@ export const relogin = oldRefresh => async dispatch => {
     if (response.data.resultCode === 0) {
       const { access, refresh, tokenExpire } = response.data.data
       dispatch(setUserData({ access, refresh, tokenExpire, isAuth: true }))
+
+      Cookies.set(TOKENS, JSON.stringify({ access, refresh, tokenExpire }), {
+        expires: 7,
+        httponly: true
+      })
     } else {
       console.warn("error relogin")
     }
