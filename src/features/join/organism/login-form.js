@@ -17,34 +17,34 @@ const Checkbox = ElementCheckbox("input")
 const minLength5 = minLength(5)
 
 const LoginForm = ({ handleSubmit, error }) => {
-  const [t] = useTranslation(["common", "auth"])
+  const [t] = useTranslation(["common"])
 
   return (
     <FormContainer onSubmit={handleSubmit}>
       {error && <FormError small> {error} </FormError>}
 
       <Field
-        label={t("auth:label.email")}
+        label={t("common:label.email")}
         name="email"
         id="email"
         component={DefaultInput}
         type="email"
-        placeholder={t("auth:placeholder.exampleEmail")}
+        placeholder={t("common:placeholder.exampleEmail")}
         validate={[required, email]}
       />
 
       <Field
-        label={t("auth:label.password")}
+        label={t("common:label.password")}
         name="password"
         id="password"
         component={DefaultInput}
         type="password"
-        placeholder={t("auth:placeholder.password")}
+        placeholder={t("common:placeholder.password")}
         validate={[required, minLength5]}
       />
 
       <Field
-        label={t("auth:rememberMe")}
+        label={t("common:rememberMe")}
         name="rememberMe"
         component={Checkbox}
       />
