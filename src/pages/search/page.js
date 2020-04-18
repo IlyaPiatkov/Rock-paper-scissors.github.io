@@ -5,8 +5,10 @@ import { useTranslation } from "react-i18next"
 import {
   searchRoom,
   errorServer,
-  connectRoom
+  connectRoom,
+  resetSearchRoom
 } from "../../redux/reduser/search-reduser"
+import { createRoom } from "../../redux/reduser/create-reduser"
 import { getUserId, getUserName } from "../../redux/selectors/selectors"
 
 import {
@@ -29,7 +31,7 @@ import {
   Modal
   // transition
 } from "../../features"
-import { createRoom } from "../../redux/reduser/create-reduser"
+import { useEffect } from "react"
 
 const Form = ({
   handleCreateRoom,
@@ -50,13 +52,13 @@ const Form = ({
   )
 }
 
-const List = ({ userName, userId, t }) => (
+const List = ({ userName, userId, t, userReady }) => (
   <SearchList>
     <SearchItem>
       <Icon name="user" />
       <Text medium>{userName ? userName : userId}</Text>
       <SearchInfo>
-        <ButtonDefault type="button">Ready</ButtonDefault>
+        <ButtonDefault id="testId" type="button" onClick={userReady} >Ready</ButtonDefault>
       </SearchInfo>
     </SearchItem>
     <SearchItem>
@@ -69,7 +71,10 @@ const List = ({ userName, userId, t }) => (
   </SearchList>
 )
 
-const ButtonRooms = ({ handleChoiceRoom, rooms, t }) => {
+const ButtonRooms = ({ handleChoiceRoom, rooms, t, resetSearchRoom }) => {
+  useEffect(() => {
+    return () => resetSearchRoom()
+  }, [resetSearchRoom])
   return (
     <>
       {rooms.map((item, index) => {
@@ -78,7 +83,8 @@ const ButtonRooms = ({ handleChoiceRoom, rooms, t }) => {
             key={item.id}
             onClick={() => handleChoiceRoom(item.id)}
           >
-            Room {index + 1}
+            {/* Room {index + 1} */}
+            {item.id}
           </ButtonDefault>
         )
       })}
@@ -97,7 +103,8 @@ const Search = ({
   errorServer,
   userName,
   userId,
-  rooms
+  rooms,
+  resetSearchRoom
 }) => {
   const [t] = useTranslation(["common"])
   // const [openModal, toggleModal] = useState({
@@ -123,6 +130,10 @@ const Search = ({
     // transition(openModal, toggleModal, 2000)
   }
 
+  const userReady = () => {
+    
+  }
+
   const isShowForm = !isCreatedRoom && !isSearchRoom
 
   return (
@@ -139,12 +150,13 @@ const Search = ({
             <SearchCircle third />
             <SearchCircle fourth />
           </SearchMaps>
-          {isCreatedRoom && <List userName={userName} userId={userId} t={t} />}
+          {isCreatedRoom && <List userName={userName} userId={userId} t={t} userReady={userReady}/>}
           {isSearchRoom && (
             <ButtonRooms
               rooms={rooms}
               t={t}
               handleChoiceRoom={handleChoiceRoom}
+              resetSearchRoom={resetSearchRoom}
             />
           )}
           {isShowForm && (
@@ -186,7 +198,8 @@ let mapDispatchToProps = dispatch => ({
   connectRoom: searchRoomId => dispatch(connectRoom(searchRoomId)),
   errorServer: isErrorServer => {
     dispatch(errorServer(isErrorServer))
-  }
+  },
+  resetSearchRoom: () => dispatch(resetSearchRoom())
 })
 
 export const SearchPage = connect(mapStateToProps, mapDispatchToProps)(Search)

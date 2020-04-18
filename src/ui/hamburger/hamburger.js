@@ -2,7 +2,8 @@ import React from "react"
 import styled, { css } from "styled-components"
 
 const Container = styled.button`
-  position: absolute;
+  position: fixed;
+  top: 0;
   right: 0;
   height: 40px;
   width: 40px;

@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit"
 
 import Cookies from "browser-cookies"
 
-import { authAPI, profileAPI } from "../../api/api"
-import { setProfileData } from "./profile-reduser"
+import { authAPI } from "../../api/api"
+import { setProfileData, getProfileData } from "./profile-reduser"
 
 const TOKENS = "token-access"
 
@@ -23,12 +23,12 @@ const auth = createSlice({
   reducers: {
     setUserData: (state, action) => ({
       ...state,
-      userId: action.payload.userId.toString(),
-      email: action.payload.email,
-      access: action.payload.access,
-      refresh: action.payload.refresh,
-      tokenExpire: action.payload.tokenExpire,
-      isAuth: action.payload.isAuth
+      userId: action.payload.userId ? action.payload.userId.toString() : null,
+      email: action.payload.email ?? null,
+      access: action.payload.access ?? null,
+      refresh: action.payload.refresh ?? null,
+      tokenExpire: action.payload.tokenExpire ?? null,
+      isAuth: action.payload.isAuth ?? false
     }),
     errorServer: (state, action) => ({
       ...state,
@@ -63,12 +63,12 @@ export const login = (email, password, rememberMe) => async dispatch => {
           isAuth: true
         })
       )
-      dispatch(setProfileData({ userId }))
+      dispatch(getProfileData())
 
       if (rememberMe) {
         Cookies.set(TOKENS, JSON.stringify({ access, refresh, tokenExpire }), {
-          expires: 7,
-          httponly: true
+          expires: 1
+          // httponly: true
         })
       } else {
         Cookies.erase(TOKENS)
@@ -87,21 +87,14 @@ export const login = (email, password, rememberMe) => async dispatch => {
   }
 }
 
-export const logout = () => async dispatch => {
+export const logout = () => async (dispatch, getState) => {
   try {
-    const response = await authAPI.logout()
+    const authToken = getState().auth.access
+    const response = await authAPI.logout(authToken)
 
     if (response.data.resultCode === 0) {
-      dispatch(
-        setUserData({
-          userId: null,
-          email: null,
-          access: null,
-          refresh: null,
-          tokenExpire: null,
-          isAuth: false
-        })
-      )
+      dispatch(setUserData({}))
+      dispatch(setProfileData({}))
 
       Cookies.erase(TOKENS)
     }
@@ -120,8 +113,8 @@ export const relogin = oldRefresh => async dispatch => {
       dispatch(setUserData({ access, refresh, tokenExpire, isAuth: true }))
 
       Cookies.set(TOKENS, JSON.stringify({ access, refresh, tokenExpire }), {
-        expires: 7,
-        httponly: true
+        expires: 1
+        // httponly: true
       })
     } else {
       console.warn("error relogin")
@@ -161,27 +154,15 @@ export const loadSession = () => async dispatch => {
       const { access, refresh, tokenExpire } = JSON.parse(tokens)
 
       if (tokenExpire > Date.now()) {
-        const response = await profileAPI.getUser(access)
-
-        if (response.data.resultCode === 0) {
-          const { userId, username } = response.data.data
-
-          dispatch(
-            setUserData({
-              userId,
-              access,
-              refresh,
-              tokenExpire,
-              isAuth: true
-            })
-          )
-          dispatch(setProfileData({ userId, userName: username })) // TODO rename filed to userName
-        } else if (response.data.resultCode === 0) {
-          dispatch(relogin(refresh))
-        } else {
-          dispatch(errorServer(true))
-          console.warn("error loadSession")
-        }
+        dispatch(
+          setUserData({
+            access,
+            refresh,
+            tokenExpire,
+            isAuth: true
+          })
+        )
+        dispatch(getProfileData())
       } else {
         dispatch(relogin(refresh))
       }

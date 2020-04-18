@@ -1,1 +1,1 @@
-export { RPSOptionsReduxForm } from './options-form'
+export { OptionsReduxForm } from "./options-form"

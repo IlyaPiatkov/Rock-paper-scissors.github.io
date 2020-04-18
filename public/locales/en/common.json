@@ -24,18 +24,24 @@
     "searchRoom": "Search room",
     "searchGame": "Search Game"
   },
+  "profile": {
+    "title": "Profile"
+  },
   "label": {
     "firstName": "First Name",
+    "lastName": "Last Name",
     "participants": "Number of Participants",
     "modeGame": "Mode game",
     "classic": "classic",
     "extended": "extended",
     "capacityRoom": "Capacity room",
     "email": "You email",
-    "password": "You password"
+    "password": "You password",
+    "gender": "Gender"
   },
   "placeholder": {
     "firstName": "Name",
+    "lastName": "Last Name",
     "exampleEmail": "example@domain.com",
     "password": "Password"
   },

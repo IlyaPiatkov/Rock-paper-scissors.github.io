@@ -2,13 +2,7 @@ import React from "react"
 import { Field, reduxForm } from "redux-form"
 import { useTranslation } from "react-i18next"
 
-import {
-  required,
-  maxLength,
-  minLength,
-  ElementInput,
-  ElementRadio
-} from "../../common"
+import { ElementRadio } from "../../common"
 import {
   FormContainer,
   FormLabel,
@@ -17,27 +11,13 @@ import {
   ButtonDefault
 } from "../../../ui"
 
-const maxLength15 = maxLength(15)
-const minLength2 = minLength(2)
-
-const defaultInput = ElementInput("input")
 const RadioInput = ElementRadio("input")
 
-const RPSOptionsForm = ({ handleSubmit, modeList }) => {
+const OptionsForm = ({ handleSubmit, modeList }) => {
   const [t] = useTranslation(["common"])
 
   return (
     <FormContainer onSubmit={handleSubmit}>
-      <Field
-        label={t("common:label.firstName")}
-        name="firstName"
-        id="firstName"
-        component={defaultInput}
-        type="text"
-        placeholder={t("common:placeholder.firstName")}
-        validate={[required, maxLength15, minLength2]}
-      />
-
       <FormFieldset>
         <FormLabel as="legend" medium>
           {t("common:label.participants")}
@@ -89,6 +69,6 @@ const RPSOptionsForm = ({ handleSubmit, modeList }) => {
   )
 }
 
-export const RPSOptionsReduxForm = reduxForm({
-  form: "rpsOptions"
-})(RPSOptionsForm)
+export const OptionsReduxForm = reduxForm({
+  form: "Options"
+})(OptionsForm)

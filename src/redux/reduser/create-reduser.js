@@ -45,13 +45,24 @@ export const createRoom = createRoomCapacity => async (dispatch, getState) => {
           isCreatedRoom: true
         })
       )
-      console.log(response)
-      console.log("userId", userId)
       let socket = new WebSocket(`ws://tornadogame.club:8080/${id}/${userId}`)
-      socket.onopen = () => {
-        console.log("socket open")
-      }
-      console.log("socket", socket)
+
+      // Соединение открыто
+      // socket.addEventListener('open', function (event) {
+      //   socket.send('Hello Server!');
+      // });
+      // Наблюдает за сообщениями
+      socket.addEventListener("message", function(event) {
+        console.log("Message from server ", JSON.parse(event.data))
+      })
+
+      const testButton = document.querySelector("#testId")
+
+      testButton.addEventListener("click", () => {
+        console.log("click")
+
+        socket.send("Hello Server!")
+      })
     } else {
       let messages =
         response.data.messages.length > 0

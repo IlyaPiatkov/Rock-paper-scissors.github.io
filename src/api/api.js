@@ -9,8 +9,9 @@ export const authAPI = {
   login(email, password) {
     return instance.post("/login/", { email, password })
   },
-  logout() {
-    return instance.delete("/login/")
+  logout(authToken) {
+    instance.defaults.headers.common["Authorization"] = `Bearer ${authToken}`
+    return instance.post("/logout/")
   },
   relogin(refresh) {
     return instance.post("/relogin/", { refresh })
@@ -31,9 +32,9 @@ export const roomAPI = {
 }
 
 export const profileAPI = {
-  setUser(userName, authToken) {
+  setUser(authToken, userData) {
     instance.defaults.headers.common["Authorization"] = `Bearer ${authToken}`
-    return instance.post("/profile/", { username: userName }) // TODO rename filed to userName
+    return instance.post("/profile/", userData)
   },
   getUser(authToken) {
     instance.defaults.headers.common["Authorization"] = `Bearer ${authToken}`

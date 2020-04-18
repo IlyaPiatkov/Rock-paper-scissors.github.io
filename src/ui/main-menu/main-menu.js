@@ -2,7 +2,7 @@ import React from "react"
 import { NavLink } from "react-router-dom"
 import { connect } from "react-redux"
 import { useTranslation } from "react-i18next"
-import styled, { css, keyframes } from "styled-components"
+import styled, { keyframes } from "styled-components"
 
 import { buttonStyle } from "../button"
 import { logout } from "../../redux/reduser/auth-reduser"
@@ -47,19 +47,12 @@ const NavBar = styled.nav`
   width: 100%;
   text-align: center;
   background-color: #262626;
-
-  ${props =>
-    props.isOpen &&
-    css`
-      && {
-      }
-    `}
 `
 
 const List = styled.ul`
   grid-area: list;
   list-style: none;
-  animation: ${p => (p.isOpen ? run : runBack)} 0.5s;
+  // animation: ${p => (p.isOpen ? run : runBack)} 0.5s;
 `
 
 const Item = styled.li`
@@ -86,13 +79,13 @@ const Overlay = styled.button`
 
 const Header = styled.header`
   grid-area: header;
-  animation: ${p => (p.isOpen ? run : runBack)} 0.5s;
+  // animation: ${p => (p.isOpen ? run : runBack)} 0.5s;
 `
 
 const Footer = styled.footer`
   grid-area: footer;
   display: flex;
-  animation: ${p => (p.isOpen ? run : runBack)} 0.5s;
+  // animation: ${p => (p.isOpen ? run : runBack)} 0.5s;
 `
 
 const ButtonJoin = styled(NavLink)`
@@ -114,12 +107,11 @@ const Menu = ({ isAuth, openMenu, handleClickMenu, logout }) => {
       <NavBar>
         <Header isOpen={openMenu.isOpen}></Header>
         <List isOpen={openMenu.isOpen}>
-          <Item>
-            <Link to="/Intro">Intro</Link>
-          </Item>
-          <Item>
-            <Link to="/Services">Services</Link>
-          </Item>
+          {isAuth && (
+            <Item>
+              <Link to="/profile">Profile</Link>
+            </Item>
+          )}
           <Item>
             <Link to="/Team">Team</Link>
           </Item>

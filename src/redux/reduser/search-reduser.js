@@ -25,13 +25,25 @@ const searchGame = createSlice({
     errorServer: (state, action) => ({
       ...state,
       isErrorServer: action.payload
+    }),
+    resetSearchRoom: () => ({
+      searchRoomId: null,
+      searchRoomCapacity: "3",
+      rooms: [],
+      numberRooms: null,
+      isSearchRoom: false
     })
   }
 })
 
 const { actions, reducer } = searchGame
 
-export const { setInfoSearchRoom, setSearchRoom, errorServer } = actions
+export const {
+  setInfoSearchRoom,
+  setSearchRoom,
+  errorServer,
+  resetSearchRoom
+} = actions
 export const searchReducer = reducer
 
 // Thunk
@@ -59,18 +71,16 @@ export const connectRoom = searchRoomId => (dispatch, getState) => {
 
   dispatch(setInfoSearchRoom({ searchRoomId }))
 
-  let socket = new WebSocket(
-    `ws://tornadogame.club:8080/${searchRoomId}/${userId}`
-  )
+  let socket = new WebSocket(`ws://tornadogame.club:8080/${searchRoomId}/${userId}`)
 
-  // socket.onopen = () => {
-  // console.log("onopen")
-  // socket.send("Привет sear")
-
-  // socket.onmessage = event => {
-  // console.log(event)
-  // }
-  // }
+  // Соединение открыто
+  // socket.addEventListener('open', function (event) {
+  //   socket.send('Hello Server!');
+  // });
+  // Наблюдает за сообщениями
+  // socket.addEventListener('message', function (event) {
+  //   console.log('Message from server ', JSON.parse(event.data));
+  // });
 
   console.log("search socket", socket)
 }
