@@ -1,0 +1,70 @@
+{
+  "registration": "Регистрация",
+  "login": "Вход",
+  "logout": "Выход",
+  "enter": "Вход",
+  "round": "Раунд",
+  "save": "Сохранить",
+  "mainNav": {
+    "singleGame": "Одиночная игра",
+    "multiplayerGame": "Многопользовательская игра",
+    "options": "Настройки",
+    "rules": "Правила"
+  },
+  "game": {
+    "Rock": "Камень",
+    "Paper": "Бумага",
+    "Scissors": "Ножницы"
+  },
+  "options": {
+    "title": "Настройки игры"
+  },
+  "search": {
+    "createRoom": "Создать комнату",
+    "searchRoom": "Найти комнату",
+    "searchGame": "Найти игру"
+  },
+  "profile": {
+    "title": "Профиль"
+  },
+  "label": {
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "participants": "Число участников",
+    "modeGame": "Режим игры",
+    "classic": "классический",
+    "extended": "расширений",
+    "capacityRoom": "Вместимость комнаты",
+    "email": "Ваш email",
+    "password": "Ваш пароль",
+    "gender": "Ваш пол"
+  },
+  "placeholder": {
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "exampleEmail": "example@domain.com",
+    "password": "Пароль"
+  },
+  "notFoundPage": {
+    "title": "К сожалению! Страница не найдена",
+    "text": "мы сожалеем, но запрошенная вами страница не найдена",
+    "button": "Главная"
+  },
+  "modal": {
+    "errorServerTitle": "Ой",
+    "errorServerText": "Что-то пошло не так, попробуйте позже"
+  },
+  "termsAndConditions": "Я принимаю <1>правила и условия</1>",
+  "rememberMe": "Запомни меня",
+  "error": {
+    "required": "Обязательное поле",
+    "invalidEmail": "Неверный адрес электронной почты",
+    "minLengthText": "Должно быть {{min}} символов или более",
+    "maxLengthText": "Должно быть не более {{max}} символа"
+  },
+  "mainMenu": {
+    "profile": "Профиль",
+    "team": "Команда",
+    "privacyPolicies": "Политика конфиденциальности"
+  }
+}

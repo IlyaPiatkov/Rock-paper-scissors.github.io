@@ -3,6 +3,8 @@ import Backend from "i18next-xhr-backend"
 import { initReactI18next } from "react-i18next"
 import LanguageDetector from "i18next-browser-languagedetector"
 
+export const languages = ["en", "ru", "ua"]
+
 i18n
   .use(Backend)
   .use(LanguageDetector)
@@ -15,7 +17,7 @@ i18n
       default: ["en"]
     },
     debug: true,
-    whiteList: ["en", "ru", "ua"],
+    whiteList: languages,
     load: "languageOnly",
     ns: ["common"],
     defaultNS: "common",

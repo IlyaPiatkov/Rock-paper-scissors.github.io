@@ -55,5 +55,16 @@
     "errorServerText": "Something went wrong, try again later"
   },
   "termsAndConditions": "I accept the <1>terms and conditions</1>",
-  "rememberMe": "Remember me"
+  "rememberMe": "Remember me",
+  "error": {
+    "required": "Required",
+    "invalidEmail": "Invalid email address",
+    "minLengthText": "Must be {{min}} characters or more",
+    "maxLengthText": "Must be {{max}} characters or less"
+  },
+  "mainMenu": {
+    "profile": "Profile",
+    "team": "Team",
+    "privacyPolicies": "Privacy policies"
+  }
 }

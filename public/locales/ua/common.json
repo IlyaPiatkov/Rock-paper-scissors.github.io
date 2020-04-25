@@ -1,0 +1,70 @@
+{
+  "registration": "Реєстрація",
+  "login": "Вхід",
+  "logout": "Виход",
+  "enter": "Вхід",
+  "round": "Раунд",
+  "save": "Зберегти",
+  "mainNav": {
+    "singleGame": "Одиночна гра",
+    "multiplayerGame": "Багатокористувацька гра",
+    "options": "Налаштування",
+    "rules": "Правила"
+  },
+  "game": {
+    "Rock": "Камінь",
+    "Paper": "Папір",
+    "Scissors": "Ножиці"
+  },
+  "options": {
+    "title": "Налаштування гри"
+  },
+  "search": {
+    "createRoom": "Створити кімнату",
+    "searchRoom": "Знайти кімнату",
+    "searchGame": "Знайти гру"
+  },
+  "profile": {
+    "title": "Профіль"
+  },
+  "label": {
+    "firstName": "Ім'я",
+    "lastName": "Прізвище",
+    "participants": "Кількість учасників",
+    "modeGame": "Режим гри",
+    "classic": "класичний",
+    "extended": "розширень",
+    "capacityRoom": "Місткість кімнати",
+    "email": "Ваш email",
+    "password": "Ваш пароль",
+    "gender": "Ваш пол"
+  },
+  "placeholder": {
+    "firstName": "Ім'я",
+    "lastName": "Прізвище",
+    "exampleEmail": "example@domain.com",
+    "password": "Пароль"
+  },
+  "notFoundPage": {
+    "title": "На жаль! Сторінку не знайдено",
+    "text": "ми шкодуємо, але запитана вами сторінка не знайдена",
+    "button": "Головна"
+  },
+  "modal": {
+    "errorServerTitle": "Ой",
+    "errorServerText": "Щось пішло не так, спробуйте пізніше"
+  },
+  "termsAndConditions": "Я приймаю <1>правила та умови</1>",
+  "rememberMe": "Запам'ятай мене",
+  "error": {
+    "required": "Обов'язкове поле",
+    "invalidEmail": "Невірна адреса електронної пошти",
+    "minLengthText": "Повинно бути {{min}} символів або більше",
+    "maxLengthText": "Повинно бути не більше {{max}} символу"
+  },
+  "mainMenu": {
+    "profile": "Профіль",
+    "team": "Команда",
+    "privacyPolicies": "Політика конфіденційності"
+  }
+}

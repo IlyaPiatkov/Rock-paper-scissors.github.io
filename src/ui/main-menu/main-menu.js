@@ -2,10 +2,12 @@ import React from "react"
 import { NavLink } from "react-router-dom"
 import { connect } from "react-redux"
 import { useTranslation } from "react-i18next"
+import i18next from "i18next"
 import styled, { keyframes } from "styled-components"
 
 import { buttonStyle } from "../button"
 import { logout } from "../../redux/reduser/auth-reduser"
+import { languages } from "../../i18n"
 
 const run = keyframes`
   0% {
@@ -79,6 +81,7 @@ const Overlay = styled.button`
 
 const Header = styled.header`
   grid-area: header;
+  padding: 20px 0;
   // animation: ${p => (p.isOpen ? run : runBack)} 0.5s;
 `
 
@@ -94,6 +97,24 @@ const ButtonJoin = styled(NavLink)`
   color: #fff;
 `
 
+const ButtonLan = styled.button`
+  border: 1px solid #fff;
+  background: transparent;
+  padding: 0.5rem 1rem;
+  color: #fff;
+`
+
+const LanBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  width: 4rem;
+
+  > :nth-child(n + 2) {
+    margin-top: 1rem;
+  }
+`
+
 const Menu = ({ isAuth, openMenu, handleClickMenu, logout }) => {
   const [t] = useTranslation(["common"])
 
@@ -105,18 +126,35 @@ const Menu = ({ isAuth, openMenu, handleClickMenu, logout }) => {
     <>
       <Overlay type="button" onClick={handleClickMenu} />
       <NavBar>
-        <Header isOpen={openMenu.isOpen}></Header>
+        <Header isOpen={openMenu.isOpen}>
+          <LanBlock>
+            {languages.map(item => {
+              return (
+                <ButtonLan
+                  key={item}
+                  onClick={() => {
+                    i18next.changeLanguage(item)
+                  }}
+                >
+                  {item}
+                </ButtonLan>
+              )
+            })}
+          </LanBlock>
+        </Header>
         <List isOpen={openMenu.isOpen}>
           {isAuth && (
             <Item>
-              <Link to="/profile">Profile</Link>
+              <Link to="/profile">{t("common:mainMenu.profile")}</Link>
             </Item>
           )}
           <Item>
-            <Link to="/Team">Team</Link>
+            <Link to="/Team">{t("common:mainMenu.team")}</Link>
           </Item>
           <Item>
-            <Link to="/privacy-policies">Privacy policies</Link>
+            <Link to="/privacy-policies">
+              {t("common:mainMenu.privacyPolicies")}
+            </Link>
           </Item>
         </List>
         <Footer isOpen={openMenu.isOpen}>
