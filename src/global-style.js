@@ -24,6 +24,10 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 1.8rem;
+
+    &[data-open-menu="true"] {
+      overflow: hidden;
+    }
   }
 `
 

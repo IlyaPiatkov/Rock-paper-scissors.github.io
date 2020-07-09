@@ -1,7 +1,7 @@
 import * as axios from "axios"
 
 const instance = axios.create({
-  baseURL: "http://tornadogame.club/api/v1.0",
+  baseURL: "https://tornadogame.club/api/v1.0",
   withCredentials: true
 })
 

@@ -18,6 +18,9 @@ export const CommonContentTemplate = ({ children, footer }) => {
   })
 
   const handleClickMenu = () => {
+    const container = document.querySelector('body')
+
+    container.dataset.openMenu = !openMenu.isOpen
     transition(openMenu, toggleMenu, 500)
   }
 
