@@ -14,6 +14,8 @@ const middleware = getDefaultMiddleware({
   thunk: true
 })
 
+export type AppDispatch = typeof store.dispatch
+
 export const store = configureStore({
   reducer: {
     game: gameReducer,
@@ -29,4 +31,5 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== "production"
 })
 
+// @ts-ignore
 window.store = store
