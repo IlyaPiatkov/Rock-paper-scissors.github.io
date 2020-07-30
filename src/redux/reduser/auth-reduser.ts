@@ -1,23 +1,38 @@
 import { stopSubmit } from "redux-form"
-import { createSlice, Dispatch } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import Cookies from "browser-cookies"
 
+import { RootThunkType } from "../store"
 import { authAPI, ResultCodeEnum } from "../../api/api"
 import { setProfileData, getProfileData } from "./profile-reduser"
 
 const TOKENS = "token-access"
 
-type InitialStateType = {
-  userId: number | null
-  email: string | null
+type TokensType = {
   access: string | null
   refresh: string | null
   tokenExpire: number | null
+}
+
+type SetUserDataType = {
+  userId: number | null
+  email: string | null
   isAuth: boolean
+} & TokensType
+
+type ErrorServerType = {
   isErrorServer: boolean
+}
+
+type InitializationType = {
   isLoad: boolean
 }
+
+type InitialStateType = SetUserDataType &
+  TokensType &
+  ErrorServerType &
+  InitializationType
 
 const initialState: InitialStateType = {
   userId: null,
@@ -34,22 +49,22 @@ const auth = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUserData: (state, action) => ({
+    setUserData: (state, action: PayloadAction<SetUserDataType>) => ({
       ...state,
-      userId: action.payload.userId ? action.payload.userId.toString() : null,
-      email: action.payload.email ?? null,
-      access: action.payload.access ?? null,
-      refresh: action.payload.refresh ?? null,
-      tokenExpire: action.payload.tokenExpire ?? null,
-      isAuth: action.payload.isAuth ?? false
+      userId: action.payload.userId,
+      email: action.payload.email,
+      access: action.payload.access,
+      refresh: action.payload.refresh,
+      tokenExpire: action.payload.tokenExpire,
+      isAuth: action.payload.isAuth
     }),
-    errorServer: (state, action) => ({
+    errorServer: (state, action: PayloadAction<ErrorServerType>) => ({
       ...state,
-      isErrorServer: action.payload
+      isErrorServer: action.payload.isErrorServer
     }),
-    initialization: (state, action) => ({
+    initialization: (state, action: PayloadAction<InitializationType>) => ({
       ...state,
-      isLoad: action.payload
+      isLoad: action.payload.isLoad
     })
   }
 })
@@ -64,7 +79,7 @@ export const login = (
   email: string,
   password: string,
   rememberMe: boolean
-) => async (dispatch: Dispatch<any>) => {
+): RootThunkType => async dispatch => {
   try {
     const data = await authAPI.login(email, password)
 
@@ -97,37 +112,48 @@ export const login = (
       dispatch(stopSubmit("login", { _error: messages }))
     }
   } catch (error) {
-    dispatch(errorServer(true))
+    dispatch(errorServer({ isErrorServer: true }))
     console.warn(error)
   }
 }
 
-export const logout = () => async (dispatch: Dispatch<any>, getState: any) => {
+export const logout = (): RootThunkType => async (dispatch, getState) => {
   try {
     const authToken = getState().auth.access
     const data = await authAPI.logout(authToken)
 
     if (data.resultCode === ResultCodeEnum.Success) {
-      dispatch(setUserData({}))
+      dispatch(setUserData(initialState))
       dispatch(setProfileData({}))
 
       Cookies.erase(TOKENS)
     }
   } catch (error) {
-    dispatch(errorServer(true))
+    dispatch(errorServer({ isErrorServer: true }))
     console.warn(error)
   }
 }
 
-export const relogin = (oldRefresh: string) => async (
-  dispatch: Dispatch<any>
+export const relogin = (oldRefresh: string | null): RootThunkType => async (
+  dispatch,
+  getState
 ) => {
   try {
+    const { userId, email } = getState().auth
     const data = await authAPI.relogin(oldRefresh)
 
     if (data.resultCode === ResultCodeEnum.Success) {
       const { access, refresh, tokenExpire } = data.data
-      dispatch(setUserData({ access, refresh, tokenExpire, isAuth: true }))
+      dispatch(
+        setUserData({
+          userId,
+          email,
+          access,
+          refresh,
+          tokenExpire,
+          isAuth: true
+        })
+      )
 
       Cookies.set(TOKENS, JSON.stringify({ access, refresh, tokenExpire }), {
         expires: 1
@@ -137,20 +163,31 @@ export const relogin = (oldRefresh: string) => async (
       console.warn("error relogin")
     }
   } catch (error) {
-    dispatch(errorServer(true))
+    dispatch(errorServer({ isErrorServer: true }))
     console.warn(error)
   }
 }
 
-export const registr = (email: string, password: string) => async (
-  dispatch: Dispatch<any>
-) => {
+export const registr = (
+  email: string,
+  password: string
+): RootThunkType => async (dispatch, getState) => {
   try {
+    const { access, refresh, tokenExpire } = getState().auth
     const data = await authAPI.registr(email, password)
 
     if (data.resultCode === ResultCodeEnum.Success) {
       const { userId, email } = data.data
-      dispatch(setUserData({ userId, email, isAuth: true }))
+      dispatch(
+        setUserData({
+          access,
+          refresh,
+          tokenExpire,
+          userId,
+          email,
+          isAuth: true
+        })
+      )
       dispatch(setProfileData({ userId }))
     } else {
       let messages =
@@ -158,21 +195,25 @@ export const registr = (email: string, password: string) => async (
       dispatch(stopSubmit("registr", { _error: messages }))
     }
   } catch (error) {
-    dispatch(errorServer(true))
+    dispatch(errorServer({ isErrorServer: true }))
     console.warn(error)
   }
 }
 
-export const loadSession = () => async (dispatch: Dispatch<any>) => {
+export const loadSession = (): RootThunkType => async (dispatch, getState) => {
   try {
     const tokens = Cookies.get(TOKENS) || null
 
     if (tokens) {
-      const { access, refresh, tokenExpire } = JSON.parse(tokens)
+      const { userId, email } = getState().auth
+      const { access, refresh, tokenExpire }: TokensType = JSON.parse(tokens)
+      console.log(typeof tokenExpire)
 
-      if (tokenExpire > Date.now()) {
+      if (tokenExpire && tokenExpire > Date.now()) {
         dispatch(
           setUserData({
+            userId,
+            email,
             access,
             refresh,
             tokenExpire,
@@ -183,8 +224,6 @@ export const loadSession = () => async (dispatch: Dispatch<any>) => {
       } else {
         dispatch(relogin(refresh))
       }
-    } else {
-      return null
     }
   } catch (error) {
     console.warn(error)

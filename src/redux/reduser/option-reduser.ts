@@ -1,13 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit"
-
-type ModeType = {
-  classic: Array<string>
-  extended: Array<string>
-}
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 type InitialStateType = {
   modeGame: string
-  dataGameList: ModeType
+  dataGameList: {
+    classic: Array<string>
+    extended: Array<string>
+  }
   enemies: string
 }
 
@@ -26,11 +24,11 @@ const optionsGame = createSlice({
   name: "optionsGame",
   initialState,
   reducers: {
-    setModeGame: (state, action) => ({
+    setModeGame: (state, action: PayloadAction<string>) => ({
       ...state,
       modeGame: action.payload
     }),
-    setEnemies: (state, action) => ({
+    setEnemies: (state, action: PayloadAction<string>) => ({
       ...state,
       enemies: action.payload
     })

@@ -1,5 +1,10 @@
 import { reducer as formReducer } from "redux-form"
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit"
+import {
+  configureStore,
+  getDefaultMiddleware,
+  ThunkAction,
+  Action
+} from "@reduxjs/toolkit"
 
 import { playersReducer, gameReducer } from "./reduser/rps-reduser"
 import { profileReducer } from "./reduser/profile-reduser"
@@ -14,7 +19,14 @@ const middleware = getDefaultMiddleware({
   thunk: true
 })
 
-export type AppDispatch = typeof store.dispatch
+export type RootDispatchType = typeof store.dispatch
+export type RootStateType = ReturnType<typeof store.getState>
+export type RootThunkType<ReturnType = Promise<void>> = ThunkAction<
+  ReturnType,
+  RootStateType,
+  unknown,
+  Action<string>
+>
 
 export const store = configureStore({
   reducer: {
