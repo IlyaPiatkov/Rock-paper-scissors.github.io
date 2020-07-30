@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-type modeType = {
+type ModeType = {
   classic: Array<string>
   extended: Array<string>
 }
 
-type initialStateType = {
+type InitialStateType = {
   modeGame: string
-  dataGameList: modeType
+  dataGameList: ModeType
   enemies: string
 }
 
@@ -16,7 +16,7 @@ const MODE = {
   extended: ["Rock", "Paper", "Scissors", "Fire", "Water"]
 }
 
-const initialState: initialStateType = {
+const initialState: InitialStateType = {
   modeGame: Object.keys(MODE)[0],
   dataGameList: MODE,
   enemies: "1"
