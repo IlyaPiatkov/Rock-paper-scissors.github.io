@@ -10,7 +10,12 @@ import {
 
 import { transition } from "../atom"
 
-export const CommonContentTemplate = ({ children, footer }) => {
+type PropsType = {
+  children: React.ReactNode
+  footer?: any
+}
+
+export const CommonContentTemplate: React.FC<PropsType> = ({ children, footer }) => {
   const [openMenu, toggleMenu] = useState({
     isOpen: false,
     isClose: false,
@@ -20,13 +25,18 @@ export const CommonContentTemplate = ({ children, footer }) => {
   const handleClickMenu = () => {
     const container = document.querySelector('body')
 
-    container.dataset.openMenu = !openMenu.isOpen
-    transition(openMenu, toggleMenu, 500)
+    if (container) {
+      // @ts-ignore
+      container.dataset.openMenu = !openMenu.isOpen
+      transition(openMenu, toggleMenu, 500)
+    }
   }
 
   return (
     <>
-      <MainMenu handleClickMenu={handleClickMenu} openMenu={openMenu} />
+      <MainMenu 
+      // @ts-ignore
+      handleClickMenu={handleClickMenu} openMenu={openMenu} />
       <Hamburger handleClickMenu={handleClickMenu} openMenu={openMenu} />
       <MainWrap isOpenMenu={openMenu.isOpen}>
         <Header />

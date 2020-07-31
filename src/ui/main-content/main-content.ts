@@ -13,7 +13,7 @@ export const MainContent = styled.div`
   }
 `
 
-export const MainWrap = styled.div`
+export const MainWrap = styled.div<{ isOpenMenu: boolean }>`
   position: relative;
   z-index: 5;
   background-color: #fff;

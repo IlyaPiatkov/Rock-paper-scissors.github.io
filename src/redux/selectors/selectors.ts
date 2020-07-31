@@ -1,13 +1,16 @@
 import { createSelector } from "@reduxjs/toolkit"
 
-const rootOptionsSelector = state => state.options
-const rootAuthSelector = state => state.auth
-const rootProfileSelector = state => state.profile
+import { RootStateType } from "../store"
 
-export const getModeGameList = createSelector(
-  rootOptionsSelector,
-  state => state.dataGameList[state.modeGame]
-)
+const rootOptionsSelector = (state: RootStateType) => state.options
+const rootAuthSelector = (state: RootStateType) => state.auth
+const rootProfileSelector = (state: RootStateType) => state.profile
+
+export const getModeGameList = createSelector(rootOptionsSelector, state => {
+  const key = state.modeGame as keyof typeof state.dataGameList
+
+  return state.dataGameList[key]
+})
 
 export const getModeList = createSelector(rootOptionsSelector, state =>
   Object.keys(state.dataGameList)

@@ -26,9 +26,9 @@ const Link = styled(NavLink)`
   display: flex;
 `
 
-export const Header = ({ isOpenMenu }) => {
+export const Header = () => {
   return (
-    <Container isOpenMenu={isOpenMenu}>
+    <Container>
       <Link to="/">
         <Logo src="img/logo.svg" alt="logo site" />
       </Link>

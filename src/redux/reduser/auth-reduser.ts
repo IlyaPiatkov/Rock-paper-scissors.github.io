@@ -5,7 +5,11 @@ import Cookies from "browser-cookies"
 
 import { RootThunkType } from "../store"
 import { authAPI, ResultCodeEnum } from "../../api/api"
-import { setProfileData, getProfileData } from "./profile-reduser"
+import {
+  setProfileData,
+  getProfileData,
+  initialState as profileInitialState
+} from "./profile-reduser"
 
 const TOKENS = "token-access"
 
@@ -124,7 +128,7 @@ export const logout = (): RootThunkType => async (dispatch, getState) => {
 
     if (data.resultCode === ResultCodeEnum.Success) {
       dispatch(setUserData(initialState))
-      dispatch(setProfileData({}))
+      dispatch(setProfileData(profileInitialState))
 
       Cookies.erase(TOKENS)
     }
@@ -188,7 +192,14 @@ export const registr = (
           isAuth: true
         })
       )
-      dispatch(setProfileData({ userId }))
+      dispatch(
+        setProfileData({
+          userId,
+          userName: "unknown",
+          userLastName: "unknown",
+          gender: "unknown"
+        })
+      )
     } else {
       let messages =
         data.messages.length > 0 ? data.messages[0] : "Common errors"
@@ -207,7 +218,6 @@ export const loadSession = (): RootThunkType => async (dispatch, getState) => {
     if (tokens) {
       const { userId, email } = getState().auth
       const { access, refresh, tokenExpire }: TokensType = JSON.parse(tokens)
-      console.log(typeof tokenExpire)
 
       if (tokenExpire && tokenExpire > Date.now()) {
         dispatch(

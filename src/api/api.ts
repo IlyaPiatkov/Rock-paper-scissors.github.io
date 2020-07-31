@@ -79,13 +79,24 @@ export const roomAPI = {
   }
 }
 
+type UserType = {
+  data: {
+    userId: number
+    username: string
+  }
+  messages: Array<string>
+  resultCode: ResultCodeEnum
+}
+
 export const profileAPI = {
-  setUser(authToken: string, userData: any) {
+  setUser(authToken: string | null, userData: any) {
     instance.defaults.headers.common["Authorization"] = `Bearer ${authToken}`
-    return instance.post("/profile/", userData)
+    return instance
+      .post<UserType>("/profile/", userData)
+      .then(response => response.data)
   },
-  getUser(authToken: string) {
+  getUser(authToken: string | null) {
     instance.defaults.headers.common["Authorization"] = `Bearer ${authToken}`
-    return instance.get("/profile/")
+    return instance.get<UserType>("/profile/").then(response => response.data)
   }
 }
