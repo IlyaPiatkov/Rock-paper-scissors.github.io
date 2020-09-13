@@ -1,1 +1,2 @@
-export { mixinTypography, TypographyType } from "./typography"
+export { mixinTypography } from "./typography"
+// export type { TypographyType } from "./typography";

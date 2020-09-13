@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
-import { mixinTypography, TypographyType } from "../typography"
+import { mixinTypography } from "../typography"
+import { TypographyType } from "../typography/typography" // TODO fix type import
 
 type PropsType = {
   bold?: boolean
