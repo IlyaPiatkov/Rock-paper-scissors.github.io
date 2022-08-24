@@ -1,8 +1,13 @@
 import axios from "axios"
 
 const instance = axios.create({
-  baseURL: "https://tornadogame.club/api/v1.0",
-  withCredentials: true
+  // baseURL: "https://tornadogame.club/api/v1.0",
+  baseURL: "api/v1/",
+  withCredentials: true,
+  // proxy: {
+  //   host: 'localhost',
+  //   port: 5000
+  // }
 })
 
 export enum ResultCodeEnum {
