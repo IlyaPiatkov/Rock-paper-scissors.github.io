@@ -1,4 +1,1 @@
-export {
-    // routerV1,
-    routers
-} from './v1';
+export { routers } from './v1'

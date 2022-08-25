@@ -3,6 +3,7 @@ const WARNING = 1;
 const ERROR = 2;
 
 export default {
+    "root": true,
     "env": {
         "browser": true,
         "es2021": true
@@ -23,5 +24,6 @@ export default {
     ],
     "rules": {
         "semi": [ERROR, "never"],
+        "quotes": [ERROR, "double"],
     }
 }

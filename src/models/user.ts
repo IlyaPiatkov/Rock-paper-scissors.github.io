@@ -1,10 +1,9 @@
-import { Schema, model, Document} from 'mongoose'
+import { Schema, model, Document } from 'mongoose'
 
 
 export interface User extends Document {
-    email: string;
-    password: string;
-    // comparePassword(candidatePassword: string): Promise<boolean>;
+    email: string
+    password: string
 }
 
 const schema = new Schema({
