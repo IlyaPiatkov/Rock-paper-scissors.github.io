@@ -1,6 +1,8 @@
 {
   "cSpell.words": [
-    "reduxjs"
+    "healthcheck",
+    "reduxjs",
+    "uuidv"
   ],
   "eslint.format.enable": true,
   "eslint.workingDirectories": [
@@ -15,4 +17,5 @@
   "typescript.preferences.quoteStyle": "single",
   "javascript.format.semicolons": "remove",
   "typescript.format.semicolons": "remove",
+  "typescript.tsdk": "node_modules/typescript/lib",
 }

@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import config from 'config'
 
-import { user } from '../../../models'
+import { user, token } from '../../../models'
 import { LoginResponse } from './types'
 
 
@@ -46,16 +46,17 @@ login.post('/login', validation, async (req: Request, res: LoginResponse) => {
             })
         }
 
-        const access = jwt.sign(
-            { userId: thisUser._id },
-            JWT_SECRET_KEY,
-            { expiresIn: '1h' }
-        )
+        const accessToken = jwt.sign({ userId: thisUser._id }, JWT_SECRET_KEY, { expiresIn: '1h' })
+        const refreshToken = uuidv4()
+
+        const result = new token({ refreshToken })
+
+        await result.save()
 
         res.json({
             data: {
-                access,
-                refresh: uuidv4(),
+                access: accessToken,
+                refresh: refreshToken,
                 tokenExpire: Date.now() + 1000 * 60 * 60,
                 userId: thisUser._id,
                 email: thisUser.email,

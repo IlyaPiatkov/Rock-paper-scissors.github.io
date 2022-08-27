@@ -58,13 +58,13 @@ export const authAPI = {
       .post<LoginType>("/login/", { email, password })
       .then(response => response.data)
   },
-  logout(authToken: string | null) {
+  logout(authToken: string, refreshToken: string) {
     instance.defaults.headers.common["Authorization"] = `Bearer ${authToken}`
-    return instance.post<LogoutType>("/logout/").then(response => response.data)
+    return instance.post<LogoutType>("/logout/", { refreshToken }).then(response => response.data)
   },
-  relogin(refresh: string | null) {
+  relogin(refresh: string | null, userId: string) {
     return instance
-      .post<ReloginType>("/relogin/", { refresh })
+      .post<ReloginType>("/relogin/", { refresh, userId })
       .then(response => response.data)
   },
   registr(email: string, password: string) {
